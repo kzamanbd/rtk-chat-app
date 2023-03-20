@@ -1,20 +1,26 @@
 import PrivateRoute from 'components/PrivateRoute';
 import PublicRoute from 'components/PublicRoute';
 import { useGetCurrentUserQuery } from 'features/auth/authApi';
+import { updateCurrentUser } from 'features/auth/authSlice';
 import Inbox from 'pages/Inbox';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-	const auth = useSelector((state) => state.auth);
-
-	const { isLoading } = useGetCurrentUserQuery(undefined, {
+	const dispatch = useDispatch();
+	const { isLoading, error } = useGetCurrentUserQuery(undefined, {
 		skip: !localStorage.getItem('loggedIn')
 	});
 
-	console.log('AuthContext state:', auth);
+	useEffect(() => {
+		if (error?.status === 401) {
+			localStorage.removeItem('loggedIn');
+			dispatch(updateCurrentUser(null));
+		}
+	}, [error, dispatch]);
 
 	if (isLoading) {
 		return <div className="flex justify-center items-center">Loading...</div>;

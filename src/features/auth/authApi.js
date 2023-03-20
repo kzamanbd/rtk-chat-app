@@ -8,8 +8,18 @@ export const authApi = apiSlice.injectEndpoints({
 				url: '/auth/register',
 				method: 'POST',
 				body: data
-			})
+			}),
+			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+				try {
+					const result = await queryFulfilled;
+					localStorage.setItem('loggedIn', true);
+					dispatch(updateCurrentUser(result.data?.user));
+				} catch (error) {
+					console.log(error);
+				}
+			}
 		}),
+
 		login: builder.mutation({
 			query: (data) => ({
 				url: '/auth/login',
@@ -26,6 +36,7 @@ export const authApi = apiSlice.injectEndpoints({
 				}
 			}
 		}),
+
 		logout: builder.mutation({
 			query: () => ({
 				url: '/logout',
@@ -43,7 +54,7 @@ export const authApi = apiSlice.injectEndpoints({
 		}),
 
 		getCurrentUser: builder.query({
-			query: () => '/current-user',
+			query: () => '/refresh-token',
 			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
 				try {
 					const result = await queryFulfilled;
