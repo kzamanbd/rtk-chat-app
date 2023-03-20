@@ -1,22 +1,59 @@
 import { apiSlice } from 'features/api/apiSlice';
+import { updateCurrentUser } from './authSlice';
 
 export const authApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		register: builder.mutation({
-			query: (body) => ({
+			query: (data) => ({
 				url: '/auth/register',
 				method: 'POST',
-				body
+				body: data
 			})
 		}),
 		login: builder.mutation({
-			query: (body) => ({
+			query: (data) => ({
 				url: '/auth/login',
 				method: 'POST',
-				body
-			})
+				body: data
+			}),
+			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+				try {
+					const result = await queryFulfilled;
+					localStorage.setItem('loggedIn', true);
+					dispatch(updateCurrentUser(result.data?.user));
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		}),
+		logout: builder.mutation({
+			query: () => ({
+				url: '/logout',
+				method: 'GET'
+			}),
+			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+				try {
+					await queryFulfilled;
+					localStorage.removeItem('loggedIn');
+					dispatch(updateCurrentUser(null));
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		}),
+
+		getCurrentUser: builder.query({
+			query: () => '/current-user',
+			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+				try {
+					const result = await queryFulfilled;
+					dispatch(updateCurrentUser(result.data?.user));
+				} catch (error) {
+					console.log(error);
+				}
+			}
 		})
 	})
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useGetCurrentUserQuery, useLogoutMutation } = authApi;
