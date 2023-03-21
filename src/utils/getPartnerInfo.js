@@ -1,8 +1,8 @@
-const getPartnerInfo = (participants, userId) => {
-	if (participants.toUser._id === userId) {
-		return participants.fromUser;
+const getPartnerInfo = (conversation, userId) => {
+	if (conversation.toUser._id === userId) {
+		return conversation.fromUser;
 	} else {
-		return participants.toUser;
+		return conversation.toUser;
 	}
 };
 

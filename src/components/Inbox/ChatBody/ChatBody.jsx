@@ -24,12 +24,7 @@ export default function ChatBody({ conversationId }) {
 		content = <Blank />;
 	}
 	if (!isLoading && messages?.length > 0) {
-		content = (
-			<>
-				<Messages messages={messages} user={currentUser} />
-				<Options conversationId={conversationId} currentUserId={currentUser._id} />
-			</>
-		);
+		content = <Messages messages={messages} user={currentUser} />;
 	}
 
 	return (
@@ -40,6 +35,7 @@ export default function ChatBody({ conversationId }) {
 					name={chatHead.name}
 				/>
 				{content}
+				<Options conversationId={conversationId} currentUserId={currentUser._id} />
 			</div>
 		</div>
 	);
