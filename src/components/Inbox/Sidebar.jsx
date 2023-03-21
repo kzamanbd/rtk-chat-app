@@ -28,7 +28,7 @@ export default function Sidebar() {
 	}
 
 	if (!isLoading && !isError && conversations.length > 0) {
-		content = <ChatItems conversations={conversations} currentUser={currentUser} />;
+		content = <ChatItems conversations={conversations} user={currentUser} />;
 	}
 
 	return (

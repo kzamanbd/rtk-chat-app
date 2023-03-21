@@ -1,23 +1,18 @@
 import moment from 'moment';
+import getPartnerInfo from 'utils/getPartnerInfo';
 import ChatItem from './ChatItem';
 
-export default function ChatItems({ conversations, currentUser }) {
-	const getParticipant = (conversation, userId) => {
-		if (conversation.toUser._id === userId) {
-			return conversation.fromUser;
-		} else {
-			return conversation.toUser;
-		}
-	};
-
+export default function ChatItems({ conversations, user }) {
 	return (
 		<ul>
 			<li>
 				{conversations.map((conversation) => (
 					<ChatItem
 						key={conversation._id}
-						avatar="https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010__340.jpg"
-						name={getParticipant(conversation, currentUser._id).name}
+						avatar={`https://ui-avatars.com/api/?background=random&name=${
+							getPartnerInfo(conversation, user._id).name
+						}}`}
+						name={getPartnerInfo(conversation, user._id).name}
 						lastMessage={conversation.lastMessage}
 						lastTime={moment(conversation.updatedAt).fromNow()}
 						conversationId={conversation._id}

@@ -1,12 +1,14 @@
 import { useGetMessagesQuery } from 'features/messages/messagesApi';
+import { useSelector } from 'react-redux';
 import Blank from './Blank';
 import ChatHead from './ChatHead';
 import Messages from './Messages';
 import Options from './Options';
 
 export default function ChatBody({ conversationId }) {
+	const { currentUser } = useSelector((state) => state.auth);
 	const {
-		data: { messages = [] } = {},
+		data: { messages = [], chatHead = {} } = {},
 		isError,
 		isLoading
 	} = useGetMessagesQuery(conversationId, {
@@ -24,8 +26,8 @@ export default function ChatBody({ conversationId }) {
 	if (!isLoading && messages?.length > 0) {
 		content = (
 			<>
-				<Messages messages={messages} />
-				<Options />
+				<Messages messages={messages} user={currentUser} />
+				<Options conversationId={conversationId} />
 			</>
 		);
 	}
@@ -35,7 +37,7 @@ export default function ChatBody({ conversationId }) {
 			<div className="w-full grid conversation-row-grid">
 				<ChatHead
 					avatar="https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg"
-					name="Kamruzzaman"
+					name={chatHead.name}
 				/>
 				{content}
 			</div>

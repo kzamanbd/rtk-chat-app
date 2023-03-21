@@ -1,27 +1,16 @@
 import Message from './Message';
 
-export default function Messages({ messages = [] }) {
+export default function Messages({ messages = [], user }) {
 	return (
 		<div className="relative w-full h-[calc(100vh_-_197px)] p-6 overflow-y-auto flex flex-col-reverse">
 			<ul className="space-y-2">
-				<Message justify="start" message="Hello" />
-				<Message justify="start" message="How are you?" />
-				<Message justify="end" message="I am fine what about you?" />
-				<Message justify="start" message="Hi" />
-				<Message justify="start" message="How are you?" />
-				<Message justify="end" message="I am fine what about you?" />
-				<Message justify="start" message="Hi" />
-				<Message justify="start" message="How are you?" />
-				<Message justify="end" message="I am fine what about you?" />
-				<Message justify="start" message="Hi" />
-				<Message justify="start" message="How are you?" />
-				<Message justify="end" message="I am fine what about you?" />
-				<Message justify="start" message="Hi" />
-				<Message justify="start" message="How are you?" />
-				<Message justify="end" message="I am fine what about you?" />
-				<Message justify="start" message="Hi" />
-				<Message justify="start" message="How are you?" />
-				<Message justify="end" message="I am fine what about you?" />
+				{messages.map((message) => {
+					const { message: lastMessage, _id, userInfo } = message || {};
+
+					const justify = userInfo._id !== user._id ? 'start' : 'end';
+
+					return <Message key={_id} justify={justify} message={lastMessage} />;
+				})}
 			</ul>
 		</div>
 	);
