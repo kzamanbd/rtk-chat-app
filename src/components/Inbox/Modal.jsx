@@ -1,6 +1,7 @@
 import { useSendMessageMutation } from 'features/messages/messagesApi';
 import { useGetUsersQuery } from 'features/users/usersApi';
 import { useState } from 'react';
+import ReactSelect from 'react-select';
 
 export default function Modal({ open, control }) {
 	const { data: { users = [] } = {}, isLoading } = useGetUsersQuery();
@@ -9,27 +10,29 @@ export default function Modal({ open, control }) {
 	// local state
 	const [toUser, setToUser] = useState('');
 	const [message, setMessage] = useState('');
-	const handleSubmit = (e) => {
+
+	const handleInputChange = ({ value }, actionMeta) => {
+		setToUser(value);
+	};
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const data = {
-			userId: toUser,
-			message
-		};
+		const data = { userId: toUser, message };
 
-		sendMessage(data)
-			.unwrap()
-			.then((response) => {
-				console.log(response);
-				setToUser('');
-				setMessage('');
-				control();
-			});
+		try {
+			await sendMessage(data).unwrap();
+			setToUser('');
+			setMessage('');
+			control();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
 		open && (
-			<>
+			<div>
 				<div onClick={control} className="fixed w-full h-full inset-0 z-10 bg-black/50 cursor-pointer"></div>
 				<div className="rounded w-[400px] lg:w-[600px] space-y-8 bg-white p-10 absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
 					<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Send message</h2>
@@ -40,21 +43,14 @@ export default function Modal({ open, control }) {
 								<label htmlFor="to" className="sr-only">
 									To
 								</label>
-								{!isLoading && users?.length > 0 && (
-									<select
-										onChange={(e) => setToUser(e.target.value)}
-										value={toUser}
-										className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm">
-										<option value="" hidden>
-											Select a user
-										</option>
-										{users?.map((user) => (
-											<option key={user._id} value={user._id}>
-												{user.name}
-											</option>
-										))}
-									</select>
-								)}
+								<ReactSelect
+									options={
+										users?.map((user) => ({ value: user._id, label: user.name, ...user })) || []
+									}
+									onChange={handleInputChange}
+									isLoading={isLoading}
+									placeholder="Select user"
+								/>
 							</div>
 							<div>
 								<label htmlFor="message" className="sr-only">
@@ -85,7 +81,7 @@ export default function Modal({ open, control }) {
 						{/* <Error message="There was an error" /> */}
 					</form>
 				</div>
-			</>
+			</div>
 		)
 	);
 }

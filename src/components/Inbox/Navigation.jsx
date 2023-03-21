@@ -1,9 +1,11 @@
 import logoImage from 'assets/lws-logo-dark.svg';
 import { useLogoutMutation } from 'features/auth/authApi';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export default function Navigation() {
 	const [logout] = useLogoutMutation();
+	const { currentUser } = useSelector((state) => state.auth);
 
 	const handleLogout = (e) => {
 		e.preventDefault();
@@ -16,7 +18,8 @@ export default function Navigation() {
 					<Link to="/">
 						<img className="h-10" src={logoImage} alt="Learn with Sumit" />
 					</Link>
-					<ul>
+					<ul className="flex space-x-3">
+						<li className="text-white">{currentUser.name}</li>
 						<li className="text-white">
 							<a href="/" onClick={handleLogout}>
 								Logout

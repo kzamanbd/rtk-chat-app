@@ -1,8 +1,10 @@
 import moment from 'moment';
+import { useParams } from 'react-router-dom';
 import getPartnerInfo from 'utils/getPartnerInfo';
 import ChatItem from './ChatItem';
 
 export default function ChatItems({ conversations, user }) {
+	const { conversationId } = useParams();
 	return (
 		<ul>
 			<li>
@@ -12,6 +14,7 @@ export default function ChatItems({ conversations, user }) {
 						avatar={`https://ui-avatars.com/api/?background=random&name=${
 							getPartnerInfo(conversation, user._id).name
 						}}`}
+						active={conversation._id === conversationId}
 						name={getPartnerInfo(conversation, user._id).name}
 						lastMessage={conversation.lastMessage}
 						lastTime={moment(conversation.updatedAt).fromNow()}

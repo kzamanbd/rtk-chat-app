@@ -28,7 +28,9 @@ export default function Sidebar() {
 	}
 
 	if (!isLoading && !isError && conversations.length > 0) {
-		content = <ChatItems conversations={conversations} user={currentUser} />;
+		const copyConversations = [...conversations];
+		const sortedConversations = copyConversations.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+		content = <ChatItems conversations={sortedConversations} user={currentUser} />;
 	}
 
 	return (
