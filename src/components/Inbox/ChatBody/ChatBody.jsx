@@ -5,7 +5,13 @@ import Messages from './Messages';
 import Options from './Options';
 
 export default function ChatBody({ conversationId }) {
-	const { data: { messages = [] } = {}, isError, isLoading } = useGetMessagesQuery(conversationId);
+	const {
+		data: { messages = [] } = {},
+		isError,
+		isLoading
+	} = useGetMessagesQuery(conversationId, {
+		refetchOnMountOrArgChange: true
+	});
 
 	let content = null;
 
