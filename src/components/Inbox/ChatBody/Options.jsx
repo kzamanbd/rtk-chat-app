@@ -1,7 +1,7 @@
 import { useSendMessageMutation } from 'features/messages/messagesApi';
 import { useEffect, useRef, useState } from 'react';
 
-export default function Options({ conversationId, user }) {
+export default function Options({ conversationId, currentUserId }) {
 	const [sendMessage, { isLoading }] = useSendMessageMutation();
 	const [message, setMessage] = useState('');
 
@@ -10,12 +10,12 @@ export default function Options({ conversationId, user }) {
 
 	useEffect(() => {
 		inputRef.current.focus();
-	}, [inputRef]);
+	}, [inputRef, conversationId]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const data = { conversationId, senderId: user._id, message };
+		const data = { conversationId, senderId: currentUserId, message };
 		try {
 			await sendMessage(data).unwrap();
 			setMessage('');

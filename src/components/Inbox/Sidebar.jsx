@@ -46,7 +46,7 @@ export default function Sidebar() {
 			</div>
 			<div className="overflow-auto h-[calc(100vh_-_129px)]">{content}</div>
 			{/* <Blank /> */}
-			<Modal open={opened} control={controlModal} />
+			<Modal open={opened} control={controlModal} currentUserId={currentUser._id} />
 		</div>
 	);
 }

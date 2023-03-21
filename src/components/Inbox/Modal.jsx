@@ -1,34 +1,51 @@
-import { useSendMessageMutation } from 'features/messages/messagesApi';
+import {
+	useCreateConversationMutation,
+	useFindConversationQuery,
+	useSendMessageMutation
+} from 'features/messages/messagesApi';
 import { useGetUsersQuery } from 'features/users/usersApi';
 import { useState } from 'react';
 import ReactSelect from 'react-select';
 
-export default function Modal({ open, control }) {
-	const { data: { users = [] } = {}, isLoading } = useGetUsersQuery();
-	const [sendMessage, { isLoading: isCreating }] = useSendMessageMutation();
-
+export default function Modal({ open, control, currentUserId }) {
 	// local state
-	const [toUser, setToUser] = useState('');
+	const [selectedUser, setSelectedUser] = useState('');
 	const [message, setMessage] = useState('');
 
+	const { data: { users = [] } = {}, isLoading } = useGetUsersQuery();
+	const [sendMessage, { isLoading: isCreating }] = useSendMessageMutation();
+	const [createConversation, { isLoading: isCreatingConversation }] = useCreateConversationMutation();
+	const { isLoading: toUserIsLoading, data: { conversation: existsConversation } = {} } = useFindConversationQuery(
+		selectedUser,
+		{
+			skip: !selectedUser
+		}
+	);
+
 	const handleInputChange = ({ value }, actionMeta) => {
-		setToUser(value);
+		setSelectedUser(value);
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const data = { userId: toUser, message };
+		const data = { userId: selectedUser, message, senderId: currentUserId };
 
 		try {
-			await sendMessage(data).unwrap();
-			setToUser('');
+			if (!existsConversation?._id) {
+				await createConversation(data).unwrap();
+			} else {
+				await sendMessage({ ...data, conversationId: existsConversation?._id }).unwrap();
+			}
+			setSelectedUser('');
 			setMessage('');
 			control();
 		} catch (error) {
 			console.log(error);
 		}
 	};
+
+	const buttonIsLoading = isCreating || isCreatingConversation || toUserIsLoading;
 
 	return (
 		open && (
@@ -72,7 +89,7 @@ export default function Modal({ open, control }) {
 						<div>
 							<button
 								type="submit"
-								disabled={isCreating}
+								disabled={buttonIsLoading}
 								className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">
 								Send Message
 							</button>

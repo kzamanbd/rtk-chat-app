@@ -27,7 +27,7 @@ export default function ChatBody({ conversationId }) {
 		content = (
 			<>
 				<Messages messages={messages} user={currentUser} />
-				<Options conversationId={conversationId} user={currentUser} />
+				<Options conversationId={conversationId} currentUserId={currentUser._id} />
 			</>
 		);
 	}

@@ -6,6 +6,34 @@ export const messagesApi = apiSlice.injectEndpoints({
 			query: (userId) => `/chat/get-conversations/${userId}`
 		}),
 
+		findConversation: builder.query({
+			query: (id) => `/chat/find-conversation/${id}`
+		}),
+
+		createConversation: builder.mutation({
+			query: (data) => ({
+				url: '/chat/create-conversation',
+				method: 'POST',
+				body: data
+			}),
+			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+				// optimistic update to the UI
+				const result = await queryFulfilled;
+				const patchResult = dispatch(
+					apiSlice.util.updateQueryData('getConversations', arg.senderId, (draft) => {
+						draft.conversations.unshift(result.data.conversation);
+					})
+				);
+
+				try {
+					await queryFulfilled;
+				} catch (error) {
+					// undo the optimistic update
+					patchResult.undo();
+				}
+			}
+		}),
+
 		sendMessage: builder.mutation({
 			query: (data) => ({
 				url: '/chat/send-message',
@@ -55,4 +83,10 @@ export const messagesApi = apiSlice.injectEndpoints({
 	})
 });
 
-export const { useGetConversationsQuery, useGetMessagesQuery, useSendMessageMutation } = messagesApi;
+export const {
+	useGetConversationsQuery,
+	useGetMessagesQuery,
+	useSendMessageMutation,
+	useFindConversationQuery,
+	useCreateConversationMutation
+} = messagesApi;
