@@ -37,6 +37,14 @@ function App() {
 						}
 					/>
 					<Route
+						path="/inbox/:conversationId"
+						element={
+							<PrivateRoute>
+								<Inbox />
+							</PrivateRoute>
+						}
+					/>
+					<Route
 						path="/login"
 						element={
 							<PublicRoute>

@@ -1,4 +1,4 @@
-import blankImage from 'assets/images/blank.svg';
+import blankImage from 'assets/blank.svg';
 
 export default function Blank() {
 	return (

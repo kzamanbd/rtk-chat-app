@@ -1,11 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {};
+const initialState = {
+	messages: []
+};
 
 export const authSlice = createSlice({
-	name: 'auth',
+	name: 'message',
 	initialState,
-	reducers: {}
+	reducers: {
+		updateMessages: (state, action) => {
+			state.messages = [...state.messages, action.payload];
+		}
+	}
 });
 
 export default authSlice.reducer;
+export const { updateMessages } = authSlice.actions;
