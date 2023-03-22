@@ -10,7 +10,10 @@ const socketOptions = {
 	upgrade: false,
 	rejectUnauthorized: false
 };
-const socketUrl = 'http://localhost:8000';
+const socketUrl =
+	process.env.NODE_ENV === 'development'
+		? process.env.REACT_APP_SOCKET_URL
+		: 'https://express-app-bext.up.railway.app';
 
 export const messagesApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
