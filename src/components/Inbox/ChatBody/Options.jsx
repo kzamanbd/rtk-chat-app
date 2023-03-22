@@ -17,9 +17,9 @@ export default function Options({ conversationId, currentUserId }) {
 
 		const data = { conversationId, senderId: currentUserId, message };
 		try {
-			await sendMessage(data).unwrap();
 			setMessage('');
 			inputRef.current.focus();
+			await sendMessage(data).unwrap();
 		} catch (error) {
 			console.log(error);
 		}
