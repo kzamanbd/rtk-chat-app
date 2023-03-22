@@ -10,10 +10,7 @@ const socketOptions = {
 	upgrade: false,
 	rejectUnauthorized: false
 };
-const socketUrl =
-	process.env.NODE_ENV === 'development'
-		? process.env.REACT_APP_SOCKET_URL
-		: 'https://express-app-bext.up.railway.app';
+const socketUrl = process.env.REACT_APP_SOCKET_URL;
 
 export const messagesApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
