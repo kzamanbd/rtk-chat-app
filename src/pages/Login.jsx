@@ -2,6 +2,7 @@ import logoImage from 'assets/lws-logo-light.svg';
 import LoadingSpinner from 'components/UI/LoadingSpinner';
 import { useLoginMutation } from 'features/auth/authApi';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
 	const [username, setUsername] = useState('kzamanbn@gmail.com');
@@ -61,14 +62,10 @@ export default function Login() {
 							</div>
 						</div>
 
-						<div className="flex items-center justify-end">
-							<div className="text-sm">
-								<a
-									href="/forgot-password"
-									className="font-medium text-violet-600 hover:text-violet-500">
-									Forgot your password?
-								</a>
-							</div>
+						<div className="flex items-center">
+							<Link to="/register" className="font-medium text-violet-600 hover:text-violet-500">
+								Don't have an account? Register
+							</Link>
 						</div>
 
 						<div>
