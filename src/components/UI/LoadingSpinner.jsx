@@ -17,7 +17,7 @@ export default function LoadingSpinner({ isLoading }) {
 						fill="currentFill"
 					/>
 				</svg>
-				<span className="sr-only">Loading...</span>
+				<span className="sr-only justify-end hidden">Loading...</span>
 			</div>
 		)
 	);

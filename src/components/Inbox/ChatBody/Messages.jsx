@@ -7,7 +7,7 @@ export default function Messages({ messages = [], user }) {
 				{messages.map((message) => {
 					const { message: lastMessage, _id, userInfo } = message || {};
 
-					const justify = userInfo._id !== user._id ? 'start' : 'end';
+					const justify = userInfo._id === user._id ? 'end' : 'start';
 
 					return <Message key={_id} justify={justify} message={lastMessage} />;
 				})}
