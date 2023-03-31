@@ -33,6 +33,7 @@ export default function ChatBody({ conversationId }) {
 				<ChatHead
 					avatar={`https://ui-avatars.com/api/?background=random&name=${chatHead.name}}`}
 					name={chatHead.name}
+					userId={chatHead._id}
 				/>
 				{content}
 				<Options conversationId={conversationId} currentUserId={currentUser._id} />

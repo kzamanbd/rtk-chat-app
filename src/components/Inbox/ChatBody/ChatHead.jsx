@@ -1,4 +1,17 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export default function ChatHead({ avatar, name }) {
+	const handleVideoCall = () => {
+		const uniqueId = uuidv4();
+		console.log('Video call', uniqueId);
+		const basePath = window.location.origin.toString();
+		window.open(
+			`${basePath}/room/${uniqueId}`,
+			'_blank',
+			`width=${window.innerWidth},height=${window.innerHeight}`
+		);
+	};
+
 	return (
 		<div className="flex justify-between p-3 border-b border-gray-300">
 			<div className="relative flex items-center ">
@@ -17,7 +30,9 @@ export default function ChatHead({ avatar, name }) {
 						<path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z" />
 					</svg>
 				</button>
-				<button className="flex items-center justify-center w-10 h-10 p-2 text-gray-500 rounded-full hover:bg-gray-100">
+				<button
+					onClick={handleVideoCall}
+					className="flex items-center justify-center w-10 h-10 p-2 text-gray-500 rounded-full hover:bg-gray-100">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
