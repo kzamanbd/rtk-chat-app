@@ -5,7 +5,6 @@ import { updateCurrentUser } from '@/features/auth/authSlice';
 import Conversation from '@/pages/Conversation';
 import Inbox from '@/pages/Inbox';
 import Login from '@/pages/Login';
-import RealTimeRoom from '@/pages/RealTimeRoom';
 import Register from '@/pages/Register';
 
 import { useEffect } from 'react';
@@ -47,7 +46,6 @@ function App() {
 							</PrivateRoute>
 						}
 					/>
-					<Route path="/room/:userId" element={<RealTimeRoom />} />
 					<Route
 						path="/login"
 						element={
