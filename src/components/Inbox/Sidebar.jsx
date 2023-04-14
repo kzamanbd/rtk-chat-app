@@ -1,4 +1,4 @@
-import { useGetConversationsQuery } from 'features/messages/messagesApi';
+import { useGetConversationsQuery } from '@/features/messages/messagesApi';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ChatItems from './ChatIItems';
@@ -6,7 +6,14 @@ import Modal from './Modal';
 
 export default function Sidebar() {
 	const { currentUser } = useSelector((state) => state.auth);
-	const { data: { conversations = [] } = {}, isLoading, isError, error } = useGetConversationsQuery(currentUser._id);
+	const {
+		data: { conversations = [] } = {},
+		isLoading,
+		isError,
+		error
+	} = useGetConversationsQuery(currentUser?._id, {
+		skip: !currentUser?._id
+	});
 
 	const [opened, setOpened] = useState(false);
 
@@ -46,7 +53,7 @@ export default function Sidebar() {
 			</div>
 			<div className="overflow-auto h-[calc(100vh_-_129px)]">{content}</div>
 			{/* <Blank /> */}
-			<Modal open={opened} control={controlModal} currentUserId={currentUser._id} />
+			<Modal open={opened} control={controlModal} currentUserId={currentUser?._id} />
 		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import { apiSlice } from 'features/api/apiSlice';
+import { apiSlice } from '@/features/api/apiSlice';
 import { updateCurrentUser } from './authSlice';
 
 export const authApi = apiSlice.injectEndpoints({

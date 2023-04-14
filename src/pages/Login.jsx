@@ -1,6 +1,6 @@
-import logoImage from 'assets/lws-logo-light.svg';
-import LoadingSpinner from 'components/UI/LoadingSpinner';
-import { useLoginMutation } from 'features/auth/authApi';
+import logoImage from '@/assets/lws-logo-light.svg';
+import LoadingSpinner from '@/components/UI/LoadingSpinner';
+import { useLoginMutation } from '@/features/auth/authApi';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import { useSendMessageMutation } from 'features/messages/messagesApi';
+import { useSendMessageMutation } from '@/features/messages/messagesApi';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Options({ conversationId, currentUserId }) {

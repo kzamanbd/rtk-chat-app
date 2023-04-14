@@ -1,6 +1,6 @@
+import getPartnerInfo from '@/utils/getPartnerInfo';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
-import getPartnerInfo from 'utils/getPartnerInfo';
 import ChatItem from './ChatItem';
 
 export default function ChatItems({ conversations, user }) {

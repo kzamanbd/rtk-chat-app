@@ -2,8 +2,8 @@ import {
 	useCreateConversationMutation,
 	useFindConversationQuery,
 	useSendMessageMutation
-} from 'features/messages/messagesApi';
-import { useGetUsersQuery } from 'features/users/usersApi';
+} from '@/features/messages/messagesApi';
+import { useGetUsersQuery } from '@/features/users/usersApi';
 import { useState } from 'react';
 import ReactSelect from 'react-select';
 

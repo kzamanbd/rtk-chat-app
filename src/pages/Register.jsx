@@ -1,5 +1,5 @@
-import logoImage from 'assets/lws-logo-light.svg';
-import { useRegisterMutation } from 'features/auth/authApi';
+import logoImage from '@/assets/lws-logo-light.svg';
+import { useRegisterMutation } from '@/features/auth/authApi';
 import { useEffect, useState } from 'react';
 
 export default function Register() {

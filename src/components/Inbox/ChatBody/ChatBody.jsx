@@ -1,4 +1,4 @@
-import { useGetMessagesQuery } from 'features/messages/messagesApi';
+import { useGetMessagesQuery } from '@/features/messages/messagesApi';
 import { useSelector } from 'react-redux';
 import Blank from './Blank';
 import ChatHead from './ChatHead';
@@ -31,12 +31,12 @@ export default function ChatBody({ conversationId }) {
 		<div className="w-full lg:col-span-2 lg:block">
 			<div className="w-full grid conversation-row-grid">
 				<ChatHead
-					avatar={`https://ui-avatars.com/api/?background=random&name=${chatHead.name}}`}
-					name={chatHead.name}
-					userId={chatHead._id}
+					avatar={`https://ui-avatars.com/api/?background=random&name=${chatHead?.name}}`}
+					name={chatHead?.name}
+					userId={chatHead?._id}
 				/>
 				{content}
-				<Options conversationId={conversationId} currentUserId={currentUser._id} />
+				<Options conversationId={conversationId} currentUserId={currentUser?._id} />
 			</div>
 		</div>
 	);

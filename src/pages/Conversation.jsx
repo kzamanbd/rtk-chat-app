@@ -1,6 +1,6 @@
-import Blank from 'components/Inbox/ChatBody/Blank';
-import Navigation from 'components/Inbox/Navigation';
-import Sidebar from 'components/Inbox/Sidebar';
+import Blank from '@/components/Inbox/ChatBody/Blank';
+import Navigation from '@/components/Inbox/Navigation';
+import Sidebar from '@/components/Inbox/Sidebar';
 
 export default function Conversation() {
 	return (

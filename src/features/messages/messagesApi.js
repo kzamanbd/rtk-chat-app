@@ -1,4 +1,4 @@
-import { apiSlice } from 'features/api/apiSlice';
+import { apiSlice } from '@/features/api/apiSlice';
 import io from 'socket.io-client';
 
 const socketOptions = {
@@ -10,7 +10,7 @@ const socketOptions = {
 	upgrade: false,
 	rejectUnauthorized: false
 };
-const socketUrl = process.env.REACT_APP_SOCKET_URL;
+const socketUrl = import.meta.env.VITE_APP_SOCKET_URL;
 
 export const messagesApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({

@@ -1,6 +1,6 @@
-import ChatBody from 'components/Inbox/ChatBody/ChatBody';
-import Navigation from 'components/Inbox/Navigation';
-import Sidebar from 'components/Inbox/Sidebar';
+import ChatBody from '@/components/Inbox/ChatBody/ChatBody';
+import Navigation from '@/components/Inbox/Navigation';
+import Sidebar from '@/components/Inbox/Sidebar';
 import { useParams } from 'react-router-dom';
 
 export default function Inbox() {

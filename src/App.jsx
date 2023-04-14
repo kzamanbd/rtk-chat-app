@@ -1,15 +1,16 @@
-import PrivateRoute from 'components/PrivateRoute';
-import PublicRoute from 'components/PublicRoute';
-import { useGetCurrentUserQuery } from 'features/auth/authApi';
-import { updateCurrentUser } from 'features/auth/authSlice';
-import Conversation from 'pages/Conversation';
-import Inbox from 'pages/Inbox';
-import Login from 'pages/Login';
-import RealTimeRoom from 'pages/RealTimeRoom';
-import Register from 'pages/Register';
+import PrivateRoute from '@/components/PrivateRoute';
+import PublicRoute from '@/components/PublicRoute';
+import { useGetCurrentUserQuery } from '@/features/auth/authApi';
+import { updateCurrentUser } from '@/features/auth/authSlice';
+import Conversation from '@/pages/Conversation';
+import Inbox from '@/pages/Inbox';
+import Login from '@/pages/Login';
+import RealTimeRoom from '@/pages/RealTimeRoom';
+import Register from '@/pages/Register';
+
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 function App() {
 	const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function App() {
 	}, [error, dispatch]);
 
 	if (isLoading) {
-		return <div className="flex justify-center items-center">Loading...</div>;
+		return <div className="flex justify-center items-center h-screen">Loading...</div>;
 	} else {
 		return (
 			<Router>

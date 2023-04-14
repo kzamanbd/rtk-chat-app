@@ -1,4 +1,4 @@
-import { apiSlice } from 'features/api/apiSlice';
+import { apiSlice } from '@/features/api/apiSlice';
 
 export const usersApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
