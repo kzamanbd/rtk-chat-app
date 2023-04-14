@@ -2,17 +2,23 @@ import logoImage from '@/assets/lws-logo-light.svg';
 import LoadingSpinner from '@/components/UI/LoadingSpinner';
 import { useLoginMutation } from '@/features/auth/authApi';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
+	const navigate = useNavigate();
 	const [username, setUsername] = useState('kzamanbn@gmail.com');
 	const [password, setPassword] = useState('password');
 
 	const [login, { isLoading }] = useLoginMutation();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		login({ username, password });
+		try {
+			await login({ username, password }).unwrap();
+			navigate('/');
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

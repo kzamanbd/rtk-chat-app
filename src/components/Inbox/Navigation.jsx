@@ -1,15 +1,17 @@
 import logoImage from '@/assets/lws-logo-dark.svg';
 import { useLogoutMutation } from '@/features/auth/authApi';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Navigation() {
+	const navigate = useNavigate();
 	const [logout] = useLogoutMutation();
 	const { currentUser } = useSelector((state) => state.auth);
 
-	const handleLogout = (e) => {
-		e.preventDefault();
+	const handleLogout = () => {
 		logout();
+		localStorage.clear();
+		navigate('/login');
 	};
 	return (
 		<nav className="border-general sticky top-0 z-40 border-b bg-violet-700 transition-colors">
@@ -21,9 +23,9 @@ export default function Navigation() {
 					<ul className="flex space-x-3">
 						<li className="text-white">{currentUser?.name}</li>
 						<li className="text-white">
-							<a href="/" onClick={handleLogout}>
+							<button type="button" onClick={handleLogout}>
 								Logout
-							</a>
+							</button>
 						</li>
 					</ul>
 				</div>
