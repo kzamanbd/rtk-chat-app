@@ -1,9 +1,10 @@
-import logoImage from '@/assets/lws-logo-light.svg';
 import { useRegisterMutation } from '@/features/auth/authApi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
-	const [register, { isLoading, error, isError }] = useRegisterMutation();
+	const navigate = useNavigate();
+	const [register, { isLoading }] = useRegisterMutation();
 
 	// local state
 	const [fullName, setFullName] = useState('');
@@ -11,28 +12,27 @@ export default function Register() {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (password !== confirmPassword) {
 			alert('Password does not match');
 			return;
 		}
-		register({ name: fullName, email, password, withLogin: true });
-	};
-
-	useEffect(() => {
-		if (isError) {
+		try {
+			await register({ name: fullName, email, password, withLogin: true }).unwrap();
+			navigate('/');
+		} catch (error) {
 			console.log(error);
 			alert(error.data?.message);
 		}
-	}, [isError, error]);
+	};
 
 	return (
 		<div className="grid place-items-center h-screen bg-[#F9FAFB">
 			<div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 				<div className="max-w-md w-full space-y-8">
 					<div>
-						<img className="mx-auto h-12 w-auto" src={logoImage} alt="Learn with sumit" />
+						<img className="mx-auto h-12 w-auto" src="/logo.svg" alt="logo" />
 						<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
 					</div>
 					<form className="mt-8 space-y-6" onSubmit={handleSubmit} method="POST">

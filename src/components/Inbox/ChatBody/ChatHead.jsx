@@ -1,15 +1,10 @@
-import { v4 as uuidv4 } from 'uuid';
+import { useRoomContext } from '@/hooks/useRoomContext';
 
 export default function ChatHead({ avatar, name }) {
+	const { ws } = useRoomContext();
+
 	const handleVideoCall = () => {
-		const uniqueId = uuidv4();
-		console.log('Video call', uniqueId);
-		const basePath = window.location.origin.toString();
-		window.open(
-			`${basePath}/room/${uniqueId}`,
-			'_blank',
-			`width=${window.innerWidth},height=${window.innerHeight}`
-		);
+		ws.emit('create-room');
 	};
 
 	return (

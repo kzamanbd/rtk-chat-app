@@ -6,6 +6,7 @@ import Conversation from '@/pages/Conversation';
 import Inbox from '@/pages/Inbox';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
+import Room from '@/pages/Room';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -43,6 +44,14 @@ function App() {
 						element={
 							<PrivateRoute>
 								<Inbox />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="/room/:roomId"
+						element={
+							<PrivateRoute>
+								<Room />
 							</PrivateRoute>
 						}
 					/>

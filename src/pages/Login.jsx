@@ -1,4 +1,3 @@
-import logoImage from '@/assets/lws-logo-light.svg';
 import LoadingSpinner from '@/components/UI/LoadingSpinner';
 import { useLoginMutation } from '@/features/auth/authApi';
 import { useState } from 'react';
@@ -26,7 +25,7 @@ export default function Login() {
 			<div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 				<div className="max-w-md w-full space-y-8">
 					<div>
-						<img className="mx-auto h-12 w-auto" src={logoImage} alt="Learn with sumit" />
+						<img className="mx-auto h-12 w-auto" src="/logo.svg" alt="logo" />
 						<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
 							Sign in to your account
 						</h2>
@@ -70,7 +69,7 @@ export default function Login() {
 
 						<div className="flex items-center">
 							<Link to="/register" className="font-medium text-violet-600 hover:text-violet-500">
-								Don't have an account? Register
+								{"Don't"} have an account? Register
 							</Link>
 						</div>
 
