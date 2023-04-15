@@ -11,6 +11,7 @@ export default function Room() {
 	const { roomId } = useParams();
 	const { ws, me } = useRoomContext();
 	const [stream, setStream] = useState(null);
+	const [micMuted, setMicMuted] = useState(false);
 
 	const [peers, dispatch] = useReducer(roomReducer, {});
 
@@ -62,17 +63,27 @@ export default function Room() {
 	console.log(Object.entries(peers));
 
 	return (
-		<div className="flex flex-col items-center justify-center h-screen">
-			<div className="grid grid-cols-4 gap-4">
-				<div>
-					<VideoPlayer stream={stream} />
-				</div>
-
-				{Object.entries(peers).map(([peerId, peer]) => (
-					<div key={peerId}>
-						<VideoPlayer stream={peer?.stream} />
+		<div className="flex flex-col items-center justify-center">
+			<div>
+				<div className="grid grid-cols-4 gap-4">
+					<div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+						<VideoPlayer micMuted={micMuted} stream={stream} />
 					</div>
-				))}
+
+					{Object.entries(peers).map(([peerId, peer]) => (
+						<div
+							className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+							key={peerId}>
+							<VideoPlayer micMuted={micMuted} stream={peer?.stream} />
+						</div>
+					))}
+				</div>
+				<button
+					type="button"
+					onClick={() => setMicMuted(!micMuted)}
+					className="mt-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+					{micMuted ? 'Unmute' : 'Mute'}
+				</button>
 			</div>
 		</div>
 	);
