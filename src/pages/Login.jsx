@@ -7,6 +7,7 @@ export default function Login() {
 	const navigate = useNavigate();
 	const [username, setUsername] = useState('kzamanbn@gmail.com');
 	const [password, setPassword] = useState('password');
+	const [loginError, setLoginError] = useState('');
 
 	const [login, { isLoading }] = useLoginMutation();
 
@@ -16,6 +17,7 @@ export default function Login() {
 			await login({ username, password }).unwrap();
 			navigate('/');
 		} catch (err) {
+			setLoginError(err.data.message);
 			console.log(err);
 		}
 	};
@@ -31,6 +33,7 @@ export default function Login() {
 						</h2>
 					</div>
 					<form className="mt-8 space-y-6" onSubmit={handleSubmit} method="POST">
+						{loginError && <div className="text-red-500 text-center">{loginError}</div>}
 						<input type="hidden" name="remember" value="true" />
 						<div className="rounded-md shadow-sm -space-y-px">
 							<div>

@@ -4,7 +4,7 @@ import socketIoClient from 'socket.io-client';
 import { v4 as uuidV4 } from 'uuid';
 
 export const RoomContext = createContext(null);
-const ws = socketIoClient('http://localhost:8000/chat');
+const ws = socketIoClient(import.meta.env.VITE_APP_SOCKET_URL);
 
 export const RoomProvider = ({ children }) => {
 	const [me, setMe] = useState(null);
