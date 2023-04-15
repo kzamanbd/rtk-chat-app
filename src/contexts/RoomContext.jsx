@@ -22,6 +22,7 @@ export const RoomProvider = ({ children }) => {
 	useEffect(() => {
 		const meId = uuidV4();
 		const peer = new Peer(meId);
+
 		setMe(peer);
 
 		ws.on('room-created', createRoom);

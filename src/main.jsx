@@ -3,15 +3,16 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App';
 import { store } from './app/store';
+import { RoomProvider } from './contexts/RoomContext';
 import './index.css';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-	<React.StrictMode>
-		<Provider store={store}>
+	<Provider store={store}>
+		<RoomProvider>
 			<App />
-		</Provider>
-	</React.StrictMode>
+		</RoomProvider>
+	</Provider>
 );

@@ -1,7 +1,8 @@
-import { addPeerAction } from '@/features/room/roomActions';
+import VideoPlayer from '@/components/VideoPlayer';
+import { addPeerAction, removePeerAction } from '@/features/room/roomActions';
 import roomReducer from '@/features/room/roomReducer';
 import { useRoomContext } from '@/hooks/useRoomContext';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -12,8 +13,6 @@ export default function Room() {
 	const [stream, setStream] = useState(null);
 
 	const [peers, dispatch] = useReducer(roomReducer, {});
-
-	const videoRef = useRef(null);
 
 	useEffect(() => {
 		if (me && currentUser?._id) {
@@ -27,7 +26,6 @@ export default function Room() {
 		try {
 			navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
 				setStream(stream);
-				videoRef.current.srcObject = stream;
 			});
 		} catch (error) {
 			console.log(error);
@@ -35,7 +33,7 @@ export default function Room() {
 	}, [roomId, currentUser]);
 
 	useEffect(() => {
-		if (stream && me) {
+		if (me && stream) {
 			ws.on('user-joined', ({ peerId }) => {
 				console.log('user-joined', peerId);
 				const call = me.call(peerId, stream);
@@ -51,22 +49,28 @@ export default function Room() {
 				});
 			});
 		}
-	}, [stream, me]);
+	}, [me, stream]);
 
-	console.log(Object.entries(peers?.peers || {}));
+	const disconnectUser = (peerId) => {
+		dispatch(removePeerAction(peerId));
+	};
 
-	const othersVideos = Object.entries(peers?.peers || {});
+	useEffect(() => {
+		ws.on('user-disconnected', disconnectUser);
+	}, []);
+
+	console.log(Object.entries(peers));
 
 	return (
 		<div className="flex flex-col items-center justify-center h-screen">
 			<div className="grid grid-cols-4 gap-4">
 				<div>
-					<video ref={videoRef} autoPlay playsInline muted />
+					<VideoPlayer stream={stream} />
 				</div>
 
-				{othersVideos.map(([peerId, peer]) => (
+				{Object.entries(peers).map(([peerId, peer]) => (
 					<div key={peerId}>
-						<video autoPlay playsInline src={peer.stream} />
+						<VideoPlayer stream={peer?.stream} />
 					</div>
 				))}
 			</div>
