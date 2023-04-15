@@ -1,10 +1,10 @@
 import { useRoomContext } from '@/hooks/useRoomContext';
 
-export default function ChatHead({ avatar, name }) {
+export default function ChatHead({ avatar, name, userId }) {
 	const { ws } = useRoomContext();
 
 	const handleVideoCall = () => {
-		ws.emit('create-room');
+		ws.emit('create-room', userId);
 	};
 
 	return (

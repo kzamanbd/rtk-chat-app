@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 export default function VideoPlayer({ stream, micMuted }) {
-	console.log(micMuted);
 	const videoRef = useRef(null);
 	useEffect(() => {
 		if (videoRef.current) {

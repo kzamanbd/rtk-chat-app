@@ -9,14 +9,18 @@ const ws = socketIoClient(import.meta.env.VITE_APP_SOCKET_URL);
 export const RoomProvider = ({ children }) => {
 	const [me, setMe] = useState(null);
 
-	const createRoom = (roomId) => {
+	const roomCreated = ({ roomId, userId }) => {
 		console.log('room-created', roomId);
 		const basePath = window.location.origin.toString();
-		window.open(`${basePath}/room/${roomId}`, '_blank', 'noopener,noreferrer');
+		window.open(`${basePath}/room/${roomId}/${userId}`, '_blank');
 	};
 
 	const getUsers = ({ participants }) => {
 		console.log({ participants });
+	};
+
+	const incomeCall = (data) => {
+		console.log('incoming-call', data);
 	};
 
 	useEffect(() => {
@@ -25,8 +29,9 @@ export const RoomProvider = ({ children }) => {
 
 		setMe(peer);
 
-		ws.on('room-created', createRoom);
+		ws.on('room-created', roomCreated);
 		ws.on('get-users', getUsers);
+		ws.on('incoming-call', incomeCall);
 		console.log('RoomContext');
 	}, []);
 	const value = { me, ws };

@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 export default function Room() {
 	const { currentUser } = useSelector((state) => state.auth);
-	const { roomId } = useParams();
+	const { roomId, userId } = useParams();
 	const { ws, me } = useRoomContext();
 	const [stream, setStream] = useState(null);
 	const [micMuted, setMicMuted] = useState(false);
@@ -15,11 +15,11 @@ export default function Room() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (me && currentUser?._id) {
-			console.log('Room', roomId);
+		if (me && userId) {
+			console.log('Room', roomId, userId);
 			ws.emit('join-room', {
 				roomId,
-				userId: currentUser?._id,
+				userId: userId,
 				peerId: me._id
 			});
 		}
