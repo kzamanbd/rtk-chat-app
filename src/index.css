@@ -154,5 +154,50 @@
     .btn:disabled {
         @apply cursor-not-allowed opacity-50;
     }
+
+    /* dropdown */
+    .dropdown {
+        @apply relative flex flex-col;
+    }
+    .dropdown-toggle {
+        @apply flex cursor-pointer items-center;
+    }
+    .dropdown-menu {
+        @apply absolute right-0 top-0 z-20 hidden w-40 overflow-hidden rounded-md border border-gray-200 bg-white py-2 shadow-lg outline-none dark:border-slate-700 dark:bg-slate-800;
+    }
+    .dropdown-menu.show {
+        @apply block !important;
+    }
+    .dropdown-link {
+        @apply inline-flex w-full cursor-pointer items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-slate-700;
+    }
+    .dropdown-btn {
+        @apply inline-flex w-full items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700;
+    }
+    .dropdown-btn.active {
+        @apply text-primary dark:text-primary;
+    }
+
+
+    /* chats */
+    .chat-wrapper {
+        @apply relative flex h-full gap-5 sm:h-screen sm:min-h-0;
+    }
+    .chat-sidebar {
+        @apply absolute inset-0 z-10 hidden w-full max-w-[20rem] flex-none space-y-4 overflow-hidden p-4 lg:inset-auto xl:relative xl:block xl:h-full;
+    }
+    .chat-users {
+        @apply relative -mr-3.5 h-full min-h-[100px] space-y-0.5 pr-3.5 sm:h-[calc(100vh_-_200px)] overflow-y-auto;
+    }
+    .chat-user-item {
+        @apply flex w-full items-center justify-between rounded-md p-2 hover:bg-gray-100 hover:text-primary dark:hover:bg-[#050b14] dark:hover:text-primary;
+    }
+    .chat-empty-wrapper {
+        @apply mb-8 h-[calc(100vh_-_320px)] min-h-[120px] w-[280px] text-white dark:text-[#0e1726] md:w-[430px];
+    }
+
+    .chat-conversation-box {
+        @apply min-h-[400px] space-y-5 p-4 pb-[68px] sm:min-h-[300px] sm:pb-0;
+    }
 }
 @tailwind utilities;
