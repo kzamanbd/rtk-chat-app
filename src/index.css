@@ -197,7 +197,7 @@
         @apply absolute inset-0 z-10 hidden w-full max-w-[20rem] flex-none space-y-4 overflow-hidden p-4 lg:inset-auto xl:relative xl:block xl:h-full;
     }
     .chat-users {
-        @apply relative -mr-3.5 h-full min-h-[100px] space-y-0.5 pr-3.5 sm:h-[calc(100vh_-_200px)] overflow-y-auto;
+        @apply relative h-full min-h-[100px] space-y-0.5 sm:h-[calc(100vh_-_200px)] overflow-y-auto;
     }
     .chat-user-item {
         @apply flex w-full items-center justify-between rounded-md p-2 hover:bg-gray-100 hover:text-primary dark:hover:bg-[#050b14] dark:hover:text-primary;
