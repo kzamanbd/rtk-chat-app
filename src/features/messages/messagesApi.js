@@ -119,7 +119,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 					await cacheDataLoaded;
 					socket.on(`newMessage.${arg}`, (message) => {
 						console.log('newMessage', message);
-						if (message.conversationId === arg && message.userInfo._id !== currentUser._id) {
+						if (message.conversationId === arg && message.userInfo._id !== currentUser?._id) {
 							updateCachedData((draft) => {
 								draft.messages.push(message);
 							});
