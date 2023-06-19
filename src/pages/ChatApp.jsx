@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import NoMessage from '@/components/NoMessage';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ChatApp() {
 	const [contactList, setContactList] = useState([
@@ -231,7 +231,7 @@ export default function ChatApp() {
 
 	const loginUser = {
 		id: 0,
-		name: 'Jon Doe',
+		name: 'Kamruzzaman',
 		path: 'avatar-1.png',
 		designation: 'Software Developer'
 	};
@@ -287,8 +287,24 @@ export default function ChatApp() {
 		}
 	}
 
-	const [isShowContactMenu, setIsShowContactMenu] = useState(false);
-	const [isShowContact, setIsShowContact] = useState(false);
+	const [isProfileDropdown, setIsProfileDropdown] = useState(false);
+	const [isMessageDropdown, setIsMessageDropdown] = useState(false);
+
+	useEffect(() => {
+		function handleClickOutside(event) {
+			const dropdownToggle = document.querySelectorAll('.dropdown-toggle');
+			dropdownToggle.forEach((d) => {
+				if (isProfileDropdown && !d.contains(event.target)) {
+					setIsProfileDropdown(false);
+				}
+				if (isMessageDropdown && !d.contains(event.target)) {
+					setIsMessageDropdown(false);
+				}
+				console.log(d.contains(event.target));
+			});
+		}
+		window.addEventListener('click', handleClickOutside);
+	}, []);
 
 	return (
 		<div className={`max-w-7xl mx-auto chat-wrapper ${isShowChatMenu && 'min-h-[999px]'}`}>
@@ -299,14 +315,14 @@ export default function ChatApp() {
 							<img src="/images/users/avatar-1.png" className="h-12 w-12 rounded-full object-cover" />
 						</div>
 						<div className="mx-3">
-							<p className="mb-1 font-semibold">Alon Smith</p>
+							<p className="mb-1 font-semibold">Kamruzzaman</p>
 							<p className="text-white-dark text-xs">Software Developer</p>
 						</div>
 					</div>
 					<div className="dropdown">
 						<button
 							type="button"
-							onClick={() => setIsShowContactMenu(!isShowContactMenu)}
+							onClick={() => setIsProfileDropdown((prev) => !prev)}
 							className="dropdown-toggle flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f4f4] hover:bg-primary-light dark:bg-[#1b2e4b]">
 							<svg
 								width="24"
@@ -327,7 +343,7 @@ export default function ChatApp() {
 							</svg>
 						</button>
 
-						<ul className={`dropdown-menu w-56 ${isShowContactMenu && 'show'}`}>
+						<ul className={`dropdown-menu w-56 ${isProfileDropdown && 'show'}`}>
 							<li>
 								<button className="dropdown-link">
 									<svg
@@ -653,8 +669,8 @@ export default function ChatApp() {
 								<div className="dropdown">
 									<button
 										type="button"
-										onClick={() => setIsShowContact(!isShowContact)}
-										className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f4f4] hover:bg-primary-light hover:text-primary dark:bg-[#1b2e4b]">
+										onClick={() => setIsMessageDropdown((prev) => !prev)}
+										className="dropdown-toggle flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f4f4] hover:bg-primary-light hover:text-primary dark:bg-[#1b2e4b]">
 										<svg
 											width="24"
 											height="24"
@@ -683,7 +699,7 @@ export default function ChatApp() {
 												strokeWidth="1.5"></circle>
 										</svg>
 									</button>
-									<ul className={`dropdown-menu w-56 ${isShowContact && 'show'}`}>
+									<ul className={`dropdown-menu w-56 ${isMessageDropdown && 'show'}`}>
 										<li>
 											<button type="button" className="dropdown-link">
 												<svg
