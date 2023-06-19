@@ -211,3 +211,26 @@
     }
 }
 @tailwind utilities;
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+::-webkit-scrollbar-thumb:active {
+    background: #6b7280;
+}
+::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+}
+::-webkit-scrollbar-thumb:horizontal {
+    width: 50px;
+}
