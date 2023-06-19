@@ -13,6 +13,16 @@
 		@apply after:absolute after:bg-[url('/images/login-right.png')];
 		@apply after:right-[-50px] after:bottom-[-50px] after:z-[-1] after:h-[244px] after:w-[244px];
 	}
+    /* card */
+    .card {
+        @apply rounded-md bg-white shadow-sm dark:bg-dark-primary;
+    }
+    .card-header {
+        @apply dark--text border-b border-dashed border-gray-200 p-4 font-semibold dark:border-gray-700;
+    }
+    .card-body {
+        @apply p-4;
+    }
 	/* Form components */
 	.form-group {
 		@apply mb-2;
@@ -193,7 +203,7 @@
         @apply flex w-full items-center justify-between rounded-md p-2 hover:bg-gray-100 hover:text-primary dark:hover:bg-[#050b14] dark:hover:text-primary;
     }
     .chat-empty-wrapper {
-        @apply mb-8 h-[calc(100vh_-_320px)] min-h-[120px] w-[280px] text-white dark:text-[#0e1726] md:w-[430px];
+        @apply mb-8 h-[calc(100vh_-_200px)] min-h-[120px] w-[280px] text-white dark:text-[#0e1726] md:w-[430px];
     }
 
     .chat-conversation-box {
