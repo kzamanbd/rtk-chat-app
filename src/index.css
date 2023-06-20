@@ -194,7 +194,7 @@
         @apply relative flex h-full gap-5 sm:h-screen sm:min-h-0;
     }
     .chat-sidebar {
-        @apply absolute inset-0 z-10 hidden w-full max-w-[20rem] flex-none space-y-4 overflow-hidden p-4 lg:inset-auto xl:relative xl:block xl:h-full;
+        @apply absolute inset-0 z-10 hidden w-full max-w-[22rem] flex-none space-y-4 overflow-hidden p-4 lg:inset-auto xl:relative xl:block xl:h-full;
     }
     .chat-users {
         @apply relative h-full min-h-[100px] space-y-0.5 sm:h-[calc(100vh_-_200px)] overflow-y-auto;

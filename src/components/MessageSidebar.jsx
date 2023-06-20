@@ -1,19 +1,24 @@
-import { updateSelectedUser } from '@/features/messages/messagesSlice';
+import { useGetConversationsQuery } from '@/features/messages/messagesApi';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function MessageSidebar() {
-	const { users: contactList, selectedUser, showSidebarList } = useSelector((state) => state.messages);
-
-	const dispatch = useDispatch();
+	const { selectedUser, showSidebarList } = useSelector((state) => state.messages);
+	const { currentUser } = useSelector((state) => state.auth);
+	const {
+		data: { conversations = [] } = {},
+		isLoading,
+		error
+	} = useGetConversationsQuery(currentUser?._id, {
+		skip: !currentUser?._id
+	});
 
 	const [searchUser, setSearchUser] = useState('');
 
-	function selectUser(user) {
-		dispatch(updateSelectedUser(user));
-	}
-
 	const [isProfileDropdown, setIsProfileDropdown] = useState(false);
+
 	useEffect(() => {
 		function handleClickOutside(event) {
 			const dropdownToggle = document.querySelector('.dropdown-toggle-profile');
@@ -23,6 +28,56 @@ export default function MessageSidebar() {
 		}
 		window.addEventListener('click', handleClickOutside);
 	}, []);
+
+	let renderContent = null;
+	if (isLoading) {
+		renderContent = <div>Loading...</div>;
+	}
+	if (error && !isLoading) {
+		renderContent = <div>Something went wrong...</div>;
+	}
+
+	if (!isLoading && !error && conversations.length) {
+		renderContent = conversations.map((conversation) => (
+			<Link
+				to={`/inbox/${conversation._id}`}
+				key={conversation._id}
+				className={`chat-user-item border-b ${
+					selectedUser._id === conversation._id &&
+					'bg-gray-100 dark:bg-[#050b14] dark:text-primary text-primary'
+				}`}>
+				<div className="flex-1">
+					<div className="flex items-center">
+						<div className="relative flex-shrink-0">
+							{conversation.avatar ? (
+								<img
+									src={`/images/users/${conversation.avatar}`}
+									className="h-12 w-12 rounded-full object-cover"
+								/>
+							) : (
+								<div className="h-12 w-12 rounded-full flex items-center justify-center text-purple-500 bg-purple-100">
+									{conversation.partnerInfo?.name?.charAt(0).toUpperCase()}
+								</div>
+							)}
+
+							{conversation.active && (
+								<div className="absolute bottom-0 right-0">
+									<div className="h-4 w-4 rounded-full bg-success"></div>
+								</div>
+							)}
+						</div>
+						<div className="mx-3 text-left">
+							<p className="mb-1 font-semibold w-32 truncate">{conversation.partnerInfo.name}</p>
+							<p className="text-white-dark text-xs">{conversation.lastMessage}</p>
+						</div>
+					</div>
+				</div>
+				<div className="whitespace-nowrap text-xs font-semibold">
+					<p>{moment(conversation.updatedAt).fromNow()}</p>
+				</div>
+			</Link>
+		));
+	}
 
 	return (
 		<div className={`card chat-sidebar ${showSidebarList && '!block'}`}>
@@ -241,44 +296,7 @@ export default function MessageSidebar() {
 			</div>
 			<div className="h-px w-full border-b border-[#e0e6ed] dark:border-[#1b2e4b]"></div>
 			<div className="!mt-0">
-				<div className="chat-users pt-2">
-					{contactList.map((person) => (
-						<button
-							type="button"
-							key={person.userId}
-							className={`chat-user-item ${
-								selectedUser.userId === person.userId &&
-								'bg-gray-100 dark:bg-[#050b14] dark:text-primary text-primary'
-							}`}
-							onClick={() => selectUser(person)}>
-							<div className="flex-1">
-								<div className="flex items-center">
-									<div className="relative flex-shrink-0">
-										<img
-											src={`/images/users/${person.path}`}
-											className="h-12 w-12 rounded-full object-cover"
-										/>
-
-										{person.active && (
-											<div className="absolute bottom-0 right-0">
-												<div className="h-4 w-4 rounded-full bg-success"></div>
-											</div>
-										)}
-									</div>
-									<div className="mx-3 text-left">
-										<p className="mb-1 font-semibold">{person.name}</p>
-										<p className="text-white-dark max-w-[185px] truncate text-xs">
-											{person.preview}
-										</p>
-									</div>
-								</div>
-							</div>
-							<div className="whitespace-nowrap text-xs font-semibold">
-								<p>{person.time}</p>
-							</div>
-						</button>
-					))}
-				</div>
+				<div className="chat-users pt-2">{renderContent}</div>
 			</div>
 		</div>
 	);
