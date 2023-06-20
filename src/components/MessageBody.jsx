@@ -20,6 +20,8 @@ export default function MessageBody({ conversationId }) {
 				behavior: 'smooth',
 				block: 'end'
 			});
+			// focus on the input field
+			document.getElementById('input-message').focus();
 		});
 	}, [messages]);
 

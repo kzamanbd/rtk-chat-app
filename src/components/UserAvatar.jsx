@@ -1,6 +1,6 @@
 import colors from 'tailwindcss/colors';
 
-export default function UserAvatar({ avatar, name, height = '12', width = '12', color = 'purple' }) {
+export default function UserAvatar({ avatar, name, height = '12', width = '12', color }) {
 	const styledElement = {
 		height: `${height * 4}px`,
 		width: `${width * 4}px`,
