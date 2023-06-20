@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 
 export default function MessageBody() {
 	const { selectedUser } = useSelector((state) => state.messages);
+
 	const loginUser = {
 		id: 0,
 		name: 'Kamruzzaman',
@@ -9,7 +10,7 @@ export default function MessageBody() {
 		designation: 'Software Developer'
 	};
 	return (
-		<div className="relative h-full overflow-auto sm:h-[calc(100vh_-_150px)]">
+		<div className="relative h-[calc(100vh_-_75px)] overflow-auto sm:h-[calc(100vh_-_150px)]">
 			<div className="chat-conversation-box">
 				<div className="m-6 mt-0 block">
 					<h4 className="relative border-b border-[#f4f4f4] text-center text-xs dark:border-gray-800">
