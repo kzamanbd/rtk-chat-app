@@ -11,8 +11,7 @@ export const RoomProvider = ({ children }) => {
 
 	const roomCreated = ({ roomId, userId }) => {
 		console.log('room-created', roomId);
-		const basePath = window.location.origin.toString();
-		window.open(`${basePath}/room/${roomId}/${userId}`, '_blank');
+		window.open(`/room/${roomId}/${userId}`, '_blank');
 	};
 
 	const getUsers = ({ participants }) => {
@@ -32,7 +31,6 @@ export const RoomProvider = ({ children }) => {
 		ws.on('room-created', roomCreated);
 		ws.on('get-users', getUsers);
 		ws.on('incoming-call', incomeCall);
-		console.log('RoomContext');
 	}, []);
 	const value = { me, ws };
 
