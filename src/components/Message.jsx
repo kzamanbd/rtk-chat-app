@@ -4,7 +4,7 @@ export default function Message({ currentUserId, message, userInfo }) {
 	return (
 		<div className={`flex items-start gap-3 ${currentUserId === userInfo._id && 'justify-end'}`}>
 			<div className={`flex-none ${currentUserId === userInfo._id && 'order-2'}`}>
-				<UserAvatar avatar={userInfo.avatar} name={userInfo.name} height="h-10" width="w-10" />
+				<UserAvatar avatar={userInfo.avatar} name={userInfo.name} height="10" width="10" />
 			</div>
 			<div className="space-y-2">
 				<div className="flex items-center gap-3">

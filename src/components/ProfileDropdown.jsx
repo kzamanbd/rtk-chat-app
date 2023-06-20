@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserAvatar from './UserAvatar';
 
 export default function ProfileDropdown() {
@@ -27,9 +27,9 @@ export default function ProfileDropdown() {
 	return (
 		<>
 			<div className="flex items-center">
-				<div className="flex-none">
-					<UserAvatar avatar={currentUser?.avatar} name={currentUser?.name} color="primary" />
-				</div>
+				<Link to="/" className="flex-none">
+					<UserAvatar avatar={currentUser?.avatar} name={currentUser?.name} color="sky" />
+				</Link>
 				<div className="mx-3">
 					<p className="mb-1 font-semibold">{currentUser?.name}</p>
 					<p className="text-white-dark text-xs">Software Developer</p>
