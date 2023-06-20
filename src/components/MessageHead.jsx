@@ -1,21 +1,27 @@
 import { toggleSidebarList } from '@/features/messages/messagesSlice';
+import { useRoomContext } from '@/hooks/useRoomContext';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import UserAvatar from './UserAvatar';
 
-export default function MessageHead() {
-	const { selectedUser } = useSelector((state) => state.messages);
+export default function MessageHead({ chatHead }) {
 	const dispatch = useDispatch();
+	const { ws } = useRoomContext();
 	const [isMessageDropdown, setIsMessageDropdown] = useState(false);
 
 	useEffect(() => {
 		function handleClickOutside(event) {
 			const dropdownToggle = document.querySelector('.dropdown-toggle-message');
-			if (!dropdownToggle.contains(event.target)) {
+			if (!dropdownToggle?.contains(event?.target)) {
 				setIsMessageDropdown(false);
 			}
 		}
 		window.addEventListener('click', handleClickOutside);
 	}, []);
+
+	const handleVideoCall = () => {
+		ws.emit('create-room', chatHead?._id);
+	};
 
 	return (
 		<div className="flex items-center justify-between p-4">
@@ -41,20 +47,15 @@ export default function MessageHead() {
 						<path d="M20 17L4 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"></path>
 					</svg>
 				</button>
-				<div className="relative flex-none">
-					<img
-						src={`/images/users/${selectedUser.path}`}
-						className="h-10 w-10 rounded-full object-cover sm:h-12 sm:w-12"
-					/>
+				<div className="relative flex-none xl:ml-[0px_!important]">
+					<UserAvatar avatar={chatHead.avatar} name={chatHead.name} />
 					<div className="absolute bottom-0 right-0">
 						<div className="h-4 w-4 rounded-full bg-success"></div>
 					</div>
 				</div>
 				<div className="mx-3">
-					<p className="font-semibold">{selectedUser.name}</p>
-					<p className="text-white-dark text-xs">
-						{selectedUser.active ? 'Active now' : 'Last seen at ' + selectedUser.time}
-					</p>
+					<p className="font-semibold">{chatHead.name}</p>
+					<p className="text-white-dark text-xs">{chatHead.active ? 'Active now' : 'Active on Mobile'}</p>
 				</div>
 			</div>
 			<div className="flex gap-3 sm:gap-5">
@@ -83,7 +84,7 @@ export default function MessageHead() {
 					</svg>
 				</button>
 
-				<button type="button">
+				<button type="button" onClick={handleVideoCall}>
 					<svg
 						width="24"
 						height="24"

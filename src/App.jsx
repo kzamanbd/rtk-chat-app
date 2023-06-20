@@ -3,7 +3,6 @@ import PublicRoute from '@/components/PublicRoute';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { updateCurrentUser } from '@/features/auth/authSlice';
 import Dashboard from '@/pages/Dashboard';
-import Inbox from '@/pages/Inbox';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Room from '@/pages/Room';
@@ -32,18 +31,10 @@ function App() {
 			<Router>
 				<Routes>
 					<Route
-						path="/"
+						path="/:conversationId?"
 						element={
 							<PrivateRoute>
 								<Dashboard />
-							</PrivateRoute>
-						}
-					/>
-					<Route
-						path="/inbox/:conversationId"
-						element={
-							<PrivateRoute>
-								<Inbox />
 							</PrivateRoute>
 						}
 					/>
