@@ -1,7 +1,15 @@
-export default function NoMessage({ showChatMenu }) {
+import { toggleSidebarList } from '@/features/messages/messagesSlice';
+import { useDispatch } from 'react-redux';
+
+export default function NoMessage() {
+	const dispatch = useDispatch();
+
 	return (
 		<div className="relative flex h-full items-center justify-center p-4">
-			<button type="button" className="absolute left-4 top-4 hover:text-primary xl:hidden" onClick={showChatMenu}>
+			<button
+				type="button"
+				className="absolute left-4 top-4 hover:text-primary xl:hidden"
+				onClick={() => dispatch(toggleSidebarList())}>
 				<svg
 					width="24"
 					height="24"
