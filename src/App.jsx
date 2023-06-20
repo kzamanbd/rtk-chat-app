@@ -8,7 +8,6 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import Room from '@/pages/Room';
 
-import ChatApp from '@/pages/ChatApp';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
@@ -37,14 +36,6 @@ function App() {
 						element={
 							<PrivateRoute>
 								<Dashboard />
-							</PrivateRoute>
-						}
-					/>
-					<Route
-						path="/chat"
-						element={
-							<PrivateRoute>
-								<ChatApp />
 							</PrivateRoute>
 						}
 					/>
