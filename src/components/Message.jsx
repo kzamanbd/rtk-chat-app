@@ -1,6 +1,7 @@
+import moment from 'moment';
 import UserAvatar from './UserAvatar';
 
-export default function Message({ currentUserId, message, userInfo }) {
+export default function Message({ currentUserId, message, userInfo, createdAt }) {
 	return (
 		<div className={`flex items-start gap-3 ${currentUserId === userInfo._id && 'justify-end'}`}>
 			<div className={`flex-none ${currentUserId === userInfo._id && 'order-2'}`}>
@@ -44,7 +45,7 @@ export default function Message({ currentUserId, message, userInfo }) {
 					</div>
 				</div>
 				<div className={`text-white-dark text-xs ${currentUserId === userInfo._id && 'text-right'}`}>
-					{message.time ? message.time : '5h ago'}
+					{moment(createdAt).fromNow()}
 				</div>
 			</div>
 		</div>

@@ -2,6 +2,7 @@ import Message from '@/components/Message';
 import { useGetMessagesQuery } from '@/features/messages/messagesApi';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import SimpleBar from 'simplebar-react';
 import MessageHead from './MessageHead';
 
 export default function MessageBody({ conversationId }) {
@@ -27,7 +28,7 @@ export default function MessageBody({ conversationId }) {
 		<>
 			<MessageHead chatHead={chatHead} />
 			<div className="h-px w-full border-b border-[#e0e6ed] dark:border-[#1b2e4b]"></div>
-			<div className="relative h-[calc(100vh_-_75px)] overflow-auto sm:h-[calc(100vh_-_150px)]">
+			<SimpleBar className="relative h-[calc(100vh_-_75px)] overflow-auto sm:h-[calc(100vh_-_150px)]">
 				<div className="chat-conversation-box">
 					<div className="m-6 mt-0 block">
 						<h4 className="relative border-b border-[#f4f4f4] text-center text-xs dark:border-gray-800">
@@ -40,10 +41,11 @@ export default function MessageBody({ conversationId }) {
 							currentUserId={currentUser._id}
 							message={message.message}
 							userInfo={message.userInfo}
+							createdAt={message.createdAt}
 						/>
 					))}
 				</div>
-			</div>
+			</SimpleBar>
 		</>
 	);
 }

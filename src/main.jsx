@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import 'simplebar-react/dist/simplebar.min.css';
 import App from './App';
 import { store } from './app/store';
 import { RoomProvider } from './contexts/RoomContext';

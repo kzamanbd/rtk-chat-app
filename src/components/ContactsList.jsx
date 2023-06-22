@@ -1,3 +1,7 @@
+import { useGetUsersQuery } from '@/features/users/usersApi';
+
 export default function ContactsList() {
-	return <div>ContactsList</div>;
+	const { data: contacts } = useGetUsersQuery();
+
+	return <div>{JSON.stringify(contacts)}</div>;
 }

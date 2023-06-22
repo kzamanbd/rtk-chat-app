@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import SimpleBar from 'simplebar-react';
 import ContactsList from './ContactsList';
 import ProfileDropdown from './ProfileDropdown';
 import UserAvatar from './UserAvatar';
@@ -75,7 +76,7 @@ export default function MessageSidebar({ conversationId }) {
 	}
 
 	return (
-		<Tab.Group className={`card chat-sidebar ${showSidebarList && '!block'}`}>
+		<Tab.Group className={`card chat-sidebar pr-0 ${showSidebarList && '!block'}`}>
 			<div>
 				<div className="flex items-center justify-between">
 					<ProfileDropdown />
@@ -190,7 +191,7 @@ export default function MessageSidebar({ conversationId }) {
 					<Tab.Panel>
 						<div className="h-px w-full border-b border-[#e0e6ed] dark:border-[#1b2e4b]"></div>
 						<div className="!mt-0">
-							<div className="chat-users pt-2">{renderContent}</div>
+							<SimpleBar className="chat-users pt-2 pr-4">{renderContent}</SimpleBar>
 						</div>
 					</Tab.Panel>
 					<Tab.Panel>Content 2</Tab.Panel>
