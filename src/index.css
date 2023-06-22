@@ -205,7 +205,9 @@
     .chat-empty-wrapper {
         @apply mb-8 h-[calc(100vh_-_200px)] min-h-[120px] w-[280px] text-white dark:text-[#0e1726] md:w-[430px];
     }
-
+    .chat-detail {
+        @apply relative h-[calc(100vh_-_75px)] overflow-auto sm:h-[calc(100vh_-_150px)];
+    }
     .chat-conversation-box {
         @apply min-h-[400px] space-y-5 p-4 pb-[68px] sm:min-h-[300px] sm:pb-0;
     }

@@ -1,19 +1,29 @@
 import { useGetUsersQuery } from '@/features/messages/messagesApi';
+import { setSelectedNewUser } from '@/features/messages/messagesSlice';
 import dateFormat from '@/utils/dateFormat';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 import UserAvatar from './UserAvatar';
+import UserListSkeleton from './shared/UserListSkeleton';
 
 export default function ContactsList() {
-	const { data: contacts } = useGetUsersQuery();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { data: contacts, isLoading } = useGetUsersQuery();
+
 	const handleContactClick = (contact) => {
 		if (contact.conversationId) {
 			navigate(`/${contact.conversationId}`);
 		} else {
-			console.log('contact', contact);
+			dispatch(setSelectedNewUser(contact));
+			navigate('/?newChat=true');
 		}
 	};
+
+	if (isLoading) {
+		return <UserListSkeleton />;
+	}
 
 	return (
 		<SimpleBar className="chat-users pt-2 pr-4">

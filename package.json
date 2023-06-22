@@ -6,6 +6,7 @@
 		"dev": "vite",
 		"build": "vite build",
 		"preview": "vite preview",
+		"serve": "vite --mode production",
 		"postinstall": "patch-package"
 	},
 	"dependencies": {

@@ -27,8 +27,7 @@ export default function MessageBody({ conversationId }) {
 	return (
 		<>
 			<MessageHead chatHead={chatHead} />
-			<div className="h-px w-full border-b border-[#e0e6ed] dark:border-[#1b2e4b]"></div>
-			<SimpleBar className="relative h-[calc(100vh_-_75px)] overflow-auto sm:h-[calc(100vh_-_150px)]">
+			<SimpleBar className="chat-detail">
 				<div className="chat-conversation-box">
 					<div className="m-6 mt-0 block">
 						<h4 className="relative border-b border-[#f4f4f4] text-center text-xs dark:border-gray-800">
