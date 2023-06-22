@@ -1,15 +1,28 @@
 import { useGetUsersQuery } from '@/features/messages/messagesApi';
 import dateFormat from '@/utils/dateFormat';
+import { useNavigate } from 'react-router-dom';
 import SimpleBar from 'simplebar-react';
 import UserAvatar from './UserAvatar';
 
 export default function ContactsList() {
 	const { data: contacts } = useGetUsersQuery();
+	const navigate = useNavigate();
+	const handleContactClick = (contact) => {
+		if (contact.conversationId) {
+			navigate(`/${contact.conversationId}`);
+		} else {
+			console.log('contact', contact);
+		}
+	};
 
 	return (
 		<SimpleBar className="chat-users pt-2 pr-4">
 			{contacts?.users?.map((contact) => (
-				<button type="button" key={contact._id} className="chat-user-item border-b">
+				<button
+					type="button"
+					key={contact._id}
+					className="chat-user-item border-b"
+					onClick={() => handleContactClick(contact)}>
 					<div className="flex-1">
 						<div className="flex items-center">
 							<div className="relative flex-shrink-0">
