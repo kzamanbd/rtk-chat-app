@@ -14,8 +14,11 @@ const socketUrl = import.meta.env.VITE_APP_SOCKET_URL;
 
 export const messagesApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
+		getUsers: builder.query({
+			query: () => '/chat/users'
+		}),
 		getConversations: builder.query({
-			query: (userId) => `/chat/get-conversations/${userId}`,
+			query: (userId) => `/chat/conversations/${userId}`,
 			async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
 				const socket = io(socketUrl, socketOptions);
 				try {
@@ -42,12 +45,12 @@ export const messagesApi = apiSlice.injectEndpoints({
 		}),
 
 		findConversation: builder.query({
-			query: (id) => `/chat/find-conversation/${id}`
+			query: (id) => `/chat/conversation/${id}`
 		}),
 
 		createConversation: builder.mutation({
 			query: (data) => ({
-				url: '/chat/create-conversation',
+				url: '/chat/conversation',
 				method: 'POST',
 				body: data
 			}),
@@ -68,7 +71,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 
 		sendMessage: builder.mutation({
 			query: (data) => ({
-				url: '/chat/send-message',
+				url: '/chat/message',
 				method: 'POST',
 				body: data
 			}),
@@ -110,7 +113,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 		}),
 
 		getMessages: builder.query({
-			query: (conversationId) => `/chat/get-messages/${conversationId}`,
+			query: (conversationId) => `/chat/messages/${conversationId}`,
 			async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved, getState }) {
 				const { currentUser } = getState().auth;
 				const socket = io(socketUrl, socketOptions);
@@ -140,5 +143,6 @@ export const {
 	useGetMessagesQuery,
 	useSendMessageMutation,
 	useFindConversationQuery,
-	useCreateConversationMutation
+	useCreateConversationMutation,
+	useGetUsersQuery
 } = messagesApi;

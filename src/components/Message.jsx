@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dateFormat from '@/utils/dateFormat';
 import UserAvatar from './UserAvatar';
 
 export default function Message({ currentUserId, message, userInfo, createdAt }) {
@@ -45,7 +45,7 @@ export default function Message({ currentUserId, message, userInfo, createdAt })
 					</div>
 				</div>
 				<div className={`text-white-dark text-xs ${currentUserId === userInfo._id && 'text-right'}`}>
-					{moment(createdAt).fromNow()}
+					{dateFormat(createdAt).fromNow()}
 				</div>
 			</div>
 		</div>

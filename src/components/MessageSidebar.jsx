@@ -1,6 +1,6 @@
 import { useGetConversationsQuery } from '@/features/messages/messagesApi';
+import dateFormat from '@/utils/dateFormat';
 import { Tab } from '@headlessui/react';
-import moment from 'moment';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -69,7 +69,7 @@ export default function MessageSidebar({ conversationId }) {
 					</div>
 				</div>
 				<div className="whitespace-nowrap text-xs font-semibold">
-					<p>{moment(conversation.updatedAt).fromNow()}</p>
+					<p>{dateFormat(conversation.updatedAt).fromNow()}</p>
 				</div>
 			</Link>
 		));

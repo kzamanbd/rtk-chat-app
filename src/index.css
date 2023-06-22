@@ -200,7 +200,7 @@
         @apply relative h-full min-h-[100px] space-y-0.5 sm:h-[calc(100vh_-_200px)] overflow-y-auto;
     }
     .chat-user-item {
-        @apply flex w-full items-center justify-between rounded-md p-2 hover:bg-gray-100 hover:text-primary dark:hover:bg-[#050b14] dark:hover:text-primary;
+        @apply flex w-full items-center justify-between rounded-md p-2 mb-1 hover:bg-gray-50 hover:text-primary dark:hover:bg-[#050b14] dark:hover:text-primary;
     }
     .chat-empty-wrapper {
         @apply mb-8 h-[calc(100vh_-_200px)] min-h-[120px] w-[280px] text-white dark:text-[#0e1726] md:w-[430px];
