@@ -20,7 +20,7 @@ export default function Login() {
 			navigate('/');
 		} catch (err) {
 			setLoginError(err.data.message);
-			console.log(err);
+			console.error(err);
 		}
 	};
 

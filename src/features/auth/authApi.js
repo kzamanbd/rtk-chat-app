@@ -15,7 +15,7 @@ export const authApi = apiSlice.injectEndpoints({
 					localStorage.setItem('loggedIn', true);
 					dispatch(updateCurrentUser(result.data?.user));
 				} catch (error) {
-					console.log(error);
+					console.error(error);
 				}
 			}
 		}),
@@ -32,7 +32,7 @@ export const authApi = apiSlice.injectEndpoints({
 					localStorage.setItem('loggedIn', true);
 					dispatch(updateCurrentUser(result.data?.user));
 				} catch (error) {
-					console.log(error);
+					console.error(error);
 				}
 			}
 		}),
@@ -48,7 +48,7 @@ export const authApi = apiSlice.injectEndpoints({
 					localStorage.removeItem('loggedIn');
 					dispatch(updateCurrentUser(null));
 				} catch (error) {
-					console.log(error);
+					console.error(error);
 				}
 			}
 		}),
@@ -60,7 +60,7 @@ export const authApi = apiSlice.injectEndpoints({
 					const result = await queryFulfilled;
 					dispatch(updateCurrentUser(result.data?.user));
 				} catch (error) {
-					console.log(error);
+					console.error(error);
 				}
 			}
 		})

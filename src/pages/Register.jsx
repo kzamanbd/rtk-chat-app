@@ -26,7 +26,7 @@ export default function Register() {
 			await register({ name: fullName, email: username, password, withLogin: true }).unwrap();
 			navigate('/');
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			setRegisterError(error.data.message);
 		}
 	};

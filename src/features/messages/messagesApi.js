@@ -61,7 +61,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 						})
 					);
 				} catch (error) {
-					console.log(error);
+					console.error(error);
 				}
 			}
 		}),

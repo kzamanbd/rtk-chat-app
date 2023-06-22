@@ -6,12 +6,10 @@ import MessageHead from './MessageHead';
 
 export default function MessageBody({ conversationId }) {
 	const { currentUser } = useSelector((state) => state.auth);
-	const { data: { messages = [], chatHead = {} } = {}, isLoading } = useGetMessagesQuery(conversationId, {
+	const { data: { messages = [], chatHead = {} } = {} } = useGetMessagesQuery(conversationId, {
 		refetchOnMountOrArgChange: true,
 		skip: !conversationId
 	});
-
-	console.log(isLoading);
 
 	useEffect(() => {
 		setTimeout(() => {
