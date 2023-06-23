@@ -8,9 +8,12 @@ export default function Message({ currentUserId, message, userInfo, createdAt })
 				<UserAvatar avatar={userInfo.avatar} name={userInfo.name} height="10" width="10" />
 			</div>
 			<div className="space-y-2">
-				<div className="flex items-center gap-3">
+				<div
+					className={`flex items-center gap-3 ${
+						currentUserId === userInfo._id ? 'justify-end' : 'justify-start'
+					} `}>
 					<div
-						className={`rounded-md bg-black/10 p-4 py-2 dark:bg-gray-800 ${
+						className={`text-justify rounded-md bg-black/10 p-4 py-2 dark:bg-gray-800 ${
 							userInfo._id == currentUserId
 								? 'rounded-br-none  !bg-primary text-white'
 								: 'rounded-bl-none'

@@ -24,8 +24,6 @@ export const messagesApi = apiSlice.injectEndpoints({
 				try {
 					await cacheDataLoaded;
 					socket.on(`conversation.${arg}`, (conversation) => {
-						console.log('conversation', conversation);
-
 						updateCachedData((draft) => {
 							const drafted = draft.conversations.find((c) => c._id === conversation._id);
 							if (drafted) {
@@ -121,8 +119,8 @@ export const messagesApi = apiSlice.injectEndpoints({
 				try {
 					await cacheDataLoaded;
 					socket.on(`newMessage.${arg}`, (message) => {
-						console.log('newMessage', message);
 						if (message.conversationId === arg && message.userInfo._id !== currentUser?._id) {
+							console.log('newMessage', message);
 							updateCachedData((draft) => {
 								draft.messages.push(message);
 							});

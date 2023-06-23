@@ -57,7 +57,6 @@ export default function Dashboard() {
 	};
 
 	useEffect(() => {
-		console.log('Dashboard rendered', query);
 		if (query.get('newChat')) {
 			setNewChat(true);
 			inputRef.current.focus();

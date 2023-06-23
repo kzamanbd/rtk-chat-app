@@ -52,8 +52,8 @@ export default function MessageSidebar({ conversationId }) {
 							)}
 						</div>
 						<div className="mx-3 text-left">
-							<p className="mb-1 font-semibold w-32 truncate">{conversation.partnerInfo.name}</p>
-							<p className="text-white-dark text-xs">{conversation.lastMessage}</p>
+							<p className="mb-1 font-semibold max-w-[120px] truncate">{conversation.partnerInfo.name}</p>
+							<p className="text-white-dark max-w-[185px] truncate text-xs">{conversation.lastMessage}</p>
 						</div>
 					</div>
 				</div>
@@ -65,7 +65,7 @@ export default function MessageSidebar({ conversationId }) {
 	}
 
 	return (
-		<Tab.Group className={`card chat-sidebar pr-0 ${showSidebarList && '!block'}`}>
+		<Tab.Group className={`card chat-sidebar ${showSidebarList && '!block'}`}>
 			<div>
 				<div className="flex items-center justify-between">
 					<ProfileDropdown />
@@ -180,7 +180,7 @@ export default function MessageSidebar({ conversationId }) {
 					<Tab.Panel>
 						<div className="h-px w-full border-b border-[#e0e6ed] dark:border-[#1b2e4b]"></div>
 						<div className="!mt-0">
-							<SimpleBar className="chat-users pt-2 pr-4">{renderContent}</SimpleBar>
+							<SimpleBar className="chat-users pt-2">{renderContent}</SimpleBar>
 						</div>
 					</Tab.Panel>
 					<Tab.Panel>Content 2</Tab.Panel>
