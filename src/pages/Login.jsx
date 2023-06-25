@@ -29,18 +29,15 @@ export default function Login() {
 			<div className="flex min-h-screen items-center justify-center p-6">
 				<div className="login-bg">
 					<div className="rounded-md bg-white p-8 shadow-md">
-						<div className="my-6 flex items-center justify-center space-x-2">
+						<div className="my-4 flex items-center justify-center space-x-2">
 							<span className="h-12 w-12" alt="logo">
 								<ApplicationLogo />
 							</span>
 							<span className="dark--text text-3xl font-semibold">RTK Chat</span>
 						</div>
-						<div className="my-3">
-							<p className="dark--text my-2 text-2xl font-semibold">Welcome to RTK Chat App!</p>
-							<p className="text-xs text-gray-600">
-								Please sign-in to your account and start the adventure
-							</p>
-						</div>
+						<p className="text-xs text-center text-gray-600">
+							Please sign-in to your account and start the adventure
+						</p>
 
 						<OtherLoginOption />
 

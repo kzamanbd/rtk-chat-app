@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	messages: [],
 	searchText: '',
 	selectedNewUser: {},
 	showSidebarList: false
