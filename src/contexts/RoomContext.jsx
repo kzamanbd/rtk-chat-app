@@ -8,6 +8,7 @@ const ws = io(import.meta.env.VITE_APP_SOCKET_URL);
 
 export const RoomProvider = ({ children }) => {
 	const [me, setMe] = useState(null);
+	const [incomeCall, setIncomeCall] = useState(null);
 
 	const roomCreated = ({ roomId, userId }) => {
 		console.log('room-created', roomId);
@@ -18,8 +19,9 @@ export const RoomProvider = ({ children }) => {
 		console.log({ participants });
 	};
 
-	const incomeCall = (data) => {
+	const incomeCallHandler = (data) => {
 		console.log('incoming-call', data);
+		setIncomeCall(data);
 	};
 
 	useEffect(() => {
@@ -30,9 +32,9 @@ export const RoomProvider = ({ children }) => {
 
 		ws.on('room-created', roomCreated);
 		ws.on('get-users', getUsers);
-		ws.on('incoming-call', incomeCall);
+		ws.on('incoming-call', incomeCallHandler);
 	}, []);
-	const value = { me, ws };
+	const value = { me, ws, incomeCall };
 
 	return <RoomContext.Provider value={value}>{children}</RoomContext.Provider>;
 };

@@ -1,12 +1,12 @@
 import { toggleSidebarList } from '@/features/messages/messagesSlice';
-import { useRoomContext } from '@/hooks/useRoomContext';
+import { useRoom } from '@/hooks/useRoom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import UserAvatar from './UserAvatar';
 
 export default function MessageHead({ chatHead }) {
 	const dispatch = useDispatch();
-	const { ws } = useRoomContext();
+	const { ws } = useRoom();
 	const [isDropdown, setIsDropdown] = useState(false);
 
 	useEffect(() => {

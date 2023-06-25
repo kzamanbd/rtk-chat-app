@@ -1,25 +1,25 @@
 import VideoPlayer from '@/components/VideoPlayer';
 import { addPeer, removePeer } from '@/features/room/peerSlice';
-import { useRoomContext } from '@/hooks/useRoomContext';
+import { useRoom } from '@/hooks/useRoom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 export default function Room() {
 	const { currentUser } = useSelector((state) => state.auth);
-	const { roomId, userId } = useParams();
-	const { ws, me } = useRoomContext();
+	const { roomId, targetUserId } = useParams();
+	const { ws, me } = useRoom();
 	const [stream, setStream] = useState(null);
 	const [micMuted, setMicMuted] = useState(false);
 	const { peers } = useSelector((state) => state.peers);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (me && userId) {
-			console.log('Room', roomId, userId);
+		if (me && targetUserId) {
+			console.log('Room', roomId, targetUserId);
 			ws.emit('join-room', {
 				roomId,
-				userId: userId,
+				userId: targetUserId,
 				peerId: me._id
 			});
 		}
