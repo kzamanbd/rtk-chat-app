@@ -26,7 +26,7 @@ export default function ContactsList() {
 	}
 
 	return (
-		<SimpleBar className="chat-users pt-2 pr-4">
+		<SimpleBar className="chat-users pt-2">
 			{contacts?.users?.map((contact) => (
 				<button
 					type="button"
