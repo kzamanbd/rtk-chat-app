@@ -92,7 +92,8 @@ export const messagesApi = apiSlice.injectEndpoints({
 						draft.messages.push({
 							_id: Date.now(),
 							userInfo: {
-								_id: arg.senderId
+								_id: arg.senderId,
+								name: arg.senderName
 							},
 							message: arg.message,
 							createdAt: new Date().toISOString()

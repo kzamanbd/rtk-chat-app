@@ -33,12 +33,19 @@ export default function Dashboard() {
 		if (!textMessage.trim()) {
 			return;
 		}
+		const data = {
+			message: textMessage,
+			senderId: currentUser._id,
+			senderName: currentUser.name
+		};
+
 		if (!conversationId && newChat && selectedNewUser) {
-			const data = { userId: selectedNewUser._id, message: textMessage, senderId: currentUser._id };
+			data.userId = selectedNewUser._id;
 			const { conversation } = await createConversation(data).unwrap();
 			navigate(`/${conversation._id}`);
 		} else {
-			const data = { conversationId, senderId: currentUser._id, message: textMessage };
+			data.senderName = currentUser.name;
+			data.conversationId = conversationId;
 			await sendMessage(data).unwrap();
 			scrollToBottom();
 		}
