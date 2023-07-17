@@ -4,24 +4,25 @@ import io from 'socket.io-client';
 import { v4 as uuidV4 } from 'uuid';
 
 export const RoomContext = createContext(null);
+
 const ws = io(import.meta.env.VITE_APP_SOCKET_URL);
 
 export const RoomProvider = ({ children }) => {
 	const [me, setMe] = useState(null);
-	const [incomeCall, setIncomeCall] = useState(null);
 
 	const roomCreated = ({ roomId, userId }) => {
 		console.log('room-created', roomId);
-		window.open(`/room/${roomId}/${userId}`, '_blank');
+		const width = window.innerWidth || document.documentElement.clientWidth;
+		const height = window.innerHeight || document.documentElement.clientHeight;
+		window.open(
+			`/room/${roomId}/${userId}`,
+			'_blank',
+			`toolbar=yes,scrollbars=yes,resizable=yes,width=${width},height=${height}`
+		);
 	};
 
 	const getUsers = ({ participants }) => {
 		console.log({ participants });
-	};
-
-	const incomeCallHandler = (data) => {
-		console.log('incoming-call', data);
-		setIncomeCall(data);
 	};
 
 	useEffect(() => {
@@ -32,9 +33,9 @@ export const RoomProvider = ({ children }) => {
 
 		ws.on('room-created', roomCreated);
 		ws.on('get-users', getUsers);
-		ws.on('incoming-call', incomeCallHandler);
 	}, []);
-	const value = { me, ws, incomeCall };
+
+	const value = { me, ws };
 
 	return <RoomContext.Provider value={value}>{children}</RoomContext.Provider>;
 };

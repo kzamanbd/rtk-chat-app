@@ -4,9 +4,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build",
+		"build": "vite build --mode prod",
 		"preview": "vite preview",
-		"serve": "vite --mode production",
+		"serve": "vite --mode prod",
 		"postinstall": "patch-package"
 	},
 	"dependencies": {

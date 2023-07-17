@@ -10,6 +10,9 @@ export default defineConfig({
 			'@': fileURLToPath(new URL('./src', import.meta.url))
 		}
 	},
+	build: {
+		chunkSizeWarningLimit: 1000
+	},
 	server: {
 		port: 3000,
 		open: true

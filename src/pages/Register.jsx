@@ -58,6 +58,7 @@ export default function Register() {
 									className="form-input"
 									placeholder="Email Address"
 									value={fullName}
+									required
 									onChange={(e) => setFullName(e.target.value)}
 								/>
 							</label>
@@ -70,6 +71,7 @@ export default function Register() {
 									className="form-input"
 									placeholder="Email Address"
 									value={username}
+									required
 									onChange={(e) => setUsername(e.target.value)}
 								/>
 							</label>
@@ -82,6 +84,7 @@ export default function Register() {
 									className="form-input"
 									placeholder="********"
 									value={password}
+									required
 									onChange={(e) => setPassword(e.target.value)}
 								/>
 							</label>
@@ -94,22 +97,10 @@ export default function Register() {
 									className="form-input"
 									placeholder="********"
 									value={confirmPassword}
+									required
 									onChange={(e) => setConfirmPassword(e.target.value)}
 								/>
 							</label>
-
-							<div className="mt-4 flex items-center justify-between">
-								<label className="inline-flex items-center">
-									<input type="checkbox" name="remember" className="form-checkbox" />
-									<span className="dark--text mx-2 text-sm">Remember me</span>
-								</label>
-
-								<a
-									className="block text-sm text-primary-600 hover:underline"
-									href="/auth-forgot-password.html">
-									Forgot your password?
-								</a>
-							</div>
 
 							<div className="mt-6">
 								<button type="submit" className="btn btn-primary flex w-full" disabled={isLoading}>
