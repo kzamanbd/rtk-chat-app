@@ -32,7 +32,10 @@ export default function MessageSidebar({ conversationId }) {
 	}
 
 	if (!isLoading && !error && conversations.length) {
-		renderContent = conversations.map((conversation) => (
+		const filteredConversations = conversations.filter((conversation) => {
+			return conversation.partnerInfo.name.toLowerCase().includes(searchUser.toLowerCase());
+		});
+		renderContent = filteredConversations.map((conversation) => (
 			<Link
 				to={`/${conversation._id}`}
 				key={conversation._id}
@@ -72,7 +75,7 @@ export default function MessageSidebar({ conversationId }) {
 				</div>
 				<div className="relative">
 					<input
-						type="text"
+						type="search"
 						className="peer form-input pr-9"
 						placeholder="Searching..."
 						value={searchUser}
