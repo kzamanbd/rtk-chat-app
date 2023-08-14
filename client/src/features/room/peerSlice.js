@@ -17,7 +17,6 @@ export const peerSlice = createSlice({
 			};
 		},
 		removePeer: (state, action) => {
-			// eslint-disable-next-line no-unused-vars
 			const { [action.payload.peerId]: deleted, ...peers } = state;
 			state = peers;
 		}

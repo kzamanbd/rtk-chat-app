@@ -1,0 +1,43 @@
+{
+    "name": "express-chat-app",
+    "version": "1.0.0",
+    "description": "Express chat app",
+    "main": "index.js",
+    "engines": {
+        "node": "18.x"
+    },
+    "scripts": {
+        "dev": "nodemon index.js",
+        "start": "node index.js"
+    },
+    "keywords": [],
+    "author": "Zaman",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "cookie-parser": "^1.4.6",
+        "cookie-session": "^2.0.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.1.4",
+        "express": "^4.17.3",
+        "express-winston": "^4.2.0",
+        "jsonwebtoken": "^9.0.0",
+        "mongoose": "^7.1.1",
+        "nodemailer": "^6.9.3",
+        "nodemon": "^2.0.15",
+        "socket.io": "^4.6.2",
+        "swagger-ui-express": "^4.6.3",
+        "uuid": "^9.0.0",
+        "winston": "^3.9.0",
+        "winston-mongodb": "^5.1.1"
+    },
+    "devDependencies": {
+        "eslint": "^8.2.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.25.2",
+        "eslint-plugin-prettier": "^4.2.1",
+        "nodemon": "^2.0.22",
+        "prettier": "^2.7.1"
+    }
+}

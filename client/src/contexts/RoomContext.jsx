@@ -12,12 +12,12 @@ export const RoomProvider = ({ children }) => {
 
 	const roomCreated = ({ roomId, userId }) => {
 		console.log('room-created', roomId);
-		const width = window.innerWidth || document.documentElement.clientWidth;
-		const height = window.innerHeight || document.documentElement.clientHeight;
+		// const width = window.innerWidth || document.documentElement.clientWidth;
+		// const height = window.innerHeight || document.documentElement.clientHeight;
 		window.open(
 			`/room/${roomId}/${userId}`,
-			'_blank',
-			`toolbar=yes,scrollbars=yes,resizable=yes,width=${width},height=${height}`
+			'_blank'
+			// `toolbar=yes,scrollbars=yes,resizable=yes,width=${width},height=${height}`
 		);
 	};
 

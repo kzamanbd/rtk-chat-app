@@ -16,7 +16,6 @@ export default function Room() {
 
 	useEffect(() => {
 		if (me && targetUserId) {
-			console.log('Room', roomId, targetUserId);
 			ws.emit('join-room', {
 				roomId,
 				userId: targetUserId,
@@ -43,6 +42,7 @@ export default function Room() {
 			});
 
 			me.on('call', (call) => {
+				console.log('call', call);
 				call.answer(stream);
 				call.on('stream', (userVideoStream) => {
 					dispatch(addPeer({ peerId: call.peer, stream: userVideoStream }));
@@ -52,6 +52,7 @@ export default function Room() {
 	}, [me, stream]);
 
 	const disconnectUser = (peerId) => {
+		console.log('user-disconnected', peerId);
 		dispatch(removePeer(peerId));
 	};
 
