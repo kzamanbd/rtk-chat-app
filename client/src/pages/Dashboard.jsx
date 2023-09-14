@@ -1,20 +1,23 @@
-import MessageBody from '@/components/MessageBody';
-import MessageSidebar from '@/components/MessageSidebar';
-import NewMessageBody from '@/components/NewMessageBody';
-import NoMessage from '@/components/NoMessage';
-import { useCreateConversationMutation, useSendMessageMutation } from '@/features/messages/messagesApi';
+import MessageBody from "@/components/MessageBody";
+import MessageSidebar from "@/components/MessageSidebar";
+import NewMessageBody from "@/components/NewMessageBody";
+import NoMessage from "@/components/NoMessage";
 
-import { toggleSidebarList } from '@/features/messages/messagesSlice';
-import useQuery from '@/hooks/useQuery';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import IncomingRequest from "@/components/IncomingRequest";
+import { useCreateConversationMutation, useSendMessageMutation } from "@/features/messages/messagesApi";
+import { toggleSidebarList } from "@/features/messages/messagesSlice";
+import useQuery from "@/hooks/useQuery";
+import { useRoom } from "@/hooks/useRoom";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Dashboard() {
 	const query = useQuery();
 	const dispatch = useDispatch();
 	const { conversationId } = useParams();
 	const navigate = useNavigate();
+	const { ws } = useRoom();
 
 	const inputRef = useRef(null);
 	const [sendMessage, { isLoading }] = useSendMessageMutation();
@@ -24,8 +27,16 @@ export default function Dashboard() {
 		auth: { currentUser }
 	} = useSelector((state) => state);
 
-	const [textMessage, setTextMessage] = useState('');
+	const [textMessage, setTextMessage] = useState("");
 	const [newChat, setNewChat] = useState(false);
+
+	const [incomingRequestData, setIncomingRequestData] = useState(null);
+	const [incomingModalOpen, setIncomingModalOpen] = useState(false);
+
+	const incomingModalCloseHandler = () => {
+		setIncomingModalOpen(false);
+		setIncomingRequestData(null);
+	};
 
 	const sendMessageHandler = async (e) => {
 		e.preventDefault();
@@ -49,22 +60,22 @@ export default function Dashboard() {
 			await sendMessage(data).unwrap();
 			scrollToBottom();
 		}
-		setTextMessage('');
+		setTextMessage("");
 	};
 
 	const scrollToBottom = () => {
 		inputRef.current.focus();
 		setTimeout(() => {
-			const element = document.querySelector('.chat-conversation-box');
+			const element = document.querySelector(".chat-conversation-box");
 			element.scrollIntoView({
-				behavior: 'smooth',
-				block: 'end'
+				behavior: "smooth",
+				block: "end"
 			});
 		});
 	};
 
 	useEffect(() => {
-		if (query.get('newChat')) {
+		if (query.get("newChat")) {
 			setNewChat(true);
 			inputRef.current.focus();
 		}
@@ -74,12 +85,22 @@ export default function Dashboard() {
 		if (conversationId) scrollToBottom();
 	}, [conversationId]);
 
+	useEffect(() => {
+		if (currentUser?._id) {
+			ws.on(`newCallRequest.${currentUser._id}`, (data) => {
+				console.log("newCallRequest", data);
+				setIncomingRequestData(data);
+				setIncomingModalOpen(true);
+			});
+		}
+	}, [currentUser]);
+
 	return (
 		<div className="max-w-7xl mx-auto chat-wrapper overflow-hidden">
 			<MessageSidebar conversationId={conversationId} />
 			<div
 				className={`absolute z-[5] hidden h-full w-full rounded-md bg-black/60 ${
-					showSidebarList && '!block xl:!hidden'
+					showSidebarList && "!block xl:!hidden"
 				}`}
 				onClick={() => dispatch(toggleSidebarList())}></div>
 
@@ -277,6 +298,11 @@ export default function Dashboard() {
 					</div>
 				</div>
 			</div>
+			<IncomingRequest
+				request={incomingRequestData}
+				isOpen={incomingModalOpen}
+				closeModal={incomingModalCloseHandler}
+			/>
 		</div>
 	);
 }

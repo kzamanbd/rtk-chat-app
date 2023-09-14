@@ -269,11 +269,30 @@ const getUsers = async (req, res) => {
     }
 };
 
+// outgoing call handler
+const callRequest = (req, res) => {
+    const roomId = req.body.room_id;
+    const targetUserId = req.body.target_user_id;
+    const obj = {
+        room_id: roomId,
+        target_user_id: targetUserId,
+        caller: req.authUser
+    };
+
+    global.chat.emit(`newCallRequest.${targetUserId}`, obj);
+    res.status(200).json({
+        success: true,
+        message: 'Outgoing call',
+        ...obj
+    });
+};
+
 router.get('/conversation/:userId', auth, findConversation);
 router.get('/conversations/:userId', auth, getConversations);
 router.post('/conversation', auth, createConversation);
 router.get('/messages/:conversationId', auth, getMessages);
 router.post('/message', auth, sendMessage);
 router.get('/users', auth, getUsers);
+router.post('/call-request', auth, callRequest);
 
 module.exports = router;

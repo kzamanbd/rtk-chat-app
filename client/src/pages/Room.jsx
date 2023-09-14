@@ -1,9 +1,10 @@
-import VideoPlayer from '@/components/VideoPlayer';
-import { addPeer, removePeer } from '@/features/room/peerSlice';
-import { useRoom } from '@/hooks/useRoom';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import VideoPlayer from "@/components/VideoPlayer";
+import { useRequestVideoCallMutation } from "@/features/messages/messagesApi";
+import { addPeer, removePeer } from "@/features/room/peerSlice";
+import { useRoom } from "@/hooks/useRoom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export default function Room() {
 	const { currentUser } = useSelector((state) => state.auth);
@@ -14,9 +15,18 @@ export default function Room() {
 	const { peers } = useSelector((state) => state.peers);
 	const dispatch = useDispatch();
 
+	const [requestVideoCall] = useRequestVideoCallMutation();
+
+	useEffect(() => {
+		requestVideoCall({
+			room_id: roomId,
+			target_user_id: targetUserId
+		});
+	}, [roomId, targetUserId]);
+
 	useEffect(() => {
 		if (me && targetUserId) {
-			ws.emit('join-room', {
+			ws.emit("join-room", {
 				roomId,
 				userId: targetUserId,
 				peerId: me._id
@@ -33,18 +43,18 @@ export default function Room() {
 
 	useEffect(() => {
 		if (me && stream) {
-			ws.on('user-joined', ({ peerId }) => {
-				console.log('user-joined', peerId);
+			ws.on("user-joined", ({ peerId }) => {
+				console.log("user-joined", peerId);
 				const call = me.call(peerId, stream);
-				call.on('stream', (userVideoStream) => {
+				call.on("stream", (userVideoStream) => {
 					dispatch(addPeer({ peerId, stream: userVideoStream }));
 				});
 			});
 
-			me.on('call', (call) => {
-				console.log('call', call);
+			me.on("call", (call) => {
+				console.log("call", call);
 				call.answer(stream);
-				call.on('stream', (userVideoStream) => {
+				call.on("stream", (userVideoStream) => {
 					dispatch(addPeer({ peerId: call.peer, stream: userVideoStream }));
 				});
 			});
@@ -52,15 +62,15 @@ export default function Room() {
 	}, [me, stream]);
 
 	const disconnectUser = (peerId) => {
-		console.log('user-disconnected', peerId);
+		console.log("user-disconnected", peerId);
 		dispatch(removePeer(peerId));
 	};
 
 	useEffect(() => {
-		ws.on('user-disconnected', disconnectUser);
+		ws.on("user-disconnected", disconnectUser);
 	}, []);
 
-	console.log('peers', Object.entries(peers));
+	console.log("peers", Object.entries(peers));
 
 	return (
 		<div className="flex flex-col items-center justify-center">
@@ -82,7 +92,7 @@ export default function Room() {
 					type="button"
 					onClick={() => setMicMuted(!micMuted)}
 					className="mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-					{micMuted ? 'Unmute' : 'Mute'}
+					{micMuted ? "Unmute" : "Mute"}
 				</button>
 			</div>
 		</div>

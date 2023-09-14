@@ -1,11 +1,11 @@
-import { apiSlice } from '@/features/api/apiSlice';
-import io from 'socket.io-client';
+import { apiSlice } from "@/features/api/apiSlice";
+import io from "socket.io-client";
 
 const socketOptions = {
 	reconnectionDelay: 1000,
 	reconnection: true,
 	reconnectionAttemps: 10,
-	transports: ['websocket'],
+	transports: ["websocket"],
 	agent: false,
 	upgrade: false,
 	rejectUnauthorized: false
@@ -15,7 +15,7 @@ const socketUrl = import.meta.env.VITE_APP_SOCKET_URL;
 export const messagesApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getUsers: builder.query({
-			query: () => '/chat/users'
+			query: () => "/chat/users"
 		}),
 		getConversations: builder.query({
 			query: (userId) => `/chat/conversations/${userId}`,
@@ -48,8 +48,8 @@ export const messagesApi = apiSlice.injectEndpoints({
 
 		createConversation: builder.mutation({
 			query: (data) => ({
-				url: '/chat/conversation',
-				method: 'POST',
+				url: "/chat/conversation",
+				method: "POST",
 				body: data
 			}),
 			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -57,7 +57,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 				try {
 					const result = await queryFulfilled;
 					dispatch(
-						apiSlice.util.updateQueryData('getConversations', arg.senderId, (draft) => {
+						apiSlice.util.updateQueryData("getConversations", arg.senderId, (draft) => {
 							draft.conversations.unshift(result.data.conversation);
 						})
 					);
@@ -69,14 +69,14 @@ export const messagesApi = apiSlice.injectEndpoints({
 
 		sendMessage: builder.mutation({
 			query: (data) => ({
-				url: '/chat/message',
-				method: 'POST',
+				url: "/chat/message",
+				method: "POST",
 				body: data
 			}),
 			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
 				// optimistic update to the UI
 				const patchResult1 = dispatch(
-					apiSlice.util.updateQueryData('getConversations', arg.senderId, (draft) => {
+					apiSlice.util.updateQueryData("getConversations", arg.senderId, (draft) => {
 						const conversation = draft.conversations.find((c) => c._id === arg.conversationId.toString());
 
 						if (conversation) {
@@ -88,7 +88,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 
 				// optimistic update to the UI messages
 				const patchResult2 = dispatch(
-					apiSlice.util.updateQueryData('getMessages', arg.conversationId, (draft) => {
+					apiSlice.util.updateQueryData("getMessages", arg.conversationId, (draft) => {
 						draft.messages.push({
 							_id: Date.now(),
 							userInfo: {
@@ -121,7 +121,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 					await cacheDataLoaded;
 					socket.on(`newMessage.${arg}`, (message) => {
 						if (message.conversationId === arg && message.userInfo._id !== currentUser?._id) {
-							console.log('newMessage', message);
+							console.log("newMessage", message);
 							updateCachedData((draft) => {
 								draft.messages.push(message);
 							});
@@ -133,6 +133,14 @@ export const messagesApi = apiSlice.injectEndpoints({
 				await cacheEntryRemoved;
 				socket.close();
 			}
+		}),
+
+		requestVideoCall: builder.mutation({
+			query: (data) => ({
+				url: "/chat/call-request",
+				method: "POST",
+				body: data
+			})
 		})
 	})
 });
@@ -143,5 +151,6 @@ export const {
 	useSendMessageMutation,
 	useFindConversationQuery,
 	useCreateConversationMutation,
-	useGetUsersQuery
+	useGetUsersQuery,
+	useRequestVideoCallMutation
 } = messagesApi;

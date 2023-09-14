@@ -1,7 +1,7 @@
-import Peer from 'peerjs';
-import { createContext, useEffect, useState } from 'react';
-import io from 'socket.io-client';
-import { v4 as uuidV4 } from 'uuid';
+import Peer from "peerjs";
+import { createContext, useEffect, useState } from "react";
+import io from "socket.io-client";
+import { v4 as uuidV4 } from "uuid";
 
 export const RoomContext = createContext(null);
 
@@ -11,13 +11,13 @@ export const RoomProvider = ({ children }) => {
 	const [me, setMe] = useState(null);
 
 	const roomCreated = ({ roomId, userId }) => {
-		console.log('room-created', roomId);
-		// const width = window.innerWidth || document.documentElement.clientWidth;
-		// const height = window.innerHeight || document.documentElement.clientHeight;
+		console.log("room-created", roomId);
+		const width = window.innerWidth;
+		const height = window.innerHeight;
 		window.open(
 			`/room/${roomId}/${userId}`,
-			'_blank'
-			// `toolbar=yes,scrollbars=yes,resizable=yes,width=${width},height=${height}`
+			"_blank",
+			`toolbar=yes,scrollbars=yes,resizable=yes,width=${width},height=${height}`
 		);
 	};
 
@@ -31,8 +31,8 @@ export const RoomProvider = ({ children }) => {
 
 		setMe(peer);
 
-		ws.on('room-created', roomCreated);
-		ws.on('get-users', getUsers);
+		ws.on("room-created", roomCreated);
+		ws.on("get-users", getUsers);
 	}, []);
 
 	const value = { me, ws };
