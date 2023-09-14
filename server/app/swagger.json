@@ -3,13 +3,13 @@
     "info": {
         "version": "1.0.0",
         "title": "Chat Application API",
-        "description": "Yet Another Node.js Blogg Application API",
+        "description": "Yet Another Node.js Chat Application API",
         "license": {
             "name": "MIT",
             "url": "https://opensource.org/licenses/MIT"
         }
     },
-    "host": "localhost:8000",
+    "host": "rtk-chat-app.onrender.com",
     "basePath": "/api",
     "tags": [
         {
