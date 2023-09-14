@@ -10,7 +10,7 @@ import swaggerUi from 'swagger-ui-express';
 import { socketConnection } from './controllers/socket.controller';
 import { errorHandler, notFoundHandler, requestHandler } from './middleware/errorHandler';
 import routes from './routes';
-import swaggerDocument from './swagger.json';
+import swaggerJSON from './swagger.json';
 import { errorLogger, infoLogger, logger } from './utils/logger';
 
 dotenv.config();
@@ -61,11 +61,7 @@ app.use(errorLogger);
 // error handler
 app.use(errorHandler);
 
-const options = {
-    customCss: '.swagger-ui .topbar { display: none }'
-};
-
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 // not found handler
 app.use(notFoundHandler);
 // connection
