@@ -1,16 +1,14 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-
 export default function IncomingRequest({ isOpen, closeModal, request }) {
 	const requestAccepted = () => {
-		const width = window.innerWidth;
-		const height = window.innerHeight;
 		window.open(
 			`/room/${request.room_id}/${request.target_user_id}`,
 			"_blank",
-			`toolbar=yes,scrollbars=yes,resizable=yes,width=${width},height=${height}`
+			`toolbar=yes,scrollbars=yes,resizable=yes`
 		);
 	};
+
 	return (
 		<Transition appear show={isOpen} as={Fragment}>
 			<Dialog as="div" className="relative z-10" onClose={closeModal}>
