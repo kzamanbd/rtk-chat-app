@@ -27,11 +27,16 @@ export const logger = createLogger({
 });
 
 const MONGO_URI: string = process.env.MONGO_URI || 'http://localhost:27017';
+console.log(MONGO_URI);
 
-const mongoErrorTransport = new transports.MongoDB({
-    db: MONGO_URI,
+const mongoTransport = new transports.MongoDB({
+    db: 'mongodb+srv://kzaman:16724245@cluster0.t00ijp0.mongodb.net',
     metaKey: 'meta',
-    collection: 'logs'
+    collection: 'logs',
+    tryReconnect: true,
+    options: {
+        useUnifiedTopology: true
+    }
 });
 
 // eslint-disable-next-line no-unused-vars
@@ -62,7 +67,7 @@ export const errorLogger = expressWinston.errorLogger({
             format: format.combine(format.colorize(), format.cli({ colors })),
             handleExceptions: true
         }),
-        mongoErrorTransport
+        mongoTransport
     ],
     format: format.combine(format.colorize(), format.json()),
     meta: true,

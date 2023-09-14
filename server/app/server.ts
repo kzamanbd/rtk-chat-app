@@ -13,8 +13,8 @@ import routes from './routes';
 import swaggerDocument from './swagger.json';
 import { errorLogger, infoLogger, logger } from './utils/logger';
 
-// Middleware
 dotenv.config();
+// Middleware
 const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
