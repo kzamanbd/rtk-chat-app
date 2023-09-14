@@ -12,13 +12,7 @@ export const RoomProvider = ({ children }) => {
 
 	const roomCreated = ({ roomId, userId }) => {
 		console.log("room-created", roomId);
-		const width = window.innerWidth;
-		const height = window.innerHeight;
-		window.open(
-			`/room/${roomId}/${userId}`,
-			"_blank",
-			`toolbar=yes,scrollbars=yes,resizable=yes,width=${width},height=${height}`
-		);
+		window.open(`/room/${roomId}/${userId}`, "_blank", `toolbar=yes,scrollbars=yes,resizable=yes`);
 	};
 
 	const getUsers = ({ participants }) => {

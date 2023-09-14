@@ -19,8 +19,8 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function Dashboard() {
 	const query = useQuery();
 	const dispatch = useDispatch();
-	const { conversationId } = useParams();
 	const navigate = useNavigate();
+	const { conversationId } = useParams();
 	const { ws } = useRoom();
 
 	const inputRef = useRef(null);
