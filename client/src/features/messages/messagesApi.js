@@ -141,6 +141,13 @@ export const messagesApi = apiSlice.injectEndpoints({
 				method: "POST",
 				body: data
 			})
+		}),
+		requestDeclined: builder.mutation({
+			query: (data) => ({
+				url: "/chat/call-declined",
+				method: "POST",
+				body: data
+			})
 		})
 	})
 });
@@ -152,5 +159,6 @@ export const {
 	useFindConversationQuery,
 	useCreateConversationMutation,
 	useGetUsersQuery,
-	useRequestVideoCallMutation
+	useRequestVideoCallMutation,
+	useRequestDeclinedMutation
 } = messagesApi;

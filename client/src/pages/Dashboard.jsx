@@ -4,7 +4,11 @@ import NewMessageBody from "@/components/NewMessageBody";
 import NoMessage from "@/components/NoMessage";
 
 import IncomingRequest from "@/components/IncomingRequest";
-import { useCreateConversationMutation, useSendMessageMutation } from "@/features/messages/messagesApi";
+import {
+	useCreateConversationMutation,
+	useRequestDeclinedMutation,
+	useSendMessageMutation
+} from "@/features/messages/messagesApi";
 import { toggleSidebarList } from "@/features/messages/messagesSlice";
 import useQuery from "@/hooks/useQuery";
 import { useRoom } from "@/hooks/useRoom";
@@ -20,8 +24,10 @@ export default function Dashboard() {
 	const { ws } = useRoom();
 
 	const inputRef = useRef(null);
+	const audioRef = useRef(null);
 	const [sendMessage, { isLoading }] = useSendMessageMutation();
 	const [createConversation, { isLoading: isCreatingConversation }] = useCreateConversationMutation();
+	const [requestDeclined] = useRequestDeclinedMutation();
 	const {
 		messages: { showSidebarList, selectedNewUser },
 		auth: { currentUser }
@@ -33,9 +39,14 @@ export default function Dashboard() {
 	const [incomingRequestData, setIncomingRequestData] = useState(null);
 	const [incomingModalOpen, setIncomingModalOpen] = useState(false);
 
-	const incomingModalCloseHandler = () => {
+	const requestDeclinedHandler = () => {
 		setIncomingModalOpen(false);
+		requestDeclined({
+			room_id: incomingRequestData.room_id,
+			target_user_id: incomingRequestData.target_user_id
+		});
 		setIncomingRequestData(null);
+		audioRef.current.pause();
 	};
 
 	const sendMessageHandler = async (e) => {
@@ -91,6 +102,7 @@ export default function Dashboard() {
 				console.log("newCallRequest", data);
 				setIncomingRequestData(data);
 				setIncomingModalOpen(true);
+				audioRef.current.play();
 			});
 		}
 	}, [currentUser]);
@@ -301,7 +313,7 @@ export default function Dashboard() {
 			<IncomingRequest
 				request={incomingRequestData}
 				isOpen={incomingModalOpen}
-				closeModal={incomingModalCloseHandler}
+				closeModal={requestDeclinedHandler}
 			/>
 		</div>
 	);
