@@ -20,6 +20,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const httpServer = http.createServer(app);
 
+(async () => {
+    const MONGO_URI: string = process.env.MONGO_URI || 'http://localhost:27017';
+    // connect mongoDB
+    try {
+        await mongoose.connect(MONGO_URI);
+        console.log('MongoDB connected ✅');
+    } catch (err) {
+        console.log(err);
+    }
+})();
+
 // request handler
 app.use(infoLogger);
 app.use(requestHandler);
@@ -58,15 +69,6 @@ const options = {
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 // connection
 const port = process.env.PORT || 9001;
-const MONGO_URI: string = process.env.MONGO_URI || 'http://localhost:27017';
-
 httpServer.listen(port, async () => {
     logger.info(`⚡️[server]: Server is running at http://localhost:${port}`);
-    // connect mongoDB
-    try {
-        await mongoose.connect(MONGO_URI);
-        console.log('MongoDB connected ✅');
-    } catch (err) {
-        console.log(err);
-    }
 });
