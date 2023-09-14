@@ -15,6 +15,15 @@ Hosting express node project on Vercel
 
 ## Installation and Setup Instructions
 
+### Docker-Compose Setup for Server
+
+    ```sh
+    $ git clone
+    $ cd rtk-chat-app/server
+    $ docker-compose up -d --build
+    
+    ```
+
 ### Client Setup
 
     ```sh
@@ -43,13 +52,6 @@ Hosting express node project on Vercel
     * Socket.io
     * MongoDB
     * Vercel
-
-## Docker-Compose Setup for Server
-
-    ```sh
-    $ docker-compose up -d --build
-    
-    ```
 
 ## Client Deployed On
 
