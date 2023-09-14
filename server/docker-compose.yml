@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+    # Express App
+    express-app:
+        build: .
+        networks:
+            - express-network
+        volumes:
+            - ./:/app # if Read only mode sue :ro
+            - /app/node_modules # node_modules will be created in the container
+        environment:
+            - PORT=8000
+            - NODE_ENV=development
+            - APP_NAME=Express App
+            - APP_URL=http://localhost:8000
+            - MONGO_URI=mongodb+srv://kzaman:16724245@cluster0.t00ijp0.mongodb.net
+            - COOKIE_SECRET=7c4a8d09ca3762af61e59520943dc26494f8941b
+            - JWT_SECRET=AIRS2ihzUZ7RA4l5BcoGJo22phO/Gi7PHrF+P22g6c0
+            - JWT_EXPIRY=86400000
+            - COOKIE_NAME=_refresh_token
+
+    # Nginx Server
+    nginx-server:
+        image: nginx:alpine
+        container_name: nginx-server
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+        networks:
+            - express-network
+        depends_on:
+            - express-app
+
+# Networks
+networks:
+    express-network:
+        driver: bridge
