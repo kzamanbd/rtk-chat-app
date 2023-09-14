@@ -24,7 +24,6 @@ export default function Dashboard() {
 	const { ws } = useRoom();
 
 	const inputRef = useRef(null);
-	const audioRef = useRef(null);
 	const [sendMessage, { isLoading }] = useSendMessageMutation();
 	const [createConversation, { isLoading: isCreatingConversation }] = useCreateConversationMutation();
 	const [requestDeclined] = useRequestDeclinedMutation();
@@ -46,7 +45,6 @@ export default function Dashboard() {
 			target_user_id: incomingRequestData.target_user_id
 		});
 		setIncomingRequestData(null);
-		audioRef.current.pause();
 	};
 
 	const sendMessageHandler = async (e) => {
@@ -102,7 +100,6 @@ export default function Dashboard() {
 				console.log("newCallRequest", data);
 				setIncomingRequestData(data);
 				setIncomingModalOpen(true);
-				audioRef.current.play();
 			});
 		}
 	}, [currentUser]);
