@@ -10,7 +10,6 @@ services:
             - /app/node_modules # node_modules will be created in the container
         environment:
             - PORT=8000
-            - NODE_ENV=development
             - APP_NAME=Express App
             - APP_URL=http://localhost:8000
             - MONGO_URI=mongodb+srv://kzaman:16724245@cluster0.t00ijp0.mongodb.net
