@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const schema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
     {
         name: String,
         email: String,
@@ -13,11 +13,9 @@ const schema = new mongoose.Schema(
         timestamps: true
     }
 );
-// hide password from response
-schema.methods.toJSON = function test() {
-    const obj = this.toObject();
-    delete obj.password;
-    return obj;
-};
+// hide password field
+userSchema.set('toJSON', {
+    transform: (doc, { __v, password, ...rest }, options) => rest
+});
 
-export default mongoose.model('User', schema);
+export default mongoose.model('User', userSchema);

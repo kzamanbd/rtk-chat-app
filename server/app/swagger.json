@@ -21,7 +21,7 @@
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {
-        "/users": {
+        "/chat/users": {
             "post": {
                 "tags": ["Users"],
                 "description": "Create new user in system",

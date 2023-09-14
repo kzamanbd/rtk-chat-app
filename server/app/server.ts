@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 import swaggerUi from 'swagger-ui-express';
 import { socketConnection } from './controllers/socket.controller';
-import { errorHandler, requestHandler } from './middleware/errorHandler';
+import { errorHandler, notFoundHandler, requestHandler } from './middleware/errorHandler';
 import routes from './routes';
 import swaggerDocument from './swagger.json';
 import { errorLogger, infoLogger, logger } from './utils/logger';
@@ -56,7 +56,8 @@ chat.on('connection', socketConnection);
 
 // Routes
 app.use('/', routes);
-
+// not found handler
+app.use(notFoundHandler);
 // error logger
 app.use(errorLogger);
 // error handler
