@@ -56,8 +56,6 @@ chat.on('connection', socketConnection);
 
 // Routes
 app.use('/', routes);
-// not found handler
-app.use(notFoundHandler);
 // error logger
 app.use(errorLogger);
 // error handler
@@ -68,8 +66,10 @@ const options = {
 };
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+// not found handler
+app.use(notFoundHandler);
 // connection
-const port = process.env.PORT || 9001;
+const port = process.env.PORT || 8000;
 httpServer.listen(port, async () => {
     logger.info(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
