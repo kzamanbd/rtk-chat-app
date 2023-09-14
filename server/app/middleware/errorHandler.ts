@@ -1,10 +1,10 @@
-const { v4: uuidV4 } = require('uuid');
-const { GeneralError } = require('../utilities/errors');
-// module scaffolding
-const handler = {};
+import { NextFunction, Request, Response } from 'express';
+import { v4 as uuidV4 } from 'uuid';
+
+import { GeneralError } from '../utils/AppError';
 
 // request handler
-handler.requestHandler = (req, res, next) => {
+export const requestHandler = (req: Request, res: Response, next: NextFunction) => {
     let correlationId = req.headers['x-correlation-id'];
     if (!correlationId) {
         correlationId = uuidV4();
@@ -17,7 +17,7 @@ handler.requestHandler = (req, res, next) => {
 
 // global error handler
 // eslint-disable-next-line no-unused-vars
-handler.errorHandler = (err, req, res, next) => {
+export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
     const correlationId = req.headers['x-correlation-id'];
     let code = 500;
     if (err instanceof GeneralError) {
@@ -28,5 +28,3 @@ handler.errorHandler = (err, req, res, next) => {
         message: err.message
     });
 };
-
-module.exports = handler;

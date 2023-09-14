@@ -1,9 +1,10 @@
-require('winston-mongodb');
-const { createLogger, format, transports } = require('winston');
-const expressWinston = require('express-winston');
+import { Request, Response } from 'express';
+import expressWinston from 'express-winston';
+import { createLogger, format, transports } from 'winston';
+import 'winston-mongodb';
 
 const logFormat = format.printf(
-    ({ level, message, timestamp, stack }) => `${timestamp}: ${level} - ${stack || message}`
+    ({ level, message, timestamp, stack }: any) => `${timestamp}: ${level} - ${stack || message}`
 );
 const colors = {
     error: 'red',
@@ -14,7 +15,7 @@ const colors = {
     debug: 'white'
 };
 
-const logger = createLogger({
+export const logger = createLogger({
     level: 'debug',
     format: format.combine(
         format.colorize({ colors }),
@@ -25,14 +26,16 @@ const logger = createLogger({
     transports: [new transports.Console()]
 });
 
+const MONGO_URI: string = process.env.MONGO_URI || 'http://localhost:27017';
+
 const mongoErrorTransport = new transports.MongoDB({
-    db: process.env.MONGO_URI,
+    db: MONGO_URI,
     metaKey: 'meta',
     collection: 'logs'
 });
 
 // eslint-disable-next-line no-unused-vars
-const getLogMessage = (req, res) => {
+const getLogMessage = (req: Request, res: Response) => {
     const msgObj = {
         request: req.body,
         correlationId: req.headers['x-correlation-id']
@@ -41,7 +44,7 @@ const getLogMessage = (req, res) => {
     return JSON.stringify(msgObj);
 };
 
-const infoLogger = expressWinston.logger({
+export const infoLogger = expressWinston.logger({
     transports: [
         new transports.Console({
             format: format.combine(format.colorize(), format.cli({ colors })),
@@ -53,7 +56,7 @@ const infoLogger = expressWinston.logger({
     msg: getLogMessage
 });
 
-const errorLogger = expressWinston.errorLogger({
+export const errorLogger = expressWinston.errorLogger({
     transports: [
         new transports.Console({
             format: format.combine(format.colorize(), format.cli({ colors })),
@@ -63,12 +66,5 @@ const errorLogger = expressWinston.errorLogger({
     ],
     format: format.combine(format.colorize(), format.json()),
     meta: true,
-    msg: '{ "correlationId": "{{req.headers["x-correlation-id"]}}", "error" : "{{err.message}}" }',
-    correlationId: "{{req.headers['x-correlation-id']}}"
+    msg: '{ "correlationId": "{{req.headers["x-correlation-id"]}}", "error" : "{{err.message}}" }'
 });
-
-module.exports = {
-    logger,
-    infoLogger,
-    errorLogger
-};

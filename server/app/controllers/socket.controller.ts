@@ -1,21 +1,18 @@
-const { v4: uuidV4 } = require('uuid');
+import { v4 as uuidV4 } from 'uuid';
 
-// module scaffolding
-const handler = {};
+const rooms: any = {};
 
-const rooms = {};
-
-handler.socketConnection = (socket) => {
+export const socketConnection = (socket: any) => {
     console.log('Client connected', socket.id);
     // create room
-    const roomCreate = (userId) => {
+    const roomCreate = (userId: string) => {
         const roomId = uuidV4();
         socket.emit('room-created', { roomId, userId });
         rooms[roomId] = [];
     };
 
     // join room
-    const joinRoom = ({ roomId, peerId }) => {
+    const joinRoom = ({ roomId, peerId }: any) => {
         if (rooms[roomId]) {
             // if peerId not in rooms[roomId] then push it
             if (!rooms[roomId].includes(peerId)) {
@@ -43,6 +40,3 @@ handler.socketConnection = (socket) => {
     socket.on('create-room', roomCreate);
     socket.on('join-room', joinRoom);
 };
-
-// export module
-module.exports = handler;

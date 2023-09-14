@@ -1,9 +1,9 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const express = require('express');
-const nodemailer = require('nodemailer');
-const { User } = require('../models');
-const { BadRequest } = require('../utilities/errors');
+import bcrypt from 'bcrypt';
+import express, { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
+import { User } from '../models';
+import { BadRequest } from './../utils/AppError';
 
 // node mailer
 const transporter = nodemailer.createTransport({
@@ -17,11 +17,11 @@ const transporter = nodemailer.createTransport({
 
 const router = express.Router();
 
-const login = async (req, res, next) => {
+const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // find a user who has this email/username
         const { username, password } = req.body;
-        const user = await User.findOne({
+        const user: any = await User.findOne({
             $or: [{ email: username }, { username }]
         });
 
@@ -39,17 +39,23 @@ const login = async (req, res, next) => {
                 };
 
                 // generate token
-                const accessToken = jwt.sign(userObject, process.env.JWT_SECRET, {
+                const JWT_SECRET: string = process.env.JWT_SECRET || 'secret';
+                const accessToken = jwt.sign(userObject, JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRY
                 });
 
                 // set cookie
-                res.cookie(process.env.COOKIE_NAME, accessToken, {
-                    maxAge: process.env.JWT_EXPIRY,
-                    httpOnly: !process.env.NODE_ENV === 'production',
-                    secure: process.env.NODE_ENV === 'production',
+                const COOKIE_NAME: string = process.env.COOKIE_NAME || 'token';
+                const JWT_EXPIRY: any = process.env.JWT_EXPIRY || '1d';
+                const httpOnly: boolean = process.env.NODE_ENV !== 'production';
+                const sameSite: any = process.env.NODE_ENV === 'production' ? 'None' : 'Lax';
+
+                res.cookie(COOKIE_NAME, accessToken, {
+                    maxAge: JWT_EXPIRY,
+                    httpOnly: httpOnly,
+                    secure: !httpOnly,
                     signed: true,
-                    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax'
+                    sameSite: sameSite
                 });
 
                 res.status(200).json({
@@ -64,14 +70,14 @@ const login = async (req, res, next) => {
             throw new BadRequest('Invalid credentials!', 401);
         }
     } catch (err) {
-        return next(err, req, res);
+        return next(err);
     }
 };
 
-const register = async (req, res, next) => {
+const register = async (req: Request, res: Response, next: NextFunction) => {
     const { name, email, password, withLogin } = req.body;
     if (!name || !email || !password) {
-        return next(new BadRequest('Name and email are required!', 422), req, res);
+        return next(new BadRequest('Name and email are required!', 422));
     }
     const checkUser = await User.findOne({ email });
     if (!checkUser) {
@@ -109,18 +115,25 @@ const register = async (req, res, next) => {
                     avatar: null
                 };
 
+                const JWT_SECRET: string = process.env.JWT_SECRET || 'secret';
+
                 // generate token
-                const accessToken = jwt.sign(userObject, process.env.JWT_SECRET, {
+                const accessToken = jwt.sign(userObject, JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRY
                 });
 
                 // set cookie
-                res.cookie(process.env.COOKIE_NAME, accessToken, {
-                    maxAge: process.env.JWT_EXPIRY,
-                    httpOnly: !process.env.NODE_ENV === 'production',
-                    secure: process.env.NODE_ENV === 'production',
+                const COOKIE_NAME: string = process.env.COOKIE_NAME || 'token';
+                const JWT_EXPIRY: any = process.env.JWT_EXPIRY || '1d';
+                const httpOnly: boolean = process.env.NODE_ENV !== 'production';
+                const sameSite: any = process.env.NODE_ENV === 'production' ? 'None' : 'Lax';
+
+                res.cookie(COOKIE_NAME, accessToken, {
+                    maxAge: JWT_EXPIRY,
+                    httpOnly: httpOnly,
+                    secure: !httpOnly,
                     signed: true,
-                    sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'lax'
+                    sameSite: sameSite
                 });
 
                 res.status(200).json({
@@ -135,14 +148,14 @@ const register = async (req, res, next) => {
                 });
             }
         } catch (err) {
-            return next(err, req, res);
+            return next(err);
         }
     } else {
-        return next(new BadRequest('User already exists!', 422), req, res);
+        return next(new BadRequest('User already exists!', 422));
     }
 };
 
 router.post('/login', login);
 router.post('/register', register);
 
-module.exports = router;
+export default router;

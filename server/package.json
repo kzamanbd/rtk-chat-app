@@ -2,13 +2,10 @@
     "name": "express-chat-app",
     "version": "1.0.0",
     "description": "Express chat app",
-    "main": "index.js",
-    "engines": {
-        "node": "18.x"
-    },
     "scripts": {
-        "dev": "nodemon index.js",
-        "start": "node index.js"
+        "build": "npx tsc",
+        "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\"",
+        "start": "node build/server.js"
     },
     "keywords": [],
     "author": "Zaman",
@@ -24,7 +21,6 @@
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^7.1.1",
         "nodemailer": "^6.9.3",
-        "nodemon": "^2.0.15",
         "socket.io": "^4.6.2",
         "swagger-ui-express": "^4.6.3",
         "uuid": "^9.0.0",
@@ -32,12 +28,23 @@
         "winston-mongodb": "^5.1.1"
     },
     "devDependencies": {
+        "@types/bcrypt": "^5.0.0",
+        "@types/cookie-parser": "^1.4.4",
+        "@types/cors": "^2.8.14",
+        "@types/express": "^4.17.17",
+        "@types/jsonwebtoken": "^9.0.2",
+        "@types/node": "^20.6.0",
+        "@types/nodemailer": "^6.4.10",
+        "@types/swagger-ui-express": "^4.1.3",
+        "@types/uuid": "^9.0.4",
+        "concurrently": "^8.2.1",
         "eslint": "^8.2.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-import": "^2.25.2",
         "eslint-plugin-prettier": "^4.2.1",
-        "nodemon": "^2.0.22",
-        "prettier": "^2.7.1"
+        "nodemon": "^3.0.1",
+        "prettier": "^2.7.1",
+        "typescript": "^5.2.2"
     }
 }

@@ -1,24 +1,25 @@
 // import dependencies
-const express = require('express');
-const { Conversation, Message, User } = require('../models');
-const { cookieAuth: auth } = require('../middleware/authenticate');
+import express, { Request, Response } from 'express';
+import { cookieAuth as auth } from '../middleware/authenticate';
+import { Conversation, Message, User } from '../models';
 
 const router = express.Router();
 
-const getPartnerInfo = (conversation, userId) => {
+const getPartnerInfo = (conversation: any, userId: string) => {
     const partner =
         conversation.toUser._id.toString() === userId.toString() ? conversation.fromUser : conversation.toUser;
     return partner;
 };
 
 // find existing conversation
-const findConversation = async (req, res) => {
+const findConversation = async (req: Request, res: Response) => {
+    const authUser = (req as any).authUser;
     const { userId } = req.params;
     try {
-        const conversation = await Conversation.findOne({
+        const conversation: any = await Conversation.findOne({
             $or: [
-                { toUser: userId, fromUser: req.authUser._id },
-                { toUser: req.authUser._id, fromUser: userId }
+                { toUser: userId, fromUser: authUser._id },
+                { toUser: authUser._id, fromUser: userId }
             ]
         });
         if (conversation) {
@@ -26,7 +27,7 @@ const findConversation = async (req, res) => {
                 success: true,
                 conversation: {
                     ...conversation._doc,
-                    partnerInfo: getPartnerInfo(conversation, req.authUser._id)
+                    partnerInfo: getPartnerInfo(conversation, authUser._id)
                 }
             });
         } else {
@@ -35,7 +36,7 @@ const findConversation = async (req, res) => {
                 message: 'No conversation found'
             });
         }
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -45,27 +46,28 @@ const findConversation = async (req, res) => {
 };
 
 // if not create new conversation
-const createConversation = async (req, res) => {
+const createConversation = async (req: Request, res: Response) => {
     const { userId, message } = req.body;
+    const authUser = (req as any).authUser;
     try {
         const existsConversation = await Conversation.findOne({
             $or: [
-                { toUser: userId, fromUser: req.authUser._id },
-                { toUser: req.authUser._id, fromUser: userId }
+                { toUser: userId, fromUser: authUser._id },
+                { toUser: authUser._id, fromUser: userId }
             ]
         });
 
         if (!existsConversation) {
             const newConversation = new Conversation({
                 toUser: userId,
-                fromUser: req.authUser._id
+                fromUser: authUser._id
             });
             const savedConversation = await newConversation.save();
 
             if (savedConversation) {
                 // save message
                 const newMessage = new Message({
-                    userInfo: req.authUser._id,
+                    userInfo: authUser._id,
                     conversationId: savedConversation._id,
                     message
                 });
@@ -76,20 +78,20 @@ const createConversation = async (req, res) => {
                 await savedConversation.save();
 
                 // populate conversation toUser and fromUser
-                const populatedData = await Conversation.findOne({ _id: savedConversation._id })
+                const populatedData: any = await Conversation.findOne({ _id: savedConversation._id })
                     .populate('toUser', 'name avatar')
                     .populate('fromUser', 'name avatar')
                     .exec();
 
                 // target conversation to user
-                const targetUser = getPartnerInfo(populatedData, req.authUser._id);
+                const targetUser = getPartnerInfo(populatedData, authUser._id);
 
                 const conversation = {
                     ...populatedData._doc,
                     partnerInfo: targetUser
                 };
 
-                global.chat.emit(`conversation.${targetUser._id}`, conversation);
+                (global as any).chat.emit(`conversation.${targetUser._id}`, conversation);
 
                 res.status(201).json({
                     success: true,
@@ -107,7 +109,7 @@ const createConversation = async (req, res) => {
                 message: 'Conversation already exists'
             });
         }
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -117,18 +119,19 @@ const createConversation = async (req, res) => {
 };
 
 // send message
-const sendMessage = async (req, res) => {
+const sendMessage = async (req: Request, res: Response) => {
     const { message, conversationId } = req.body;
+    const authUser = (req as any).authUser;
     try {
-        const conversation = await Conversation.findOne({ _id: conversationId })
+        const conversation: any = await Conversation.findOne({ _id: conversationId })
             .populate('toUser', 'name avatar')
             .populate('fromUser', 'name avatar')
             .exec();
 
         if (conversation) {
             // save message
-            const newMessage = new Message({
-                userInfo: req.authUser._id,
+            const newMessage: any = new Message({
+                userInfo: authUser._id,
                 conversationId: conversation._id,
                 message
             });
@@ -139,16 +142,16 @@ const sendMessage = async (req, res) => {
             conversation.lastMessage = message;
             await conversation.save();
 
-            const targetUser = getPartnerInfo(conversation, req.authUser._id);
+            const targetUser = getPartnerInfo(conversation, authUser._id);
 
-            global.chat.emit(`conversation.${targetUser._id}`, {
+            (global as any).chat.emit(`conversation.${targetUser._id}`, {
                 ...conversation._doc,
                 partnerInfo: targetUser
             });
 
             const userInfo = {
-                _id: req.authUser._id,
-                name: req.authUser.name
+                _id: authUser._id,
+                name: authUser.name
             };
 
             const messageData = {
@@ -156,7 +159,7 @@ const sendMessage = async (req, res) => {
                 userInfo
             };
 
-            global.chat.emit(`newMessage.${conversationId}`, messageData);
+            (global as any).chat.emit(`newMessage.${conversationId}`, messageData);
 
             res.status(201).json({
                 success: true,
@@ -169,7 +172,7 @@ const sendMessage = async (req, res) => {
                 error: 'Conversation not found'
             });
         }
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -179,8 +182,9 @@ const sendMessage = async (req, res) => {
 };
 
 // get conversations
-const getConversations = async (req, res) => {
+const getConversations = async (req: Request, res: Response) => {
     const { userId } = req.params;
+    const authUser = (req as any).authUser;
     try {
         const docs = await Conversation.find({ $or: [{ toUser: userId }, { fromUser: userId }] })
             .populate('toUser', 'name avatar')
@@ -188,16 +192,16 @@ const getConversations = async (req, res) => {
             .sort('-updatedAt')
             .exec();
 
-        const conversations = docs.map((conversation) => ({
+        const conversations = docs.map((conversation: any) => ({
             ...conversation._doc,
-            partnerInfo: getPartnerInfo(conversation, req.authUser._id)
+            partnerInfo: getPartnerInfo(conversation, authUser._id)
         }));
 
         res.status(200).json({
             success: true,
             conversations
         });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({
             success: false,
             message: 'Internal server error',
@@ -207,8 +211,9 @@ const getConversations = async (req, res) => {
 };
 
 // get messages
-const getMessages = async (req, res) => {
+const getMessages = async (req: Request, res: Response) => {
     const { conversationId } = req.params;
+    const authUser = (req as any).authUser;
 
     try {
         // find conversation
@@ -217,7 +222,7 @@ const getMessages = async (req, res) => {
             .populate('fromUser', 'name avatar')
             .exec();
 
-        const chatHead = getPartnerInfo(conversation, req.authUser._id);
+        const chatHead = getPartnerInfo(conversation, authUser._id);
 
         // find all messages
         const messages = await Message.find({ conversationId }).populate('userInfo', 'name avatar').exec();
@@ -229,24 +234,24 @@ const getMessages = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Internal server error',
-            error: error.message
+            message: 'Internal server error'
         });
     }
 };
 
 // get users to start conversation
-const getUsers = async (req, res) => {
+const getUsers = async (req: Request, res: Response) => {
+    const authUser = (req as any).authUser;
     try {
-        const users = await User.find({ _id: { $ne: req.authUser._id } });
+        const users = await User.find({ _id: { $ne: authUser._id } });
 
         // get all conversations
         const conversations = await Conversation.find({
-            $or: [{ toUser: req.authUser._id }, { fromUser: req.authUser._id }]
+            $or: [{ toUser: authUser._id }, { fromUser: authUser._id }]
         });
         // filter users who have conversation with current user
-        const filteredUsers = users.map((user) => {
-            const found = conversations.find((item) => {
+        const filteredUsers = users.map((user: any) => {
+            const found = conversations.find((item: any) => {
                 const { toUser, fromUser } = item;
                 return toUser.toString() === user._id.toString() || fromUser.toString() === user._id.toString();
             });
@@ -263,23 +268,24 @@ const getUsers = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Internal server error',
-            error: error.message
+            message: 'Internal server error'
         });
     }
 };
 
 // outgoing call handler
-const callRequest = (req, res) => {
+const callRequest = (req: Request, res: Response) => {
     const roomId = req.body.room_id;
     const targetUserId = req.body.target_user_id;
+    const authUser = (req as any).authUser;
+
     const obj = {
         room_id: roomId,
         target_user_id: targetUserId,
-        caller: req.authUser
+        caller: authUser
     };
 
-    global.chat.emit(`newCallRequest.${targetUserId}`, obj);
+    (global as any).chat.emit(`newCallRequest.${targetUserId}`, obj);
     res.status(200).json({
         success: true,
         message: 'Outgoing call',
@@ -295,4 +301,4 @@ router.post('/message', auth, sendMessage);
 router.get('/users', auth, getUsers);
 router.post('/call-request', auth, callRequest);
 
-module.exports = router;
+export default router;
