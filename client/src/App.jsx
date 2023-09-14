@@ -1,25 +1,25 @@
-import PrivateRoute from '@/components/PrivateRoute';
-import PublicRoute from '@/components/PublicRoute';
-import { useGetCurrentUserQuery } from '@/features/auth/authApi';
-import { updateCurrentUser } from '@/features/auth/authSlice';
-import Dashboard from '@/pages/Dashboard';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import Room from '@/pages/Room';
+import PrivateRoute from "@/components/PrivateRoute";
+import PublicRoute from "@/components/PublicRoute";
+import { useGetCurrentUserQuery } from "@/features/auth/authApi";
+import { updateCurrentUser } from "@/features/auth/authSlice";
+import Dashboard from "@/pages/Dashboard";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
+import Room from "@/pages/Room";
 
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 function App() {
 	const dispatch = useDispatch();
 	const { isLoading, error } = useGetCurrentUserQuery(undefined, {
-		skip: !localStorage.getItem('loggedIn')
+		skip: !localStorage.getItem("loggedIn")
 	});
 
 	useEffect(() => {
 		if (error?.status === 401) {
-			localStorage.removeItem('loggedIn');
+			localStorage.removeItem("loggedIn");
 			dispatch(updateCurrentUser(null));
 		}
 	}, [error, dispatch]);

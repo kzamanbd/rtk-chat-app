@@ -51,12 +51,12 @@ export default function Register() {
 						<form className="mt-4" onSubmit={handleSubmit}>
 							{registerError && <div className="text-red-500 text-center">{registerError}</div>}
 							<label className="block">
-								<span className="form-label">Email</span>
+								<span className="form-label">Full Name</span>
 								<input
 									type="text"
 									name="fullName"
 									className="form-input"
-									placeholder="Email Address"
+									placeholder="Full Name"
 									value={fullName}
 									required
 									onChange={(e) => setFullName(e.target.value)}

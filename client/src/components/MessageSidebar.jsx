@@ -1,14 +1,14 @@
-import { useGetConversationsQuery } from '@/features/messages/messagesApi';
-import dateFormat from '@/utils/dateFormat';
-import { Tab } from '@headlessui/react';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import SimpleBar from 'simplebar-react';
-import ContactsList from './ContactsList';
-import ProfileDropdown from './ProfileDropdown';
-import UserAvatar from './UserAvatar';
-import UserListSkeleton from './shared/UserListSkeleton';
+import { useGetConversationsQuery } from "@/features/messages/messagesApi";
+import dateFormat from "@/utils/dateFormat";
+import { Tab } from "@headlessui/react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import SimpleBar from "simplebar-react";
+import ContactsList from "./ContactsList";
+import ProfileDropdown from "./ProfileDropdown";
+import UserAvatar from "./UserAvatar";
+import UserListSkeleton from "./shared/UserListSkeleton";
 
 export default function MessageSidebar({ conversationId }) {
 	const { showSidebarList } = useSelector((state) => state.messages);
@@ -21,7 +21,7 @@ export default function MessageSidebar({ conversationId }) {
 		skip: !currentUser?._id
 	});
 
-	const [searchUser, setSearchUser] = useState('');
+	const [searchUser, setSearchUser] = useState("");
 
 	let renderContent = null;
 	if (isLoading) {
@@ -41,7 +41,7 @@ export default function MessageSidebar({ conversationId }) {
 				key={conversation._id}
 				className={`chat-user-item border-b ${
 					conversationId === conversation._id &&
-					'bg-gray-100 dark:bg-[#050b14] dark:text-primary text-primary'
+					"bg-gray-100 dark:bg-[#050b14] dark:text-primary text-primary"
 				}`}>
 				<div className="flex-1">
 					<div className="flex items-center">
@@ -56,7 +56,7 @@ export default function MessageSidebar({ conversationId }) {
 						</div>
 						<div className="mx-3 text-left">
 							<p className="mb-1 font-semibold max-w-[120px] truncate">{conversation.partnerInfo.name}</p>
-							<p className="text-white-dark max-w-[185px] truncate text-xs">{conversation.lastMessage}</p>
+							<p className="text-white-dark max-w-[170px] truncate text-xs">{conversation.lastMessage}</p>
 						</div>
 					</div>
 				</div>
@@ -68,7 +68,7 @@ export default function MessageSidebar({ conversationId }) {
 	}
 
 	return (
-		<Tab.Group className={`card chat-sidebar ${showSidebarList && '!block'}`}>
+		<Tab.Group className={`card chat-sidebar ${showSidebarList && "!block"}`}>
 			<div>
 				<div className="flex items-center justify-between">
 					<ProfileDropdown />

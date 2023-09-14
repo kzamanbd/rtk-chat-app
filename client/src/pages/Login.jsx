@@ -1,15 +1,15 @@
-import ApplicationLogo from '@/components/shared/ApplicationLogo';
-import LoadingSpinner from '@/components/shared/LoadingSpinner';
-import OtherLoginOption from '@/components/shared/OtherLoginOption';
-import { useLoginMutation } from '@/features/auth/authApi';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import ApplicationLogo from "@/components/shared/ApplicationLogo";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import OtherLoginOption from "@/components/shared/OtherLoginOption";
+import { useLoginMutation } from "@/features/auth/authApi";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
 	const navigate = useNavigate();
-	const [username, setUsername] = useState('kzamanbn@gmail.com');
-	const [password, setPassword] = useState('password');
-	const [loginError, setLoginError] = useState('');
+	const [username, setUsername] = useState("kzamanbn@gmail.com");
+	const [password, setPassword] = useState("password");
+	const [loginError, setLoginError] = useState("");
 
 	const [login, { isLoading }] = useLoginMutation();
 
@@ -17,7 +17,7 @@ export default function Login() {
 		e.preventDefault();
 		try {
 			await login({ username, password }).unwrap();
-			navigate('/');
+			navigate("/");
 		} catch (err) {
 			setLoginError(err.data.message);
 			console.error(err);
@@ -33,7 +33,7 @@ export default function Login() {
 							<span className="h-12 w-12" alt="logo">
 								<ApplicationLogo />
 							</span>
-							<span className="dark--text text-3xl font-semibold">RTK Chat</span>
+							<span className="dark--text text-3xl font-semibold">RTK App</span>
 						</div>
 						<p className="text-xs text-center text-gray-600">
 							Please sign-in to your account and start the adventure
