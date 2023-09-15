@@ -1,7 +1,9 @@
 // import dependencies
 import express, { Request, Response } from 'express';
 import { cookieAuth as auth } from '../middleware/authenticate';
-import { Conversation, Message, User } from '../models';
+import Conversation from '../models/conversation';
+import Message from '../models/message';
+import User from '../models/user';
 
 const router = express.Router();
 

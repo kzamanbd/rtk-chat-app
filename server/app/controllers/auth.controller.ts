@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import express, { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
-import { User } from '../models';
+import User from '../models/user';
 import { BadRequest } from './../utils/AppError';
 
 // node mailer

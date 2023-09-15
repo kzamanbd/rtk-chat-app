@@ -1,6 +1,15 @@
 import mongoose from 'mongoose';
+import { IUser } from './user';
 
-const schema = new mongoose.Schema(
+export interface IConversation extends mongoose.Document {
+    toUser: IUser;
+    fromUser: IUser;
+    lastMessage: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+const schema = new mongoose.Schema<IConversation>(
     {
         toUser: {
             type: mongoose.Schema.Types.ObjectId,
@@ -18,5 +27,6 @@ const schema = new mongoose.Schema(
         timestamps: true
     }
 );
+const Conversation: mongoose.Model<IConversation> = mongoose.model('Conversation', schema);
 
-export default mongoose.model('Conversation', schema);
+export default Conversation;
