@@ -3,11 +3,7 @@
         "commonjs": true,
         "node": true
     },
-    "extends": [
-        "prettier",
-        "airbnb-base",
-        "airbnb-base/legacy"
-    ],
+    "extends": ["prettier", "airbnb-base", "airbnb-base/legacy"],
     "parserOptions": {
         "ecmaVersion": 12
     },
@@ -35,7 +31,5 @@
         "consistent-return": 0,
         "max-len": 0
     },
-    "plugins": [
-        "prettier"
-    ]
+    "plugins": ["prettier"]
 }
