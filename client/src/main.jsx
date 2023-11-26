@@ -10,9 +10,9 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-	<Provider store={store}>
-		<RoomProvider>
-			<App />
-		</RoomProvider>
-	</Provider>
+    <Provider store={store}>
+        <RoomProvider>
+            <App />
+        </RoomProvider>
+    </Provider>
 );

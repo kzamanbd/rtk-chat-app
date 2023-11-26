@@ -1,26 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	peers: {}
+    peers: {}
 };
 
 export const peerSlice = createSlice({
-	name: 'peers',
-	initialState,
-	reducers: {
-		addPeer: (state, action) => {
-			state.peers = {
-				...state.peers,
-				[action.payload.peerId]: {
-					stream: action.payload.stream
-				}
-			};
-		},
-		removePeer: (state, action) => {
-			const { [action.payload.peerId]: deleted, ...peers } = state;
-			state = peers;
-		}
-	}
+    name: 'peers',
+    initialState,
+    reducers: {
+        addPeer: (state, action) => {
+            state.peers = {
+                ...state.peers,
+                [action.payload.peerId]: {
+                    stream: action.payload.stream
+                }
+            };
+        },
+        removePeer: (state, action) => {
+            // eslint-disable-next-line no-unused-vars
+            const { [action.payload.peerId]: deleted, ...peers } = state;
+            state = peers;
+        }
+    }
 });
 
 export const { addPeer, removePeer } = peerSlice.actions;
