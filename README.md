@@ -17,32 +17,32 @@ Hosting express node project on Vercel
 
 ### Docker-Compose Setup for Server
 
-    ```sh
-    $ git clone
-    $ cd rtk-chat-app/server
-    $ docker-compose up -d --build
-    
-    ```
+```sh
+git clone
+cd rtk-chat-app/server
+docker-compose up -d --build
+
+```
 
 ### Client Setup
 
-    ```sh
-    $ git clone
-    $ cd rtk-chat-app/client
-    $ npm install
-    $ npm run dev
-    
-    ``` 
+```sh
+git clone
+cd rtk-chat-app/client
+npm install
+npm run dev
+
+```
 
 ### Server Setup
 
-    ```sh
-    $ git clone
-    $ cd rtk-chat-app/server
-    $ npm install
-    $ npm run dev
-    
-    ```
+```sh
+git clone
+cd rtk-chat-app/server
+npm install
+npm run dev
+
+```
 
 ## Tech Stack
 
