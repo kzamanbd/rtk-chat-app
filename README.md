@@ -55,8 +55,8 @@ npm run dev
 
 ## Client Deployed On
 
-> <https://rtk-chat-app-cyan.vercel.app/>
+<https://rtk-chat-app-cyan.vercel.app>
 
 ## Backend Deployed on
 
-> <https://rtk-chat-app.onrender.com>
+<https://rtk-chat-app.onrender.com>
