@@ -1,6 +1,6 @@
 // import dependencies
 import express, { Request, Response } from 'express';
-import { cookieAuth as auth } from '../middleware/authenticate';
+import { tokenAuth as auth } from '../middleware/authenticate';
 import Conversation from '../models/conversation';
 import Message from '../models/message';
 import User from '../models/user';

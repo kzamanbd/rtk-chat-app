@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { cookieAuth as auth } from '../middleware/authenticate';
+import { tokenAuth as auth } from '../middleware/authenticate';
 
 const router = express.Router();
 
