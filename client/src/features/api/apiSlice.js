@@ -4,7 +4,13 @@ export const apiSlice = createApi({
     reducerPath: 'chatApi',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_APP_API_URL,
-        credentials: 'include'
+        prepareHeaders: async (headers) => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: () => ({}),
     tagTypes: []
