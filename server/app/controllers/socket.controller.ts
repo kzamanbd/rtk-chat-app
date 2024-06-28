@@ -39,4 +39,7 @@ export const socketConnection = (socket: any) => {
     // listen for events
     socket.on('create-room', roomCreate);
     socket.on('join-room', joinRoom);
+    socket.on('typing', (data: any) => {
+        socket.emit('typing', data);
+    });
 };

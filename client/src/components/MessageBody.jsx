@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import SimpleBar from 'simplebar-react';
 import MessageHead from './MessageHead';
 
-export default function MessageBody({ conversationId }) {
+export default function MessageBody({ conversationId, isTyping }) {
     const { currentUser } = useSelector((state) => state.auth);
     const { data: { messages = [], chatHead = {} } = {} } = useGetMessagesQuery(conversationId, {
         refetchOnMountOrArgChange: true,
@@ -34,12 +34,13 @@ export default function MessageBody({ conversationId }) {
                             <span className="relative top-2 bg-white px-3 dark:bg-[#0e1726]">Today, 5:30 PM</span>
                         </h4>
                     </div>
-                    {messages.map((message) => (
+                    {messages.map((message, index) => (
                         <Message
                             key={message._id}
                             currentUserId={currentUser._id}
                             message={message.message}
                             userInfo={message.userInfo}
+                            isTyping={isTyping && index === messages.length - 1}
                             createdAt={message.createdAt}
                         />
                     ))}

@@ -1,7 +1,7 @@
 import dateFormat from '@/utils/dateFormat';
 import UserAvatar from './UserAvatar';
 
-export default function Message({ currentUserId, message, userInfo, createdAt }) {
+export default function Message({ currentUserId, message, userInfo, createdAt, isTyping }) {
     return (
         <div className={`flex items-start gap-3 ${currentUserId === userInfo._id && 'justify-end'}`}>
             <div className={`flex-none ${currentUserId === userInfo._id && 'order-2'}`}>
@@ -50,6 +50,13 @@ export default function Message({ currentUserId, message, userInfo, createdAt })
                 <div className={`text-white-dark text-xs ${currentUserId === userInfo._id && 'text-right'}`}>
                     {dateFormat(createdAt).fromNow()}
                 </div>
+                {isTyping && (
+                    <div className="flex-none">
+                        <div className="typing-indicator">
+                            <img className="w-20" src="/images/typing-dots.gif" alt="gif" />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

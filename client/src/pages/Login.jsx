@@ -17,7 +17,13 @@ export default function Login() {
         e.preventDefault();
         try {
             await login({ username, password }).unwrap();
-            navigate('/');
+            const redirect = localStorage.getItem('redirect');
+            if (redirect) {
+                localStorage.removeItem('redirect');
+                navigate(redirect);
+            } else {
+                navigate('/');
+            }
         } catch (err) {
             setLoginError(err.data.message);
             console.error(err);

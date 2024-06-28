@@ -38,6 +38,8 @@ export default function Dashboard() {
     const [incomingRequestData, setIncomingRequestData] = useState(null);
     const [incomingModalOpen, setIncomingModalOpen] = useState(false);
 
+    const [isTyping, setIsTyping] = useState(false);
+
     const requestDeclinedHandler = () => {
         setIncomingModalOpen(false);
         requestDeclined({
@@ -72,6 +74,15 @@ export default function Dashboard() {
         setTextMessage('');
     };
 
+    const onKeyPressHandler = (e) => {
+        setTextMessage(e.target.value);
+        ws.emit('typing', {
+            conversationId,
+            senderId: currentUser._id,
+            senderName: currentUser.name
+        });
+    };
+
     const scrollToBottom = () => {
         inputRef.current.focus();
         setTimeout(() => {
@@ -101,6 +112,16 @@ export default function Dashboard() {
                 setIncomingRequestData(data);
                 setIncomingModalOpen(true);
             });
+            // listen event for typing to conversationId
+            ws.on('typing', (data) => {
+                if (data.conversationId === conversationId) {
+                    setIsTyping(true);
+                    setTimeout(() => {
+                        setIsTyping(false);
+                    }, 2000);
+                    console.log('typing', data);
+                }
+            });
         }
     }, [currentUser]);
 
@@ -117,7 +138,7 @@ export default function Dashboard() {
                 {(!conversationId || !selectedNewUser) && !newChat && <NoMessage />}
 
                 <div className="relative h-full lg:border-r">
-                    {conversationId && <MessageBody conversationId={conversationId} />}
+                    {conversationId && <MessageBody isTyping={isTyping} conversationId={conversationId} />}
                     {selectedNewUser?._id && newChat && <NewMessageBody chatHead={selectedNewUser} />}
                     <div className="absolute bottom-0 left-0 w-full p-4 bg-white">
                         <div className="w-full items-center space-x-3 sm:flex">
@@ -128,7 +149,7 @@ export default function Dashboard() {
                                     className="form-input rounded-full border-0 bg-[#f4f4f4] px-12 py-2 focus:outline-none"
                                     placeholder="Type a message"
                                     value={textMessage}
-                                    onChange={(e) => setTextMessage(e.target.value)}
+                                    onChange={onKeyPressHandler}
                                 />
                                 <button
                                     type="button"

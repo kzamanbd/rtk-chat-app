@@ -1,0 +1,24 @@
+{
+    "name": "rtk-chat-app",
+    "version": "1.0.0",
+    "description": "Hosting express node project on Vercel",
+    "main": "index.js",
+    "workspaces": [
+        "client",
+        "server"
+    ],
+    "scripts": {
+        "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+        "client:dev": "npm run dev --workspace client",
+        "client:build": "npm run build --workspace client",
+        "server:dev": "npm run dev --workspace server",
+        "server:build": "npm run build --workspace server",
+        "build": "concurrently \"npm run server:build\" \"npm run client:build\""
+    },
+    "keywords": [],
+    "author": "Kamruzzaman",
+    "license": "ISC",
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
