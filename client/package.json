@@ -6,15 +6,13 @@
 		"dev": "vite",
 		"build": "vite build --mode prod",
 		"preview": "vite preview",
-		"serve": "vite --mode prod",
-		"postinstall": "patch-package"
+		"serve": "vite --mode prod"
 	},
 	"dependencies": {
 		"@headlessui/react": "^1.7.15",
 		"@reduxjs/toolkit": "^1.9.3",
 		"@tailwindcss/forms": "^0.5.3",
 		"moment": "^2.29.4",
-		"patch-package": "^6.5.1",
 		"peerjs": "^1.4.7",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
