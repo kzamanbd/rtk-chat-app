@@ -149,7 +149,7 @@ apps/api/
 │   │   ├── logger.ts            # Winston logger
 │   │   └── AppError.ts          # Custom error class
 │   ├── routes.ts            # Main router
-│   ├── server.ts            # Express server setup
+│   ├── index.ts             # Express server setup
 │   └── swagger.json         # API documentation
 ├── build/                   # Compiled JavaScript
 ├── docker-compose.yml       # Docker services

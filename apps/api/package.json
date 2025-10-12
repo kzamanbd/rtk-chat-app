@@ -4,8 +4,8 @@
     "description": "Express chat app",
     "scripts": {
         "build": "npx tsc",
-        "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\"",
-        "start": "node build/server.js",
+        "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+        "start": "node dist/index.js",
         "lint": "eslint --config eslint.config.js app",
         "lint:fix": "eslint --config eslint.config.js --fix app",
         "check-types": "tsc --noEmit",
