@@ -43,11 +43,14 @@ export default [
         rules: {
             'react/react-in-jsx-scope': 'off',
             'react/prop-types': 'off',
-            'no-unused-vars': ['warn', { 
-                'varsIgnorePattern': '^_',
-                'argsIgnorePattern': '^_',
-                'ignoreRestSiblings': true
-            }],
+            'no-unused-vars': [
+                'warn',
+                {
+                    varsIgnorePattern: '^_',
+                    argsIgnorePattern: '^_',
+                    ignoreRestSiblings: true
+                }
+            ],
             'no-console': 'warn',
             'react-hooks/rules-of-hooks': 'error',
             'react-hooks/exhaustive-deps': 'warn',

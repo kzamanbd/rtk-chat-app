@@ -32,8 +32,7 @@ export default function ContactsList() {
                     type="button"
                     key={contact._id}
                     className="chat-user-item border-b"
-                    onClick={() => handleContactClick(contact)}
-                >
+                    onClick={() => handleContactClick(contact)}>
                     <div className="flex-1">
                         <div className="flex items-center">
                             <div className="relative flex-shrink-0">

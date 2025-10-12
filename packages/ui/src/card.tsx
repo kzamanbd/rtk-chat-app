@@ -16,8 +16,7 @@ export function Card({
             className={className}
             href={`${href}?utm_source=create-turbo&utm_medium=basic&utm_campaign=create-turbo"`}
             rel="noopener noreferrer"
-            target="_blank"
-        >
+            target="_blank">
             <h2>
                 {title} <span>-&gt;</span>
             </h2>

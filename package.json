@@ -24,6 +24,7 @@
         "tabWidth": 4,
         "trailingComma": "none",
         "bracketSpacing": true,
+        "bracketSameLine": true,
         "arrowParens": "always",
         "endOfLine": "lf"
     }
