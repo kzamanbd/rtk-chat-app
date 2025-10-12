@@ -8,7 +8,7 @@ export default function NoMessage() {
         <div className="relative flex h-full items-center justify-center p-4">
             <button
                 type="button"
-                className="absolute left-4 top-4 hover:text-primary xl:hidden"
+                className="hover:text-primary absolute left-4 top-4 xl:hidden"
                 onClick={() => dispatch(toggleSidebarList())}>
                 <svg
                     width="24"

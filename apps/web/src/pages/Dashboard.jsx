@@ -125,7 +125,7 @@ export default function Dashboard() {
     }, [currentUser]);
 
     return (
-        <div className="max-w-7xl mx-auto chat-wrapper overflow-hidden">
+        <div className="chat-wrapper mx-auto max-w-7xl overflow-hidden">
             <MessageSidebar conversationId={conversationId} />
             <div
                 className={`absolute z-[5] hidden h-full w-full rounded-md bg-black/60 ${
@@ -139,7 +139,7 @@ export default function Dashboard() {
                 <div className="relative h-full lg:border-r">
                     {conversationId && <MessageBody isTyping={isTyping} conversationId={conversationId} />}
                     {selectedNewUser?._id && newChat && <NewMessageBody chatHead={selectedNewUser} />}
-                    <div className="absolute bottom-0 left-0 w-full p-4 bg-white">
+                    <div className="absolute bottom-0 left-0 w-full bg-white p-4">
                         <div className="w-full items-center space-x-3 sm:flex">
                             <form onSubmit={sendMessageHandler} className="relative flex-1">
                                 <input
@@ -152,7 +152,7 @@ export default function Dashboard() {
                                 />
                                 <button
                                     type="button"
-                                    className="absolute left-4 top-1/2 -translate-y-1/2 hover:text-primary">
+                                    className="hover:text-primary absolute left-4 top-1/2 -translate-y-1/2">
                                     <svg
                                         width="24"
                                         height="24"
@@ -181,7 +181,7 @@ export default function Dashboard() {
                                 <button
                                     type="submit"
                                     disabled={isLoading || isCreatingConversation}
-                                    className="absolute right-4 top-1/2 -translate-y-1/2 hover:text-primary">
+                                    className="hover:text-primary absolute right-4 top-1/2 -translate-y-1/2">
                                     <svg
                                         width="24"
                                         height="24"
@@ -205,7 +205,7 @@ export default function Dashboard() {
                             <div className="hidden items-center space-x-3 py-3 sm:block sm:py-0">
                                 <button
                                     type="button"
-                                    className="rounded-md bg-[#f4f4f4] p-2 hover:bg-primary-light hover:text-primary dark:bg-[#1b2e4b]">
+                                    className="hover:bg-primary-light hover:text-primary rounded-md bg-[#f4f4f4] p-2 dark:bg-[#1b2e4b]">
                                     <svg
                                         width="24"
                                         height="24"
@@ -256,7 +256,7 @@ export default function Dashboard() {
                                 </button>
                                 <button
                                     type="button"
-                                    className="rounded-md bg-[#f4f4f4] p-2 hover:bg-primary-light hover:text-primary dark:bg-[#1b2e4b]">
+                                    className="hover:bg-primary-light hover:text-primary rounded-md bg-[#f4f4f4] p-2 dark:bg-[#1b2e4b]">
                                     <svg
                                         width="24"
                                         height="24"
@@ -280,7 +280,7 @@ export default function Dashboard() {
                                 </button>
                                 <button
                                     type="button"
-                                    className="rounded-md bg-[#f4f4f4] p-2 hover:bg-primary-light hover:text-primary dark:bg-[#1b2e4b]">
+                                    className="hover:bg-primary-light hover:text-primary rounded-md bg-[#f4f4f4] p-2 dark:bg-[#1b2e4b]">
                                     <svg
                                         width="24"
                                         height="24"
@@ -303,7 +303,7 @@ export default function Dashboard() {
                                 </button>
                                 <button
                                     type="button"
-                                    className="rounded-md bg-[#f4f4f4] p-2 hover:bg-primary-light hover:text-primary dark:bg-[#1b2e4b]">
+                                    className="hover:bg-primary-light hover:text-primary rounded-md bg-[#f4f4f4] p-2 dark:bg-[#1b2e4b]">
                                     <svg
                                         width="24"
                                         height="24"

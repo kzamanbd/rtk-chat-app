@@ -39,7 +39,7 @@ export default function ProfileDropdown() {
                 <button
                     type="button"
                     onClick={() => setIsProfileDropdown((prev) => !prev)}
-                    className="dropdown-toggle-profile flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f4f4] hover:bg-primary-light dark:bg-[#1b2e4b]">
+                    className="dropdown-toggle-profile hover:bg-primary-light flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f4f4] dark:bg-[#1b2e4b]">
                     <svg
                         width="24"
                         height="24"

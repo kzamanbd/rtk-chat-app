@@ -40,12 +40,12 @@ export default function ContactsList() {
 
                                 {contact.active && (
                                     <div className="absolute bottom-0 right-0">
-                                        <div className="h-4 w-4 rounded-full bg-success"></div>
+                                        <div className="bg-success h-4 w-4 rounded-full"></div>
                                     </div>
                                 )}
                             </div>
                             <div className="mx-3 text-left">
-                                <p className="mb-1 font-semibold w-32 truncate">{contact.name}</p>
+                                <p className="mb-1 w-32 truncate font-semibold">{contact.name}</p>
                                 <p className="text-white-dark text-xs">
                                     Last Active: {dateFormat(contact.createdAt).format('LLL')}
                                 </p>

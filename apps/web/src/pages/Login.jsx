@@ -53,7 +53,7 @@ export default function Login() {
                         <OtherLoginOption />
 
                         <form className="mt-2" onSubmit={handleSubmit}>
-                            {loginError && <div className="text-red-500 text-center">{loginError}</div>}
+                            {loginError && <div className="text-center text-red-500">{loginError}</div>}
                             <label className="block">
                                 <span className="form-label">Email</span>
                                 <input
@@ -87,7 +87,7 @@ export default function Login() {
                                 </label>
 
                                 <a
-                                    className="block text-sm text-primary-600 hover:underline"
+                                    className="text-primary-600 block text-sm hover:underline"
                                     href="/auth-forgot-password.html">
                                     Forgot your password?
                                 </a>

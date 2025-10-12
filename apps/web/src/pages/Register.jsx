@@ -47,14 +47,14 @@ export default function Register() {
                             </span>
                             <span className="dark--text text-3xl font-semibold">RTK Chat</span>
                         </div>
-                        <p className="text-xs text-center text-gray-600">
+                        <p className="text-center text-xs text-gray-600">
                             Please sign-in to your account and start the adventure
                         </p>
 
                         <OtherLoginOption />
 
                         <form className="mt-4" onSubmit={handleSubmit}>
-                            {registerError && <div className="text-red-500 text-center">{registerError}</div>}
+                            {registerError && <div className="text-center text-red-500">{registerError}</div>}
                             <label className="block">
                                 <span className="form-label">Full Name</span>
                                 <input
@@ -68,7 +68,7 @@ export default function Register() {
                                 />
                             </label>
 
-                            <label className="block mt-3">
+                            <label className="mt-3 block">
                                 <span className="form-label">Email</span>
                                 <input
                                     type="email"

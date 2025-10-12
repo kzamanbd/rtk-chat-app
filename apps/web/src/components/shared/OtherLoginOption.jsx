@@ -45,9 +45,9 @@ export default function OtherLoginOption() {
             </div>
 
             <div className="flex items-center justify-between">
-                <span className="w-1/2 border-b dark:border-dark"></span>
+                <span className="dark:border-dark w-1/2 border-b"></span>
                 <span className="mx-4 text-xs uppercase text-gray-500 dark:text-gray-400">or</span>
-                <span className="w-1/2 border-b dark:border-dark"></span>
+                <span className="dark:border-dark w-1/2 border-b"></span>
             </div>
         </>
     );

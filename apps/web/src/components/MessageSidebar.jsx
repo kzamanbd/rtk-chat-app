@@ -41,7 +41,7 @@ export default function MessageSidebar({ conversationId }) {
                 key={conversation._id}
                 className={`chat-user-item border-b ${
                     conversationId === conversation._id &&
-                    'bg-gray-100 dark:bg-[#050b14] dark:text-primary text-primary'
+                    'dark:text-primary text-primary bg-gray-100 dark:bg-[#050b14]'
                 }`}>
                 <div className="flex-1">
                     <div className="flex items-center">
@@ -50,12 +50,12 @@ export default function MessageSidebar({ conversationId }) {
 
                             {conversation.active && (
                                 <div className="absolute bottom-0 right-0">
-                                    <div className="h-4 w-4 rounded-full bg-success"></div>
+                                    <div className="bg-success h-4 w-4 rounded-full"></div>
                                 </div>
                             )}
                         </div>
                         <div className="mx-3 text-left">
-                            <p className="mb-1 font-semibold max-w-[120px] truncate">{conversation.partnerInfo.name}</p>
+                            <p className="mb-1 max-w-[120px] truncate font-semibold">{conversation.partnerInfo.name}</p>
                             <p className="text-white-dark max-w-[170px] truncate text-xs">{conversation.lastMessage}</p>
                         </div>
                     </div>
@@ -76,12 +76,12 @@ export default function MessageSidebar({ conversationId }) {
                 <div className="relative">
                     <input
                         type="search"
-                        className="peer form-control pr-9"
+                        className="form-control peer pr-9"
                         placeholder="Searching..."
                         value={searchUser}
                         onChange={(e) => setSearchUser(e.target.value)}
                     />
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 peer-focus:text-primary">
+                    <div className="peer-focus:text-primary absolute right-2 top-1/2 -translate-y-1/2">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle
                                 cx="11.5"
@@ -98,8 +98,8 @@ export default function MessageSidebar({ conversationId }) {
                         </svg>
                     </div>
                 </div>
-                <Tab.List className="flex items-center justify-between text-xs py-3">
-                    <Tab className="group hover:text-primary focus-visible:outline-none focus-visible:text-primary">
+                <Tab.List className="flex items-center justify-between py-3 text-xs">
+                    <Tab className="hover:text-primary focus-visible:text-primary group focus-visible:outline-none">
                         <svg
                             width="24"
                             height="24"
@@ -115,7 +115,7 @@ export default function MessageSidebar({ conversationId }) {
                         </svg>
                         Chats
                     </Tab>
-                    <Tab className="group hover:text-primary focus-visible:outline-none focus-visible:text-primary">
+                    <Tab className="hover:text-primary focus-visible:text-primary group focus-visible:outline-none">
                         <svg
                             width="24"
                             height="24"
@@ -135,7 +135,7 @@ export default function MessageSidebar({ conversationId }) {
                         </svg>
                         Calls
                     </Tab>
-                    <Tab className="group hover:text-primary focus-visible:outline-none focus-visible:text-primary">
+                    <Tab className="hover:text-primary focus-visible:text-primary group focus-visible:outline-none">
                         <svg
                             width="24"
                             height="24"
@@ -157,7 +157,7 @@ export default function MessageSidebar({ conversationId }) {
                         </svg>
                         Contacts
                     </Tab>
-                    <Tab className="group hover:text-primary focus-visible:outline-none focus-visible:text-primary">
+                    <Tab className="hover:text-primary focus-visible:text-primary group focus-visible:outline-none">
                         <svg
                             width="24"
                             height="24"

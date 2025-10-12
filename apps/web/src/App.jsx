@@ -37,7 +37,7 @@ function App() {
     }, [error, dispatch]);
 
     if (isLoading) {
-        return <div className="flex justify-center items-center h-screen">Loading...</div>;
+        return <div className="flex h-screen items-center justify-center">Loading...</div>;
     }
 
     const router = createBrowserRouter([

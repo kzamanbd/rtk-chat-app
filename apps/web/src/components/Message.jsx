@@ -13,10 +13,8 @@ export default function Message({ currentUserId, message, userInfo, createdAt, i
                         currentUserId === userInfo._id ? 'justify-end' : 'justify-start'
                     } `}>
                     <div
-                        className={`text-justify rounded-md bg-black/10 p-4 py-2 dark:bg-gray-800 ${
-                            userInfo._id == currentUserId
-                                ? 'rounded-br-none  !bg-primary text-white'
-                                : 'rounded-bl-none'
+                        className={`rounded-md bg-black/10 p-4 py-2 text-justify dark:bg-gray-800 ${
+                            userInfo._id == currentUserId ? '!bg-primary rounded-br-none text-white' : 'rounded-bl-none'
                         }`}>
                         {message}
                     </div>
@@ -27,7 +25,7 @@ export default function Message({ currentUserId, message, userInfo, createdAt, i
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 hover:text-primary">
+                            className="hover:text-primary h-5 w-5">
                             <circle
                                 opacity="0.5"
                                 cx="12"

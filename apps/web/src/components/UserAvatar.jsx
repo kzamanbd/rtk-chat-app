@@ -9,9 +9,9 @@ export default function UserAvatar({ avatar, name, height = '12', width = '12', 
     };
 
     return avatar ? (
-        <img src={avatar} className={`rounded-full object-cover h-2`} style={styledElement} />
+        <img src={avatar} className={`h-2 rounded-full object-cover`} style={styledElement} />
     ) : (
-        <div className={`rounded-full flex items-center justify-center`} style={styledElement}>
+        <div className={`flex items-center justify-center rounded-full`} style={styledElement}>
             {name?.charAt(0).toUpperCase()}
         </div>
     );

@@ -76,13 +76,13 @@ export default function Room() {
         <div className="flex flex-col items-center justify-center">
             <div className="container my-4">
                 <div className="grid grid-cols-4 gap-4">
-                    <div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <div className="rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800">
                         <VideoPlayer micMuted stream={stream} />
                     </div>
 
                     {Object.entries(peers).map(([peerId, peer]) => (
                         <div
-                            className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                            className="rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
                             key={peerId}>
                             <VideoPlayer micMuted={micMuted} stream={peer?.stream} />
                         </div>
@@ -91,7 +91,7 @@ export default function Room() {
                 <button
                     type="button"
                     onClick={() => setMicMuted(!micMuted)}
-                    className="mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    className="mb-2 mr-2 mt-6 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     {micMuted ? 'Unmute' : 'Mute'}
                 </button>
             </div>

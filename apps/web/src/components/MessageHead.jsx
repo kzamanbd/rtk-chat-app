@@ -51,7 +51,7 @@ export default function MessageHead({ chatHead }) {
                     <div className="relative flex-none xl:ml-[0px_!important]">
                         <UserAvatar avatar={chatHead?.avatar} name={chatHead?.name} />
                         <div className="absolute bottom-0 right-0">
-                            <div className="h-4 w-4 rounded-full bg-success"></div>
+                            <div className="bg-success h-4 w-4 rounded-full"></div>
                         </div>
                     </div>
                     <div className="mx-3">
@@ -67,7 +67,7 @@ export default function MessageHead({ chatHead }) {
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 hover:text-primary">
+                            className="hover:text-primary h-5 w-5">
                             <path
                                 d="M13.5 2C13.5 2 15.8335 2.21213 18.8033 5.18198C21.7731 8.15183 21.9853 10.4853 21.9853 10.4853"
                                 stroke="currentColor"
@@ -92,7 +92,7 @@ export default function MessageHead({ chatHead }) {
                             viewBox="0 0 24 24"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 hover:text-primary">
+                            className="hover:text-primary h-5 w-5">
                             <path
                                 d="M2 11.5C2 8.21252 2 6.56878 2.90796 5.46243C3.07418 5.25989 3.25989 5.07418 3.46243 4.90796C4.56878 4 6.21252 4 9.5 4C12.7875 4 14.4312 4 15.5376 4.90796C15.7401 5.07418 15.9258 5.25989 16.092 5.46243C17 6.56878 17 8.21252 17 11.5V12.5C17 15.7875 17 17.4312 16.092 18.5376C15.9258 18.7401 15.7401 18.9258 15.5376 19.092C14.4312 20 12.7875 20 9.5 20C6.21252 20 4.56878 20 3.46243 19.092C3.25989 18.9258 3.07418 18.7401 2.90796 18.5376C2 17.4312 2 15.7875 2 12.5V11.5Z"
                                 stroke="currentColor"
@@ -109,14 +109,14 @@ export default function MessageHead({ chatHead }) {
                         <button
                             type="button"
                             onClick={() => setIsDropdown((prev) => !prev)}
-                            className="dropdown-toggle-message flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f4f4] hover:bg-primary-light hover:text-primary dark:bg-[#1b2e4b]">
+                            className="dropdown-toggle-message hover:bg-primary-light hover:text-primary flex h-8 w-8 items-center justify-center rounded-full bg-[#f4f4f4] dark:bg-[#1b2e4b]">
                             <svg
                                 width="24"
                                 height="24"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5 rotate-90 opacity-70 hover:text-primary">
+                                className="hover:text-primary h-5 w-5 rotate-90 opacity-70">
                                 <circle cx="5" cy="12" r="2" stroke="currentColor" strokeWidth="1.5"></circle>
                                 <circle
                                     opacity="0.5"
