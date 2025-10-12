@@ -169,9 +169,6 @@ importers:
       '@eslint/js':
         specifier: ^9.33.0
         version: 9.34.0
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
       '@types/react':
         specifier: ^19.1.10
         version: 19.2.2
