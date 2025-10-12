@@ -130,7 +130,7 @@ pnpm check-types      # Type check without emitting files
 
 ```md
 apps/api/
-├── app/
+├── src/
 │   ├── controllers/          # Route handlers
 │   │   ├── auth.controller.ts    # Authentication routes
 │   │   ├── base.controller.ts    # Base/user routes
