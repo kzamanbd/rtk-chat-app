@@ -98,7 +98,7 @@ export default function MessageSidebar({ conversationId }) {
                         </svg>
                     </div>
                 </div>
-                <Tab.List className="flex items-center justify-between text-xs">
+                <Tab.List className="flex items-center justify-between text-xs py-3">
                     <Tab className="group hover:text-primary focus-visible:outline-none focus-visible:text-primary">
                         <svg
                             width="24"

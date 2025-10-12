@@ -2,7 +2,6 @@
     "name": "@rtk-app/api",
     "version": "1.0.0",
     "description": "Express chat app",
-    "type": "module",
     "scripts": {
         "build": "npx tsc",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\"",
