@@ -158,7 +158,7 @@ pnpm --filter @rtk-app/web lint
 rtk-chat-app/
 ├── apps/
 │   ├── api/                 # Express backend
-│   │   ├── app/
+│   │   ├── src/
 │   │   │   ├── controllers/ # API route handlers
 │   │   │   ├── middleware/  # Express middleware
 │   │   │   ├── models/      # Database models
