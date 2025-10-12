@@ -1,5 +1,5 @@
 {
-    "name": "express-chat-app",
+    "name": "@rtk-app/api",
     "version": "1.0.0",
     "description": "Express chat app",
     "scripts": {
