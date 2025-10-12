@@ -19,7 +19,15 @@ export default [
             globals: {
                 browser: true,
                 es2020: true,
-                node: true
+                node: true,
+                window: true,
+                document: true,
+                localStorage: true,
+                console: true,
+                alert: true,
+                navigator: true,
+                setTimeout: true,
+                URLSearchParams: true
             }
         },
         plugins: {
@@ -34,8 +42,12 @@ export default [
         },
         rules: {
             'react/react-in-jsx-scope': 'off',
-            'react/prop-types': 'warn',
-            'no-unused-vars': 'warn',
+            'react/prop-types': 'off',
+            'no-unused-vars': ['warn', { 
+                'varsIgnorePattern': '^_',
+                'argsIgnorePattern': '^_',
+                'ignoreRestSiblings': true
+            }],
             'no-console': 'warn',
             'react-hooks/rules-of-hooks': 'error',
             'react-hooks/exhaustive-deps': 'warn',
