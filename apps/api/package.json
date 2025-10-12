@@ -2,10 +2,14 @@
     "name": "@rtk-app/api",
     "version": "1.0.0",
     "description": "Express chat app",
+    "type": "module",
     "scripts": {
         "build": "npx tsc",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\"",
         "start": "node build/server.js",
+        "lint": "eslint --config eslint.config.js app",
+        "lint:fix": "eslint --config eslint.config.js --fix app",
+        "check-types": "tsc --noEmit",
         "postinstall": "cp .env.example .env || true"
     },
     "keywords": [],
@@ -29,6 +33,7 @@
         "winston-mongodb": "^5.1.1"
     },
     "devDependencies": {
+        "@repo/eslint-config": "workspace:*",
         "@types/bcrypt": "^5.0.0",
         "@types/cookie-parser": "^1.4.4",
         "@types/cors": "^2.8.14",
@@ -39,11 +44,10 @@
         "@types/swagger-ui-express": "^4.1.3",
         "@types/uuid": "^9.0.4",
         "concurrently": "^8.2.1",
-        "eslint": "^8.2.0",
-        "eslint-config-airbnb-base": "^15.0.0",
-        "eslint-config-prettier": "^8.5.0",
+        "eslint": "^9.37.0",
+        "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-import": "^2.25.2",
-        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-prettier": "^5.5.4",
         "nodemon": "^3.0.1",
         "typescript": "^5.2.2"
     }
