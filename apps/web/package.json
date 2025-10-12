@@ -7,7 +7,9 @@
         "build": "vite build",
         "build:prod": "vite build --mode prod",
         "preview": "vite preview",
-        "postinstall": "cp .env.example .env || true"
+        "postinstall": "cp .env.example .env || true",
+        "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+        "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx src"
     },
     "dependencies": {
         "@headlessui/react": "^2.2.9",

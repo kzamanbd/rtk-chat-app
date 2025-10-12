@@ -9,7 +9,7 @@
         "postinstall": "cp .env.example .env || true"
     },
     "keywords": [],
-    "author": "Zaman",
+    "author": "Kamruzzaman",
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^5.1.0",
@@ -45,7 +45,6 @@
         "eslint-plugin-import": "^2.25.2",
         "eslint-plugin-prettier": "^4.2.1",
         "nodemon": "^3.0.1",
-        "prettier": "^2.7.1",
         "typescript": "^5.2.2"
     }
 }
