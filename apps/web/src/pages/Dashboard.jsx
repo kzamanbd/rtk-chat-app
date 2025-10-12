@@ -27,10 +27,9 @@ export default function Dashboard() {
     const [sendMessage, { isLoading }] = useSendMessageMutation();
     const [createConversation, { isLoading: isCreatingConversation }] = useCreateConversationMutation();
     const [requestDeclined] = useRequestDeclinedMutation();
-    const {
-        messages: { showSidebarList, selectedNewUser },
-        auth: { currentUser }
-    } = useSelector((state) => state);
+    const showSidebarList = useSelector((state) => state.messages.showSidebarList);
+    const selectedNewUser = useSelector((state) => state.messages.selectedNewUser);
+    const currentUser = useSelector((state) => state.auth.currentUser);
 
     const [textMessage, setTextMessage] = useState('');
     const [newChat, setNewChat] = useState(false);
