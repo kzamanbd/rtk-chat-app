@@ -5,9 +5,9 @@
         "allowJs": true,
         "baseUrl": ".",
         "paths": {
-            "@/*": ["./src/*"],
+            "@/*": ["./src/*"]
         },
-        "jsx": "preserve",
+        "jsx": "preserve"
     },
     "exclude": ["node_modules", "dist"],
     "include": ["src/**/*"]

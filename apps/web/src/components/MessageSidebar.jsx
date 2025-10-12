@@ -37,7 +37,7 @@ export default function MessageSidebar({ conversationId }) {
         });
         renderContent = filteredConversations.map((conversation) => (
             <Link
-                to={`/${conversation._id}`}
+                to={`/t/${conversation._id}`}
                 key={conversation._id}
                 className={`chat-user-item border-b ${
                     conversationId === conversation._id &&

@@ -1,15 +1,31 @@
+import NoMessage from '@/components/NoMessage';
 import PrivateRoute from '@/components/PrivateRoute';
 import PublicRoute from '@/components/PublicRoute';
 import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { updateCurrentUser } from '@/features/auth/authSlice';
 import Dashboard from '@/pages/Dashboard';
 import Login from '@/pages/Login';
-import Register from '@/pages/Register';
 import Room from '@/pages/Room';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+const AuthLayout = () => {
+    return (
+        <PrivateRoute>
+            <Outlet />
+        </PrivateRoute>
+    );
+};
+
+const GuestLayout = () => {
+    return (
+        <PublicRoute>
+            <Outlet />
+        </PublicRoute>
+    );
+};
 
 function App() {
     const dispatch = useDispatch();
@@ -26,46 +42,43 @@ function App() {
 
     if (isLoading) {
         return <div className="flex justify-center items-center h-screen">Loading...</div>;
-    } else {
-        return (
-            <Router>
-                <Routes>
-                    <Route
-                        path="/:conversationId?"
-                        element={
-                            <PrivateRoute>
-                                <Dashboard />
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        path="/room/:roomId/:targetUserId"
-                        element={
-                            <PrivateRoute>
-                                <Room />
-                            </PrivateRoute>
-                        }
-                    />
-                    <Route
-                        path="/login"
-                        element={
-                            <PublicRoute>
-                                <Login />
-                            </PublicRoute>
-                        }
-                    />
-                    <Route
-                        path="/register"
-                        element={
-                            <PublicRoute>
-                                <Register />
-                            </PublicRoute>
-                        }
-                    />
-                </Routes>
-            </Router>
-        );
     }
+
+    const router = createBrowserRouter([
+        {
+            path: '/login',
+            element: (
+                <GuestLayout>
+                    <Login />
+                </GuestLayout>
+            )
+        },
+        {
+            path: '/',
+            element: <AuthLayout />,
+            errorElement: <NoMessage />,
+            children: [
+                {
+                    index: true,
+                    element: <Dashboard />
+                },
+                {
+                    path: 't/:conversationId',
+                    element: <Dashboard />
+                },
+                {
+                    path: 'room/:roomId/:targetUserId',
+                    element: <Room />
+                }
+            ]
+        },
+        {
+            path: '*',
+            element: <NoMessage />
+        }
+    ]);
+
+    return <RouterProvider router={router} />;
 }
 
 export default App;
