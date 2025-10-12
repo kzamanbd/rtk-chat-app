@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 const httpServer = http.createServer(app);
 
 (async () => {
-    const MONGO_URI: string = process.env.MONGO_URI || 'http://localhost:27017';
+    const MONGO_URI: string = process.env.MONGO_URI || 'mongodb://localhost:27017/rtk-chat-app';
     // connect mongoDB
     try {
         await mongoose.connect(MONGO_URI);
