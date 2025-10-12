@@ -82,7 +82,7 @@ export default function Login() {
 
                             <div className="mt-4 flex items-center justify-between">
                                 <label className="inline-flex items-center">
-                                    <input type="checkbox" name="remember" className="form-checkbox" />
+                                    <input type="checkbox" name="remember" className="form-control-checkbox" />
                                     <span className="dark--text mx-2 text-sm">Remember me</span>
                                 </label>
 

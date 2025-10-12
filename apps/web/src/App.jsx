@@ -19,12 +19,8 @@ const AuthLayout = () => {
     );
 };
 
-const GuestLayout = () => {
-    return (
-        <PublicRoute>
-            <Outlet />
-        </PublicRoute>
-    );
+const GuestLayout = ({ children }) => {
+    return <PublicRoute>{children}</PublicRoute>;
 };
 
 function App() {
