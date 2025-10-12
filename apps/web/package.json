@@ -1,0 +1,44 @@
+{
+    "name": "@rtk-app/web",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "build:prod": "vite build --mode prod",
+        "preview": "vite preview",
+        "postinstall": "cp .env.example .env || true",
+        "lint": "eslint --config eslint.config.js src",
+        "lint:fix": "eslint --config eslint.config.js --fix src"
+    },
+    "dependencies": {
+        "@headlessui/react": "^2.2.9",
+        "@reduxjs/toolkit": "^2.9.0",
+        "@tailwindcss/forms": "^0.5.10",
+        "@tailwindcss/vite": "^4.1.14",
+        "moment": "^2.29.4",
+        "peerjs": "^1.4.7",
+        "react": "^19.1.1",
+        "react-dom": "^19.1.1",
+        "react-redux": "^9.2.0",
+        "react-router-dom": "^7.9.4",
+        "react-select": "^5.7.1",
+        "simplebar-react": "^3.2.3",
+        "socket.io-client": "^4.6.1",
+        "tailwindcss": "^4.1.14",
+        "uuid": "^13.0.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.33.0",
+        "@types/react": "^19.1.10",
+        "@types/react-dom": "^19.1.7",
+        "@vitejs/plugin-react-swc": "^4.1.0",
+        "eslint": "^9.33.0",
+        "eslint-plugin-react-hooks": "^5.2.0",
+        "eslint-plugin-react-refresh": "^0.4.20",
+        "globals": "^16.3.0",
+        "typescript": "~5.8.3",
+        "vite": "^7.1.9"
+    }
+}
