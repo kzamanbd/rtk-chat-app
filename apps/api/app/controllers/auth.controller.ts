@@ -40,18 +40,20 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 
                 // generate token
                 const JWT_SECRET: string = process.env.JWT_SECRET || 'secret';
-                const accessToken = jwt.sign(userObject, JWT_SECRET, {
-                    expiresIn: process.env.JWT_EXPIRY
-                });
+                const JWT_EXPIRY: string = process.env.JWT_EXPIRY || '1d';
+
+                const accessToken = jwt.sign(userObject, JWT_SECRET, { expiresIn: JWT_EXPIRY } as jwt.SignOptions);
 
                 // set cookie
                 const COOKIE_NAME: string = process.env.COOKIE_NAME || 'token';
-                const JWT_EXPIRY: any = process.env.JWT_EXPIRY || '1d';
+                // Convert expiry to milliseconds for cookie (default to 1 day = 24 * 60 * 60 * 1000 ms)
+                const JWT_EXPIRY_MS: number =
+                    JWT_EXPIRY === '1d' ? 24 * 60 * 60 * 1000 : parseInt(JWT_EXPIRY) * 1000 || 24 * 60 * 60 * 1000;
                 const httpOnly: boolean = process.env.NODE_ENV !== 'production';
                 const sameSite: any = process.env.NODE_ENV === 'production' ? 'None' : 'Lax';
 
                 res.cookie(COOKIE_NAME, accessToken, {
-                    maxAge: JWT_EXPIRY,
+                    maxAge: JWT_EXPIRY_MS,
                     httpOnly: httpOnly,
                     secure: !httpOnly,
                     signed: true,
@@ -116,20 +118,21 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
                 };
 
                 const JWT_SECRET: string = process.env.JWT_SECRET || 'secret';
+                const JWT_EXPIRY: string = process.env.JWT_EXPIRY || '1d';
 
                 // generate token
-                const accessToken = jwt.sign(userObject, JWT_SECRET, {
-                    expiresIn: process.env.JWT_EXPIRY
-                });
+                const accessToken = jwt.sign(userObject, JWT_SECRET, { expiresIn: JWT_EXPIRY } as jwt.SignOptions);
 
                 // set cookie
                 const COOKIE_NAME: string = process.env.COOKIE_NAME || 'token';
-                const JWT_EXPIRY: any = process.env.JWT_EXPIRY || '1d';
+                // Convert expiry to milliseconds for cookie (default to 1 day = 24 * 60 * 60 * 1000 ms)
+                const JWT_EXPIRY_MS: number =
+                    JWT_EXPIRY === '1d' ? 24 * 60 * 60 * 1000 : parseInt(JWT_EXPIRY) * 1000 || 24 * 60 * 60 * 1000;
                 const httpOnly: boolean = process.env.NODE_ENV !== 'production';
                 const sameSite: any = process.env.NODE_ENV === 'production' ? 'None' : 'Lax';
 
                 res.cookie(COOKIE_NAME, accessToken, {
-                    maxAge: JWT_EXPIRY,
+                    maxAge: JWT_EXPIRY_MS,
                     httpOnly: httpOnly,
                     secure: !httpOnly,
                     signed: true,
