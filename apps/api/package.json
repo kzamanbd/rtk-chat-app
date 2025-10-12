@@ -5,7 +5,8 @@
     "scripts": {
         "build": "npx tsc",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\"",
-        "start": "node build/server.js"
+        "start": "node build/server.js",
+        "postinstall": "cp .env.example .env || true"
     },
     "keywords": [],
     "author": "Zaman",

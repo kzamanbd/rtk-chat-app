@@ -83,7 +83,8 @@ export default function Room() {
                     {Object.entries(peers).map(([peerId, peer]) => (
                         <div
                             className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-                            key={peerId}>
+                            key={peerId}
+                        >
                             <VideoPlayer micMuted={micMuted} stream={peer?.stream} />
                         </div>
                     ))}
@@ -91,7 +92,8 @@ export default function Room() {
                 <button
                     type="button"
                     onClick={() => setMicMuted(!micMuted)}
-                    className="mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    className="mt-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                >
                     {micMuted ? 'Unmute' : 'Mute'}
                 </button>
             </div>

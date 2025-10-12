@@ -59,7 +59,7 @@ export default function Login() {
                                 <input
                                     type="email"
                                     name="email"
-                                    className="form-input"
+                                    className="form-control"
                                     placeholder="Email Address"
                                     value={username}
                                     required
@@ -72,7 +72,7 @@ export default function Login() {
                                 <input
                                     type="password"
                                     name="password"
-                                    className="form-input"
+                                    className="form-control"
                                     placeholder="********"
                                     value={password}
                                     required
@@ -88,7 +88,8 @@ export default function Login() {
 
                                 <a
                                     className="block text-sm text-primary-600 hover:underline"
-                                    href="/auth-forgot-password.html">
+                                    href="/auth-forgot-password.html"
+                                >
                                     Forgot your password?
                                 </a>
                             </div>

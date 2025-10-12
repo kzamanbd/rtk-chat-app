@@ -80,7 +80,9 @@ const createConversation = async (req: Request, res: Response) => {
                 await savedConversation.save();
 
                 // populate conversation toUser and fromUser
-                const populatedData: any = await Conversation.findOne({ _id: savedConversation._id })
+                const populatedData: any = await Conversation.findOne({
+                    _id: savedConversation._id
+                })
                     .populate('toUser', 'name avatar')
                     .populate('fromUser', 'name avatar')
                     .exec();
@@ -125,7 +127,9 @@ const sendMessage = async (req: Request, res: Response) => {
     const { message, conversationId } = req.body;
     const authUser = (req as any).authUser;
     try {
-        const conversation: any = await Conversation.findOne({ _id: conversationId })
+        const conversation: any = await Conversation.findOne({
+            _id: conversationId
+        })
             .populate('toUser', 'name avatar')
             .populate('fromUser', 'name avatar')
             .exec();
@@ -188,7 +192,9 @@ const getConversations = async (req: Request, res: Response) => {
     const { userId } = req.params;
     const authUser = (req as any).authUser;
     try {
-        const docs = await Conversation.find({ $or: [{ toUser: userId }, { fromUser: userId }] })
+        const docs = await Conversation.find({
+            $or: [{ toUser: userId }, { fromUser: userId }]
+        })
             .populate('toUser', 'name avatar')
             .populate('fromUser', 'name avatar')
             .sort('-updatedAt')

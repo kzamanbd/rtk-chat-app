@@ -23,7 +23,12 @@ export default function Register() {
             return;
         }
         try {
-            await register({ name: fullName, email: username, password, withLogin: true }).unwrap();
+            await register({
+                name: fullName,
+                email: username,
+                password,
+                withLogin: true
+            }).unwrap();
             navigate('/');
         } catch (error) {
             console.error(error);
@@ -55,7 +60,7 @@ export default function Register() {
                                 <input
                                     type="text"
                                     name="fullName"
-                                    className="form-input"
+                                    className="form-control"
                                     placeholder="Full Name"
                                     value={fullName}
                                     required
@@ -68,7 +73,7 @@ export default function Register() {
                                 <input
                                     type="email"
                                     name="email"
-                                    className="form-input"
+                                    className="form-control"
                                     placeholder="Email Address"
                                     value={username}
                                     required
@@ -81,7 +86,7 @@ export default function Register() {
                                 <input
                                     type="password"
                                     name="password"
-                                    className="form-input"
+                                    className="form-control"
                                     placeholder="********"
                                     value={password}
                                     required
@@ -94,7 +99,7 @@ export default function Register() {
                                 <input
                                     type="password"
                                     name="password"
-                                    className="form-input"
+                                    className="form-control"
                                     placeholder="********"
                                     value={confirmPassword}
                                     required

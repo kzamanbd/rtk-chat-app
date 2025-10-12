@@ -5,7 +5,7 @@
         "build": "turbo run build",
         "dev": "turbo run dev",
         "lint": "turbo run lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
         "check-types": "turbo run check-types"
     },
     "devDependencies": {
@@ -16,5 +16,15 @@
     "packageManager": "pnpm@9.0.0",
     "engines": {
         "node": ">=18"
+    },
+    "prettier": {
+        "semi": true,
+        "singleQuote": true,
+        "printWidth": 120,
+        "tabWidth": 4,
+        "trailingComma": "none",
+        "bracketSpacing": true,
+        "arrowParens": "always",
+        "endOfLine": "lf"
     }
 }
