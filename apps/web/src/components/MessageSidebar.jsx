@@ -39,7 +39,7 @@ export default function MessageSidebar({ conversationId }) {
             <Link
                 to={`/t/${conversation._id}`}
                 key={conversation._id}
-                className={`chat-user-item border-b ${
+                className={`chat-user-item ${
                     conversationId === conversation._id &&
                     'dark:text-primary text-primary bg-gray-100 dark:bg-[#050b14]'
                 }`}>

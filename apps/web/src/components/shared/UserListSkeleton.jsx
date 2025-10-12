@@ -1,6 +1,6 @@
 export default function UserListSkeleton({ length = 20 }) {
     return (
-        <div className="w-full animate-pulse space-y-4 divide-y divide-gray-200 rounded border border-gray-200 p-4 shadow md:p-6 dark:divide-gray-700 dark:border-gray-700">
+        <div className="w-full animate-pulse space-y-4 rounded p-4 shadow md:p-6">
             {[...Array(length)].map((_, index) => (
                 <div key={index} className="flex items-center justify-between pt-4">
                     <div>

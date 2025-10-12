@@ -26,7 +26,7 @@ export default function ProfileDropdown() {
 
     return (
         <>
-            <div className="flex items-center">
+            <div className="mb-4 flex items-center">
                 <Link to="/" className="flex-none">
                     <UserAvatar avatar={currentUser?.avatar} name={currentUser?.name} color="sky" />
                 </Link>
