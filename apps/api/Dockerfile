@@ -6,4 +6,4 @@ RUN pnpm install --no-frozen-lockfile
 COPY . .
 RUN pnpm build
 EXPOSE 3000
-CMD ["node", "build/index.js"]
+CMD ["node", "dist/index.js"]
