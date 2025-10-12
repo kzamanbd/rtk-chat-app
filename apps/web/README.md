@@ -1,46 +1,180 @@
-# Getting Started with Create React App and Redux
+# RTK Chat App - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+The frontend application for the RTK Chat App, built with React 19, Redux Toolkit, Vite, and Tailwind CSS.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **Real-time Chat Interface** - Modern chat UI with Socket.io integration
+- **Video Calling** - WebRTC-based video calling with PeerJS
+- **User Authentication** - Login/register with JWT tokens
+- **Contact Management** - Add, search, and manage contacts
+- **Message History** - Persistent chat history with MongoDB
+- **Responsive Design** - Mobile-first design with Tailwind CSS
+- **State Management** - Redux Toolkit for predictable state management
 
-### `npm start`
+## 🛠️ Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React 19** - Latest React with concurrent features
+- **Redux Toolkit** - Modern Redux with RTK Query
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **Socket.io Client** - Real-time communication
+- **PeerJS** - WebRTC peer-to-peer connections
+- **React Router** - Client-side routing
+- **Headless UI** - Accessible UI components
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Installation
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js >= 18
+- pnpm >= 9.0.0
 
-### `npm run build`
+### Setup
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Install dependencies** (from project root):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   pnpm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Environment Configuration**:
 
-### `npm run eject`
+   ```bash
+   cp .env.example .env
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   Configure the following environment variables:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```env
+   VITE_API_URL=http://localhost:5000
+   VITE_SOCKET_URL=http://localhost:5000
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Start development server**:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   # From project root
+   pnpm --filter @rtk-app/web dev
+   
+   # Or from this directory
+   cd apps/web
+   pnpm dev
+   ```
 
-## Learn More
+The application will be available at [http://localhost:5173](http://localhost:5173).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📜 Available Scripts
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+pnpm dev              # Start development server
+pnpm build            # Build for production
+pnpm build:prod       # Build for production with prod mode
+pnpm preview          # Preview production build
+pnpm lint             # Run ESLint
+pnpm lint:fix         # Fix ESLint errors
+```
+
+## 🏗️ Project Structure
+
+```md
+apps/web/
+├── src/
+│   ├── components/          # Reusable React components
+│   │   ├── shared/         # Shared UI components
+│   │   ├── ContactsList.jsx
+│   │   ├── Message.jsx
+│   │   ├── MessageSidebar.jsx
+│   │   └── ...
+│   ├── features/           # Redux slices and API logic
+│   │   ├── api/           # RTK Query API definitions
+│   │   ├── auth/          # Authentication slice
+│   │   ├── messages/      # Messages slice
+│   │   └── room/          # Room/chat slice
+│   ├── pages/             # Route components
+│   │   ├── Dashboard.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   └── Room.jsx
+│   ├── hooks/             # Custom React hooks
+│   ├── contexts/          # React contexts
+│   ├── utils/             # Utility functions
+│   ├── App.jsx            # Main app component
+│   └── main.jsx           # Entry point
+├── public/                # Static assets
+├── dist/                  # Build output
+└── vercel.json           # Vercel deployment config
+```
+
+## 🔧 Development
+
+### Key Components
+
+- **`App.jsx`** - Main application component with routing
+- **`Dashboard.jsx`** - Main chat interface
+- **`Room.jsx`** - Individual chat room component
+- **`MessageSidebar.jsx`** - Contacts and message list
+- **`Message.jsx`** - Individual message component
+
+### State Management
+
+The app uses Redux Toolkit with the following slices:
+
+- **`authSlice`** - User authentication state
+- **`messagesSlice`** - Chat messages and conversations
+- **`roomSlice`** - Video calling and room state
+- **`filterSlice`** - Search and filtering state
+
+### API Integration
+
+RTK Query is used for API calls:
+
+- **`authApi`** - Authentication endpoints
+- **`apiSlice`** - Base API configuration
+
+## 🎨 Styling
+
+The application uses Tailwind CSS for styling with:
+
+- Custom color palette
+- Responsive design utilities
+- Component-based styling approach
+- Dark/light mode support (if implemented)
+
+## 🚀 Deployment
+
+The frontend is automatically deployed to Vercel:
+
+- **Production URL**: <https://rtk-chat-app-cyan.vercel.app>
+- **Auto-deployment**: On push to main branch
+- **Configuration**: `vercel.json`
+
+### Manual Deployment
+
+```bash
+pnpm build
+pnpm preview  # Test production build locally
+```
+
+## 🔗 Integration
+
+This frontend integrates with:
+
+- **Backend API** - Express.js server for authentication and data
+- **Socket.io** - Real-time messaging and notifications
+- **WebRTC** - Peer-to-peer video calling
+
+## 📱 Browser Support
+
+- Chrome >= 88
+- Firefox >= 85
+- Safari >= 14
+- Edge >= 88
+
+## 🤝 Contributing
+
+1. Follow the project's coding standards
+2. Use TypeScript for type safety
+3. Write meaningful commit messages
+4. Test your changes thoroughly
+5. Update documentation as needed
