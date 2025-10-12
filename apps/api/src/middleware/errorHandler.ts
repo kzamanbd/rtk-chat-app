@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as uuidV4 } from 'uuid';
 
-import { GeneralError } from '../utils/AppError';
+import { GeneralError } from '../utils/error';
 
 const correlationHeader: string = 'x-correlation-id';
 

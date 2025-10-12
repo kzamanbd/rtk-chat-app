@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import User from '../models/user';
-import { BadRequest } from './../utils/AppError';
+import { BadRequest } from '../utils/error';
 
 // node mailer
 const transporter = nodemailer.createTransport({

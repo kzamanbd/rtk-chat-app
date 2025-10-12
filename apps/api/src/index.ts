@@ -7,7 +7,7 @@ import http from 'http';
 import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 import swaggerUi from 'swagger-ui-express';
-import { socketConnection } from './controllers/socket.controller';
+import { socketConnection } from './controllers/socket-controller';
 import { errorHandler, notFoundHandler, requestHandler } from './middleware/errorHandler';
 import routes from './routes';
 import swaggerJSON from './swagger.json';
@@ -21,10 +21,10 @@ app.use(express.urlencoded({ extended: true }));
 const httpServer = http.createServer(app);
 
 (async () => {
-    const MONGO_URI: string = process.env.MONGO_URI || 'mongodb://localhost:27017/rtk-chat-app';
     // connect mongoDB
     try {
-        await mongoose.connect(MONGO_URI);
+        const MONGO_URI = process.env.MONGO_URI;
+        await mongoose.connect(MONGO_URI!);
         console.log('MongoDB connected ✅');
     } catch (err) {
         console.log(err);

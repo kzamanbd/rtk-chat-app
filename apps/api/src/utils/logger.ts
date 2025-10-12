@@ -26,11 +26,10 @@ export const logger = createLogger({
     transports: [new transports.Console()]
 });
 
-const MONGO_URI: string = process.env.MONGO_URI || 'mongodb://localhost:27017/rtk-chat-app';
-console.log(MONGO_URI);
+const MONGO_URI = process.env.MONGO_URI;
 
 const mongoTransport = new transports.MongoDB({
-    db: MONGO_URI,
+    db: MONGO_URI!,
     metaKey: 'meta',
     collection: 'logs',
     tryReconnect: true,
