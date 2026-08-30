@@ -41,6 +41,8 @@ This project uses a monorepo structure with the following workspaces:
 - **`packages/eslint-config`** - Shared ESLint configuration
 - **`packages/typescript-config`** - Shared TypeScript configuration
 
+Real-time messaging and video calling both run through a single Socket.io namespace, with WebRTC carrying the media. [**docs/socket-server.md**](docs/socket-server.md) documents the namespace, the room naming, every event, and the call and message flows as sequence diagrams.
+
 ## 🛠️ Tech Stack
 
 ### Frontend
