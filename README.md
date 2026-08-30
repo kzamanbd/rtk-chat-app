@@ -12,6 +12,22 @@ A modern real-time chat application built with React, Redux Toolkit, Express, an
 - **Modern UI** - Responsive design with Tailwind CSS
 - **Monorepo Architecture** - Organized workspace with shared packages
 
+## 📸 Video Calling
+
+Messenger-style call screen built on WebRTC (PeerJS) with Socket.io signalling.
+
+| Incoming call | Ringing |
+| --- | --- |
+| ![Incoming call screen](docs/screenshots/incoming-call.jpg) | ![Ringing the other side](docs/screenshots/video-call-ringing.jpg) |
+
+![In-call screen with the control dock and picture-in-picture self view](docs/screenshots/video-call-in-call.jpg)
+
+- Full-bleed remote video, with a grid layout once more than one person joins
+- Draggable picture-in-picture self view that snaps to the nearest corner; tap it to swap with the main stage
+- Control dock (mic, camera, screen share, swap, end call) that auto-hides while the call is connected
+- Ringing state with the caller's avatar, live call duration, and participant count
+- Incoming call screen with ringtone, and decline that actually stops the caller's ring
+
 ## 🏗️ Architecture
 
 This project uses a monorepo structure with the following workspaces:
