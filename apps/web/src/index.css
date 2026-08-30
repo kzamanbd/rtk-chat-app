@@ -293,3 +293,44 @@
 body {
     @apply bg-light-gray;
 }
+
+/* ------------------------------ video call ------------------------------ */
+@keyframes call-ring-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    70% {
+        transform: scale(1.75);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1.75);
+        opacity: 0;
+    }
+}
+
+@keyframes call-accept-bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.call-ring {
+    animation: call-ring-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.call-accept {
+    animation: call-accept-bounce 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .call-ring,
+    .call-accept {
+        animation: none;
+    }
+}

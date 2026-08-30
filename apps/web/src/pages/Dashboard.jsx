@@ -43,7 +43,8 @@ export default function Dashboard() {
         setIncomingModalOpen(false);
         requestDeclined({
             room_id: incomingRequestData.room_id,
-            target_user_id: incomingRequestData.target_user_id
+            target_user_id: incomingRequestData.target_user_id,
+            caller_id: incomingRequestData.caller?._id
         });
         setIncomingRequestData(null);
     };
@@ -63,7 +64,7 @@ export default function Dashboard() {
         if (!conversationId && newChat && selectedNewUser) {
             data.userId = selectedNewUser._id;
             const { conversation } = await createConversation(data).unwrap();
-            navigate(`/${conversation._id}`);
+            navigate(`/t/${conversation._id}`);
         } else {
             data.senderName = currentUser.name;
             data.conversationId = conversationId;

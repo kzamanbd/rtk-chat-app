@@ -12,6 +12,25 @@ A modern real-time chat application built with React, Redux Toolkit, Express, an
 - **Modern UI** - Responsive design with Tailwind CSS
 - **Monorepo Architecture** - Organized workspace with shared packages
 
+## 📸 Video Calling
+
+Messenger-style call screen built on WebRTC (PeerJS) with Socket.io signalling.
+
+| Incoming call | Ringing |
+| --- | --- |
+| ![Incoming call screen](docs/screenshots/incoming-call.jpg) | ![Ringing the other side](docs/screenshots/video-call-ringing.jpg) |
+
+Calls open in their own compact popup window rather than taking over a full-size one:
+
+![Two connected call windows on the desktop, showing the compact popup size](docs/screenshots/video-call-in-call.jpg)
+
+- Full-bleed remote video, with a grid layout once more than one person joins
+- Draggable picture-in-picture self view that snaps to the nearest corner; tap it to swap with the main stage
+- Control dock (mic, camera, screen share, swap, end call) that auto-hides while the call is connected
+- Opens in a centred 960x640 popup, clamped to the available screen and resizable
+- Ringing state with the caller's avatar, live call duration, and participant count
+- Incoming call screen with ringtone, and decline that actually stops the caller's ring
+
 ## 🏗️ Architecture
 
 This project uses a monorepo structure with the following workspaces:
@@ -21,6 +40,8 @@ This project uses a monorepo structure with the following workspaces:
 - **`packages/ui`** - Shared UI components
 - **`packages/eslint-config`** - Shared ESLint configuration
 - **`packages/typescript-config`** - Shared TypeScript configuration
+
+Real-time messaging and video calling both run through a single Socket.io namespace, with WebRTC carrying the media. [**docs/socket-server.md**](docs/socket-server.md) documents the namespace, the room naming, every event, and the call and message flows as sequence diagrams.
 
 ## 🛠️ Tech Stack
 

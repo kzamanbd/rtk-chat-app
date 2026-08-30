@@ -9,20 +9,19 @@ export const peerSlice = createSlice({
     initialState,
     reducers: {
         addPeer: (state, action) => {
-            state.peers = {
-                ...state.peers,
-                [action.payload.peerId]: {
-                    stream: action.payload.stream
-                }
+            state.peers[action.payload.peerId] = {
+                stream: action.payload.stream
             };
         },
         removePeer: (state, action) => {
-            // eslint-disable-next-line no-unused-vars
-            const { [action.payload.peerId]: deleted, ...peers } = state;
-            state = peers;
+            // payload is the peerId emitted by the `user-disconnected` event
+            delete state.peers[action.payload];
+        },
+        clearPeers: (state) => {
+            state.peers = {};
         }
     }
 });
 
-export const { addPeer, removePeer } = peerSlice.actions;
+export const { addPeer, removePeer, clearPeers } = peerSlice.actions;
 export default peerSlice.reducer;

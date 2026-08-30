@@ -18,10 +18,17 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setRegisterError('');
+
         if (password !== confirmPassword) {
-            alert('Password does not match');
+            setRegisterError('Passwords do not match');
             return;
         }
+        if (password.length < 6) {
+            setRegisterError('Password must be at least 6 characters');
+            return;
+        }
+
         try {
             await register({
                 name: fullName,
@@ -32,7 +39,7 @@ export default function Register() {
             navigate('/');
         } catch (error) {
             console.error(error);
-            setRegisterError(error.data.message);
+            setRegisterError(error?.data?.message || 'Registration failed, please try again');
         }
     };
 
@@ -48,13 +55,17 @@ export default function Register() {
                             <span className="dark--text text-3xl font-semibold">RTK Chat</span>
                         </div>
                         <p className="text-center text-xs text-gray-600">
-                            Please sign-in to your account and start the adventure
+                            Create your account and start the adventure
                         </p>
 
                         <OtherLoginOption />
 
                         <form className="mt-4" onSubmit={handleSubmit}>
-                            {registerError && <div className="text-center text-red-500">{registerError}</div>}
+                            {registerError && (
+                                <div className="mb-3 rounded-md bg-red-50 p-2 text-center text-sm text-red-600">
+                                    {registerError}
+                                </div>
+                            )}
                             <label className="block">
                                 <span className="form-label">Full Name</span>
                                 <input
@@ -88,6 +99,7 @@ export default function Register() {
                                     name="password"
                                     className="form-control"
                                     placeholder="********"
+                                    autoComplete="new-password"
                                     value={password}
                                     required
                                     onChange={(e) => setPassword(e.target.value)}
@@ -95,10 +107,10 @@ export default function Register() {
                             </label>
 
                             <label className="mt-3 block">
-                                <span className="form-label">Password</span>
+                                <span className="form-label">Confirm Password</span>
                                 <input
                                     type="password"
-                                    name="password"
+                                    name="confirmPassword"
                                     className="form-control"
                                     placeholder="********"
                                     value={confirmPassword}

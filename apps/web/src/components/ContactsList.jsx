@@ -14,7 +14,7 @@ export default function ContactsList() {
 
     const handleContactClick = (contact) => {
         if (contact.conversationId) {
-            navigate(`/${contact.conversationId}`);
+            navigate(`/t/${contact.conversationId}`);
         } else {
             dispatch(setSelectedNewUser(contact));
             navigate('/?newChat=true');
