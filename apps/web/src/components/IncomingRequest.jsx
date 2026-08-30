@@ -1,5 +1,6 @@
 import ringtone from '@/assets/ringtone.mp3';
 import { EndCallIcon, VideoIcon } from '@/components/video-call/CallIcons';
+import openCallWindow from '@/utils/openCallWindow';
 import { Dialog, Transition, TransitionChild } from '@headlessui/react';
 import { Fragment, useEffect, useRef } from 'react';
 
@@ -25,11 +26,7 @@ export default function IncomingRequest({ isOpen, closeModal, request }) {
         audioRef.current?.pause();
         // Open the room pointed at the caller — target_user_id is us — and flag
         // the window as the answering side so it does not ring back.
-        window.open(
-            `/room/${request.room_id}/${request.caller?._id}?incoming=1`,
-            '_blank',
-            `toolbar=yes,scrollbars=yes,resizable=yes`
-        );
+        openCallWindow(`/room/${request.room_id}/${request.caller?._id}?incoming=1`);
     };
 
     const caller = request?.caller;

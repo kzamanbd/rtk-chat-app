@@ -1,3 +1,4 @@
+import openCallWindow from '@/utils/openCallWindow';
 import Peer from 'peerjs';
 import { createContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -15,7 +16,7 @@ export const RoomProvider = ({ children }) => {
     const userId = useSelector((state) => state.auth.currentUser?._id);
 
     const roomCreated = ({ roomId, userId }) => {
-        window.open(`/room/${roomId}/${userId}`, '_blank', `toolbar=yes,scrollbars=yes,resizable=yes`);
+        openCallWindow(`/room/${roomId}/${userId}`);
     };
 
     useEffect(() => {
