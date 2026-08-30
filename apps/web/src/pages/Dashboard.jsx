@@ -43,7 +43,8 @@ export default function Dashboard() {
         setIncomingModalOpen(false);
         requestDeclined({
             room_id: incomingRequestData.room_id,
-            target_user_id: incomingRequestData.target_user_id
+            target_user_id: incomingRequestData.target_user_id,
+            caller_id: incomingRequestData.caller?._id
         });
         setIncomingRequestData(null);
     };

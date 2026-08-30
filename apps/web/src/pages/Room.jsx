@@ -1,9 +1,10 @@
-import CallControls from '@/components/call/CallControls';
-import { ChevronDownIcon, UsersIcon } from '@/components/call/CallIcons';
-import SelfView from '@/components/call/SelfView';
-import VideoTile from '@/components/call/VideoTile';
+import CallControls from '@/components/video-call/CallControls';
+import { ChevronDownIcon, UsersIcon } from '@/components/video-call/CallIcons';
+import SelfView from '@/components/video-call/SelfView';
+import VideoTile from '@/components/video-call/VideoTile';
 import { useGetUsersQuery, useRequestVideoCallMutation } from '@/features/messages/messagesApi';
 import { addPeer, clearPeers, removePeer } from '@/features/room/peerSlice';
+import useQuery from '@/hooks/useQuery';
 import { useRoom } from '@/hooks/useRoom';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +27,7 @@ export default function Room() {
     const { ws, me } = useRoom();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isIncoming = useQuery().get('incoming') === '1';
 
     const [stream, setStream] = useState(null);
     const [mediaError, setMediaError] = useState(null);
@@ -38,6 +40,7 @@ export default function Room() {
     const [toast, setToast] = useState(null);
 
     const callsRef = useRef([]);
+    const pendingCallsRef = useRef(new Map());
     const streamRef = useRef(null);
     const cameraTrackRef = useRef(null);
     const idleTimerRef = useRef(null);
@@ -55,15 +58,14 @@ export default function Room() {
 
     /* ----------------------------- signalling ----------------------------- */
 
+    // Only the caller rings the other side; the callee arrives with ?incoming=1.
     useEffect(() => {
+        if (isIncoming) return;
         requestVideoCall({ room_id: roomId, target_user_id: targetUserId });
-    }, [roomId, targetUserId]);
+    }, [roomId, targetUserId, isIncoming]);
 
+    // Grab the camera once per room.
     useEffect(() => {
-        if (me && targetUserId) {
-            ws.emit('join-room', { roomId, userId: targetUserId, peerId: me._id });
-        }
-
         if (!navigator.mediaDevices?.getUserMedia) {
             setMediaError('device');
             return;
@@ -80,33 +82,58 @@ export default function Room() {
                 console.error(error);
                 setMediaError(error?.name === 'NotAllowedError' ? 'permission' : 'device');
             });
-    }, [roomId, currentUser]);
+    }, [roomId]);
+
+    // Announce ourselves only once the peer is dialable (see RoomContext).
+    useEffect(() => {
+        if (!me) return;
+        ws.emit('join-room', { roomId, userId: targetUserId, peerId: me.id });
+    }, [me, roomId, targetUserId]);
 
     useEffect(() => {
         if (!me || !stream) return;
 
-        const onUserJoined = ({ peerId }) => {
-            const call = me.call(peerId, stream);
+        const attach = (call, peerId) => {
             callsRef.current.push(call);
             call.on('stream', (userVideoStream) => {
+                pendingCallsRef.current.delete(peerId);
                 dispatch(addPeer({ peerId, stream: userVideoStream }));
             });
         };
 
+        const dial = (peerId, attempt = 0) => {
+            const call = me.call(peerId, stream);
+            if (call) {
+                pendingCallsRef.current.set(peerId, attempt);
+                attach(call, peerId);
+            }
+        };
+
+        const onUserJoined = ({ peerId }) => dial(peerId);
+
         const onIncomingCall = (call) => {
             call.answer(stream);
-            callsRef.current.push(call);
-            call.on('stream', (userVideoStream) => {
-                dispatch(addPeer({ peerId: call.peer, stream: userVideoStream }));
-            });
+            attach(call, call.peer);
+        };
+
+        // The broker can still report the freshly announced peer as unknown;
+        // back off and dial again instead of ringing forever.
+        const onPeerError = (err) => {
+            if (err.type !== 'peer-unavailable') return;
+            const peerId = err.message?.match(/peer\s(\S+)/)?.[1];
+            const attempt = pendingCallsRef.current.get(peerId);
+            if (peerId === undefined || attempt === undefined || attempt >= 4) return;
+            setTimeout(() => dial(peerId, attempt + 1), 1000);
         };
 
         ws.on('user-joined', onUserJoined);
         me.on('call', onIncomingCall);
+        me.on('error', onPeerError);
 
         return () => {
             ws.off('user-joined', onUserJoined);
             me.off('call', onIncomingCall);
+            me.off('error', onPeerError);
         };
     }, [me, stream]);
 
@@ -230,6 +257,21 @@ export default function Room() {
         window.close();
         navigate('/');
     };
+
+    // The callee turned us down: say so, then close the room window.
+    useEffect(() => {
+        const callerId = currentUser?._id;
+        if (!callerId) return;
+
+        const onDeclined = ({ room_id: declinedRoom, declined_by: declinedBy }) => {
+            if (declinedRoom && declinedRoom !== roomId) return;
+            setToast(`${declinedBy?.name || 'They'} declined the call`);
+            setTimeout(endCall, 1500);
+        };
+
+        ws.on(`callDeclined.${callerId}`, onDeclined);
+        return () => ws.off(`callDeclined.${callerId}`, onDeclined);
+    }, [currentUser, roomId]);
 
     /* -------------------------------- stage ------------------------------- */
 

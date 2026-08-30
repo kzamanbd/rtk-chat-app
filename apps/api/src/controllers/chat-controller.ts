@@ -4,6 +4,7 @@ import { tokenAuth as auth } from '../middleware/authenticate';
 import Conversation from '../models/conversation';
 import Message from '../models/message';
 import User from '../models/user';
+import { userRoom } from './socket-controller';
 
 const router = express.Router();
 
@@ -239,10 +240,10 @@ const getMessages = async (req: Request, res: Response) => {
             messages,
             chatHead
         });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({
             success: false,
-            message: 'Internal server error'
+            message: error.message || 'Internal server error'
         });
     }
 };
@@ -273,10 +274,10 @@ const getUsers = async (req: Request, res: Response) => {
             success: true,
             users: filteredUsers
         });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({
             success: false,
-            message: 'Internal server error'
+            message: error.message || 'Internal server error'
         });
     }
 };
@@ -293,11 +294,37 @@ const callRequest = (req: Request, res: Response) => {
         caller: authUser
     };
 
-    (global as any).chat.emit(`newCallRequest.${targetUserId}`, obj);
+    (global as any).chat.to(userRoom(targetUserId)).emit(`newCallRequest.${targetUserId}`, obj);
     res.status(200).json({
         success: true,
         message: 'Outgoing call',
         ...obj
+    });
+};
+
+// callee turned the call down
+const callDeclined = (req: Request, res: Response) => {
+    const { room_id: roomId, caller_id: callerId } = req.body;
+    const authUser = (req as any).authUser;
+
+    if (!callerId) {
+        return res.status(422).json({
+            success: false,
+            message: 'caller_id is required!'
+        });
+    }
+
+    (global as any).chat.to(userRoom(callerId)).emit(`callDeclined.${callerId}`, {
+        room_id: roomId,
+        declined_by: {
+            _id: authUser._id,
+            name: authUser.name
+        }
+    });
+
+    res.status(200).json({
+        success: true,
+        message: 'Call declined'
     });
 };
 
@@ -308,5 +335,6 @@ router.get('/messages/:conversationId', auth, getMessages);
 router.post('/message', auth, sendMessage);
 router.get('/users', auth, getUsers);
 router.post('/call-request', auth, callRequest);
+router.post('/call-declined', auth, callDeclined);
 
 export default router;
