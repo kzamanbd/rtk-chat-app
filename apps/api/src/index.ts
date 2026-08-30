@@ -1,7 +1,9 @@
+// Load env before any module reads process.env
+import 'dotenv/config';
+
 // Import packages
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
@@ -12,8 +14,6 @@ import { errorHandler, notFoundHandler, requestHandler } from './middleware/erro
 import routes from './routes';
 import swaggerJSON from './swagger.json';
 import { errorLogger, infoLogger, logger } from './utils/logger';
-
-dotenv.config();
 // Middleware
 const app: Express = express();
 app.use(express.json());
