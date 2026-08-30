@@ -5,6 +5,7 @@ import { useGetCurrentUserQuery } from '@/features/auth/authApi';
 import { updateCurrentUser } from '@/features/auth/authSlice';
 import Dashboard from '@/pages/Dashboard';
 import Login from '@/pages/Login';
+import Register from '@/pages/Register';
 import Room from '@/pages/Room';
 
 import { useEffect } from 'react';
@@ -46,6 +47,14 @@ function App() {
             element: (
                 <GuestLayout>
                     <Login />
+                </GuestLayout>
+            )
+        },
+        {
+            path: '/register',
+            element: (
+                <GuestLayout>
+                    <Register />
                 </GuestLayout>
             )
         },
